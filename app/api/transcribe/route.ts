@@ -16,10 +16,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "File too large (max 25 MB)" }, { status: 400 });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) {
+    console.warn("[transcribe] OPENAI_API_KEY is not set at runtime. Add it in Railway Variables and redeploy.");
     return NextResponse.json(
-      { error: "Transcription not configured. Add OPENAI_API_KEY in your host's environment (e.g. Railway → Variables)." },
+      { error: "Transcription not configured. Add OPENAI_API_KEY in Railway → Variables, then redeploy the service so the app loads the new variable." },
       { status: 503 }
     );
   }
