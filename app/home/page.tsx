@@ -38,6 +38,14 @@ export default async function HomePage() {
                 >
                   Continue
                 </Link>
+                {(state.part1.hasCompleted || state.part1.activeId) && (
+                  <Link
+                    href="/practice/part1/examples"
+                    className="block w-full h-12 flex items-center justify-center rounded-lg border border-neutral-300 text-neutral-700 font-medium"
+                  >
+                    See previous examples
+                  </Link>
+                )}
               </>
             ) : (
               <>
@@ -45,7 +53,7 @@ export default async function HomePage() {
                   href="/practice/part1/new"
                   className="block w-full h-12 flex items-center justify-center rounded-lg bg-blue-600 text-white font-medium"
                 >
-                  Start new essay
+                  Start new essay (choose from 3 topics)
                 </Link>
                 {state.part1.hasCompleted && (
                   <Link

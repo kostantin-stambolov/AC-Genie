@@ -39,12 +39,19 @@ export async function getCompletedAttempts(
 export async function startAttempt(
   userId: string,
   part: number,
-  section: number | null
+  section: number | null,
+  promptText?: string | null
 ) {
   const existing = await getActiveAttempt(userId, part, section);
   if (existing) return existing; // already in progress – reuse
   return prisma.attempt.create({
-    data: { userId, part, section, status: "in_progress" },
+    data: {
+      userId,
+      part,
+      section,
+      status: "in_progress",
+      ...(part === PART_1 && promptText != null && { promptText }),
+    },
   });
 }
 

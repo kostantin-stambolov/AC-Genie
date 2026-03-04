@@ -36,6 +36,17 @@ model Attempt {
   status      String    // "in_progress" | "completed"
   startedAt   DateTime  @default(now())
   completedAt DateTime?
+  promptText       String?   // Part 1: chosen essay prompt
+  essayBody        String?   // Part 1: student's essay text
+  lastFeedbackGrade          Int?      // Part 1: last AI grade 2–6 (Bulgarian)
+  lastFeedbackText           String?   // Part 1: last AI feedback
+  lastFeedbackLanguageErrors String?   // Part 1: JSON array of {type, original, correction, note}
+  lastFeedbackAt             DateTime? // Part 1: when feedback was given
+  feedbackHistory            String?   // Part 1: JSON array of {submittedAt, essayBody, grade, feedbackText, languageErrors}
+  lastRewriteParts           String?   // Part 1: JSON array of {label, text} (suggested essay)
+  lastRewriteGrade           Int?      // Part 1: grade for the suggested essay
+  lastRewriteReason          String?   // Part 1: why this grade for suggested essay
+  lastRewriteAt              DateTime? // Part 1: when rewrite was generated
   @@index([userId])
   @@index([userId, part, section])
 }
