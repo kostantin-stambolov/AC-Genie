@@ -47,24 +47,23 @@ In the Railway project:
 
 **Database options:**
 
-- **Quick test (data may reset on redeploy):**  
-  Use SQLite:  
+- **Quick test (data resets on redeploy):**  
   `DATABASE_URL="file:./prisma/dev.db"`  
-  The app will run, but the DB file may not persist across redeploys.
+  The app runs migrations on every start, but the DB file lives on the container and is **deleted on each new deploy**.
 
-- **Persistent data (recommended):**  
-  1. In Railway, add **Postgres** to the project (New → Database → PostgreSQL).  
-  2. In the Postgres service, open **Variables** and copy `DATABASE_URL`.  
-  3. In your app service Variables, set `DATABASE_URL` to that URL (it looks like `postgresql://...`).  
-  4. The app’s Prisma schema is currently **SQLite**. To use Postgres you must switch the schema to `provider = "postgresql"` in `prisma/schema.prisma`, run `npx prisma migrate deploy`, and redeploy.
+- **Persistent DB (recommended – keep accounts and data across deploys):**  
+  1. In your **AC-Genie service**, go to **Settings** (or **Variables**).  
+  2. Click **Add Volume** (or **Volumes** → **Add Volume**). Mount path: `/data`.  
+  3. In **Variables**, set:  
+     `DATABASE_URL="file:/data/dev.db"`  
+  4. Redeploy. The app runs `prisma migrate deploy` on start and stores the SQLite file on the volume, so **the DB is not deleted on new deploys**.
 
-## 3. Build and start command (if needed)
+## 3. Build and start command
 
-Railway usually detects Next.js. If you need to set commands:
+The app uses:
 
 - **Build:** `npm run build`
-- **Start:** `npm start`  
-  (Or use the default that Railway suggests.)
+- **Start:** `npm start` (runs `prisma migrate deploy` then `next start` so the DB has tables on every deploy)
 
 ## 4. Get your URL
 
@@ -78,15 +77,13 @@ After deploy:
 
 The first build can take **5–10 minutes** (install + `better-sqlite3` native bindings + Next.js build). If a build runs longer than ~10 min, cancel it in the dashboard and redeploy; check the **Build** logs for the step it’s on (Install vs Build vs Deploy).
 
-## 5. First run: database and seed
+## 5. First run and seed
 
-If the app uses a fresh DB (e.g. new Postgres or new SQLite):
+Migrations run automatically on **every** start (`prisma migrate deploy`), so the DB is ready as soon as the app is up. No need to run them manually.
 
-- Run migrations on the deployed app (e.g. in Railway’s shell or a one-off command):  
-  `npx prisma migrate deploy`  
-- Optionally seed a test user:  
-  `npm run seed`  
-  (Only if your seed is safe for production.)
+To create a test user (optional): in Railway’s **Settings** → run a one-off command or use the shell:  
+`npm run seed`  
+(Only if your seed is safe for production.)
 
 ---
 

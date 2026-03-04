@@ -6,7 +6,7 @@
     "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npx prisma migrate deploy && next start",
     "lint": "eslint",
     "seed": "npx prisma db seed",
     "reset-essay": "npx tsx prisma/reset-essay.ts",

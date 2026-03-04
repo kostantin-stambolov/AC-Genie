@@ -50,9 +50,11 @@ export async function POST(request: NextRequest) {
     await setSessionCookie(token);
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("POST /api/auth/register error:", err);
+    const message = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: process.env.NODE_ENV === "production" ? "Something went wrong. Please try again." : message },
       { status: 500 }
     );
   }
