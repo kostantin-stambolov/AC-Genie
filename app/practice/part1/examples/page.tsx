@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import type { Attempt } from "@prisma/client";
 import { getSessionUserId } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
@@ -46,7 +47,7 @@ export default async function Part1ExamplesPage() {
           <p className="text-neutral-500 text-sm">No essay feedback yet. Complete at least one feedback round to see it here.</p>
         ) : (
           <ul className="space-y-2">
-            {attempts.map((a) => (
+            {attempts.map((a: Attempt) => (
               <li key={a.id}>
                 <Link
                   href={`/practice/part1/examples/${a.id}`}
