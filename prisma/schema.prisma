@@ -1,0 +1,41 @@
+// AC-Genie: American College Preparation – simple schema
+// SQLite for local dev; switch to Postgres in production if needed
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  pinHash   String
+  createdAt DateTime @default(now())
+  sessions  Session[]
+  attempts  Attempt[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Attempt {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  part        Int       // 1 = Essay, 2 = Test
+  section     Int?      // null for Part 1; 1–4 for Part 2
+  status      String    // "in_progress" | "completed"
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  @@index([userId])
+  @@index([userId, part, section])
+}
