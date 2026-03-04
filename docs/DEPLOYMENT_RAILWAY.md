@@ -45,6 +45,9 @@ In the Railway project:
 | `SESSION_SECRET` | A long random string (e.g. 32+ chars) | Yes |
 | `OPENAI_API_KEY` | Your OpenAI API key (for essay feedback & dictation) | For essay features |
 
+**Secure: API keys and secrets**  
+Do **not** put `OPENAI_API_KEY` (or `SESSION_SECRET`) in the repo or in code. Set them only in **Railway → your service → Variables**. Railway injects them at runtime into the app; they are not stored in the image, not in build logs, and are not visible to users. That keeps the key protected from leaks and hacks.
+
 **Database options:**
 
 - **Quick test (data resets on redeploy):**  

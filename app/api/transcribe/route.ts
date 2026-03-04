@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: "Transcription not configured. Set OPENAI_API_KEY for Whisper." },
+      { error: "Transcription not configured. Add OPENAI_API_KEY in your host's environment (e.g. Railway → Variables)." },
       { status: 503 }
     );
   }
