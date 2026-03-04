@@ -1,5 +1,25 @@
 # Deploy AC-Genie on Railway (live URL)
 
+## CLI (from project root)
+
+Login and link must run in **your terminal** (interactive):
+
+```bash
+npm run railway:login   # opens browser – complete sign-in
+npm run railway:link    # select your Railway project
+```
+
+Then you or the assistant can run:
+
+```bash
+npm run railway:logs    # view deploy/runtime logs
+npm run railway:status # service status
+```
+
+---
+
+## Deploy (web)
+
 Your code is on GitHub: **https://github.com/kostantin-stambolov/AC-Genie**
 
 To get a **live URL** so the app runs on the internet:
@@ -53,6 +73,10 @@ After deploy:
 1. Open your service → **Settings** (or **Deployments**).
 2. Under **Networking** / **Public networking**, click **Generate domain** (or use the default).
 3. The **URL** (e.g. `https://ac-genie-production-xxxx.up.railway.app`) is your live app. Open it in a browser to use the app.
+
+## Build time
+
+The first build can take **5–10 minutes** (install + `better-sqlite3` native bindings + Next.js build). If a build runs longer than ~10 min, cancel it in the dashboard and redeploy; check the **Build** logs for the step it’s on (Install vs Build vs Deploy).
 
 ## 5. First run: database and seed
 
