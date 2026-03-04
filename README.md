@@ -39,6 +39,21 @@ Web app for students to practice for the American College in Sofia admission exa
 - Prisma + SQLite (local); session auth with HTTP-only cookie, bcrypt for PIN
 - Rate-limited login; see `docs/VISION.md` for security notes
 
+## Deploy (live URL)
+
+Code is on GitHub: **https://github.com/kostantin-stambolov/AC-Genie**
+
+To get a public URL (e.g. with [Railway](https://railway.com/new)):
+
+1. Create a **New Project** → **Deploy from GitHub repo** → select **AC-Genie**.
+2. In the service **Variables**, set at least:
+   - `DATABASE_URL` (e.g. `file:./prisma/dev.db` for SQLite, or a Postgres URL if you add Railway Postgres)
+   - `SESSION_SECRET` (long random string)
+   - `OPENAI_API_KEY` (for essay feedback and dictation)
+3. Generate a **public domain** in the service’s Networking / Settings to get your live URL.
+
+See **docs/DEPLOYMENT_RAILWAY.md** for step-by-step Railway deployment and database options.
+
 ## Future
 
 - Clova / ChatGPT APIs for dictation and file upload
