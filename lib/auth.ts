@@ -6,8 +6,8 @@ import { randomBytes } from "crypto";
 const SESSION_COOKIE = "ac_session";
 const SESSION_DAYS = 7;
 const PIN_SALT_ROUNDS = 10;
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 min
-const RATE_LIMIT_MAX_ATTEMPTS = 5;
+const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000; // 5 min
+const RATE_LIMIT_MAX_ATTEMPTS = 10;
 
 // In-memory rate limit (use Redis in production for multi-instance)
 const loginAttempts = new Map<string, { count: number; firstAt: number }>();
@@ -40,6 +40,10 @@ export function recordLoginAttempt(email: string): void {
     return;
   }
   entry.count += 1;
+}
+
+export function clearLoginRateLimit(email: string): void {
+  loginAttempts.delete(getRateLimitKey(email));
 }
 
 export async function hashPin(pin: string): Promise<string> {

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import {
-  hashPin,
   verifyPin,
   createSession,
   setSessionCookie,
   isRateLimited,
   recordLoginAttempt,
+  clearLoginRateLimit,
 } from "@/lib/auth";
 
 const PIN_MIN = 4;
@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    clearLoginRateLimit(normalizedEmail);
     const token = await createSession(user.id);
     await setSessionCookie(token);
 

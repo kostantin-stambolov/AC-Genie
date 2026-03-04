@@ -44,9 +44,12 @@ In the Railway project:
 | `DATABASE_URL` | See below | Yes |
 | `SESSION_SECRET` | A long random string (e.g. 32+ chars) | Yes |
 | `OPENAI_API_KEY` | Your OpenAI API key (for essay feedback & dictation) | For essay features |
+| `RATE_LIMIT_RESET_SECRET` | A secret of your choice (for unblocking “Too many attempts” at `/login/reset`) | Optional |
 
 **Secure: API keys and secrets**  
 Do **not** put `OPENAI_API_KEY` (or `SESSION_SECRET`) in the repo or in code. Set them only in **Railway → your service → Variables**. Railway injects them at runtime into the app; they are not stored in the image, not in build logs, and are not visible to users. That keeps the key protected from leaks and hacks.
+
+If a user is blocked by “Too many attempts”, they can go to **/login/reset**, enter their email and the value of `RATE_LIMIT_RESET_SECRET`, and click Unblock. Set `RATE_LIMIT_RESET_SECRET` in Railway Variables to a value only you (or they) know.
 
 **Database options:**
 
