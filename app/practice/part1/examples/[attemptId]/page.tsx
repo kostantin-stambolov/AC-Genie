@@ -4,13 +4,43 @@ import { prisma } from "@/lib/db";
 import { NavHeader } from "@/components/NavHeader";
 import { Sparkles } from "@/components/icons";
 
-type HistoryEntry = {
+type LanguageError = { type: string; original: string; correction: string; note?: string };
+
+type ExaminerScore = {
+  ideaContent: number;
+  structure: number;
+  language: number;
+  total: number;
+  notes?: string;
+};
+
+type ScoreBreakdown = {
+  examiner1: ExaminerScore;
+  examiner2: ExaminerScore;
+  finalScore: number;
+  arbitrated: boolean;
+};
+
+type HistoryEntryV2 = {
+  version: 2;
+  submittedAt: string;
+  essayBody: string;
+  finalScore: number;
+  scoreBreakdown: ScoreBreakdown;
+  feedbackText: string;
+  languageErrors?: LanguageError[];
+};
+
+type HistoryEntryV1 = {
+  version?: 1;
   submittedAt: string;
   essayBody: string;
   grade: number;
   feedbackText: string;
-  languageErrors?: Array<{ type: string; original: string; correction: string; note?: string }>;
+  languageErrors?: LanguageError[];
 };
+
+type HistoryEntry = HistoryEntryV1 | HistoryEntryV2;
 
 type RewritePart = { label: string; text: string };
 
@@ -32,7 +62,7 @@ function parseHistory(feedbackHistory: string | null): HistoryEntry[] {
     return parsed.filter(
       (e): e is HistoryEntry =>
         e != null && typeof e === "object" &&
-        "submittedAt" in e && "essayBody" in e && "grade" in e && "feedbackText" in e
+        "submittedAt" in e && "essayBody" in e && "feedbackText" in e
     );
   } catch {
     return [];
@@ -52,12 +82,45 @@ function parseRewriteParts(json: string | null): RewritePart[] {
   }
 }
 
-function gradeStyle(g: number) {
-  if (g >= 6) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
-  if (g >= 5) return "bg-blue-100 text-blue-800 ring-blue-200";
-  if (g >= 4) return "bg-yellow-100 text-yellow-800 ring-yellow-200";
-  if (g >= 3) return "bg-orange-100 text-orange-800 ring-orange-200";
+function finalScoreStyle(score: number): string {
+  if (score >= 32) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
+  if (score >= 24) return "bg-amber-100 text-amber-800 ring-amber-200";
+  if (score >= 16) return "bg-orange-100 text-orange-800 ring-orange-200";
   return "bg-red-100 text-red-800 ring-red-200";
+}
+
+function rewriteScoreStyle(total: number): string {
+  if (total >= 18) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
+  if (total >= 15) return "bg-blue-100 text-blue-800 ring-blue-200";
+  if (total >= 12) return "bg-yellow-100 text-yellow-800 ring-yellow-200";
+  return "bg-orange-100 text-orange-800 ring-orange-200";
+}
+
+function avgToDisplay(avg: number): string {
+  return Number.isInteger(avg) ? String(avg) : avg.toFixed(1);
+}
+
+function SubScoreBars({ examiner1, examiner2 }: { examiner1: ExaminerScore; examiner2: ExaminerScore }) {
+  const bars = [
+    { label: "Idea & Content", avg: (examiner1.ideaContent + examiner2.ideaContent) / 2, max: 10, color: "bg-violet-400" },
+    { label: "Structure",      avg: (examiner1.structure   + examiner2.structure)   / 2, max: 4,  color: "bg-blue-400" },
+    { label: "Language",       avg: (examiner1.language    + examiner2.language)    / 2, max: 6,  color: "bg-teal-400" },
+  ];
+  return (
+    <div className="space-y-2 mt-3">
+      {bars.map((b) => (
+        <div key={b.label}>
+          <div className="flex justify-between items-baseline mb-0.5">
+            <span className="text-[11px] font-medium text-neutral-500">{b.label}</span>
+            <span className="text-[11px] text-neutral-400">{avgToDisplay(b.avg)} / {b.max}</span>
+          </div>
+          <div className="h-1.5 rounded-full bg-neutral-100 overflow-hidden">
+            <div className={`h-full rounded-full ${b.color}`} style={{ width: `${(b.avg / b.max) * 100}%` }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 type Props = { params: Promise<{ attemptId: string }> };
@@ -82,6 +145,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
       ? history
       : attempt.lastFeedbackAt && attempt.essayBody != null
         ? [{
+            version: 1 as const,
             submittedAt: attempt.lastFeedbackAt.toISOString(),
             essayBody: attempt.essayBody,
             grade: attempt.lastFeedbackGrade ?? 0,
@@ -108,17 +172,84 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
         </div>
 
         {iterations.map((entry, i) => {
-          const gs = gradeStyle(entry.grade);
+          const isV2 = (entry as HistoryEntryV2).version === 2;
+
+          if (isV2) {
+            const v2 = entry as HistoryEntryV2;
+            const gs = finalScoreStyle(v2.finalScore);
+            return (
+              <section key={i} className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 mb-5">
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Draft {i + 1}</h2>
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 ${gs}`}>
+                      {v2.finalScore} / 40
+                    </span>
+                    <span className="text-xs text-neutral-400">
+                      {new Date(v2.submittedAt).toLocaleString(undefined, {
+                        month: "short", day: "numeric",
+                        hour: "2-digit", minute: "2-digit",
+                      })}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sub-score bars */}
+                {v2.scoreBreakdown?.examiner1 && v2.scoreBreakdown?.examiner2 && (
+                  <div className="mb-4">
+                    <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Sub-scores (averaged)</p>
+                    <SubScoreBars examiner1={v2.scoreBreakdown.examiner1} examiner2={v2.scoreBreakdown.examiner2} />
+                  </div>
+                )}
+
+                <div className="mb-4">
+                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Your text</p>
+                  <div className="text-neutral-700 text-sm leading-relaxed whitespace-pre-wrap bg-neutral-50 rounded-xl p-4 border border-neutral-100">
+                    {v2.essayBody || "(No text)"}
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Feedback</p>
+                  <div className="text-neutral-600 text-sm leading-relaxed whitespace-pre-wrap">
+                    {v2.feedbackText}
+                  </div>
+                </div>
+
+                {v2.languageErrors && v2.languageErrors.length > 0 && (
+                  <div className="border-t border-amber-100 pt-4">
+                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Language corrections</p>
+                    <ul className="space-y-2">
+                      {v2.languageErrors.map((err, j) => (
+                        <li key={j} className="text-sm flex flex-wrap items-center gap-1.5">
+                          <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold bg-amber-100 text-amber-800 uppercase">
+                            {err.type.replace(/_/g, " ")}
+                          </span>
+                          <span className="line-through text-neutral-400">{err.original}</span>
+                          <span className="text-neutral-300 text-base font-light">›</span>
+                          <span className="font-semibold text-neutral-800">{err.correction}</span>
+                          {err.note && <span className="text-neutral-400 text-xs ml-1">({err.note})</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            );
+          }
+
+          // Version 1 (old scoring): show with legacy label
+          const v1 = entry as HistoryEntryV1;
           return (
             <section key={i} className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 mb-5">
               <div className="flex items-center justify-between gap-3 mb-4">
                 <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Draft {i + 1}</h2>
                 <div className="flex items-center gap-2">
-                  <span className={`inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 ${gs}`}>
-                    {entry.grade} / 6
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 bg-neutral-100 text-neutral-600 ring-neutral-200">
+                    Grade {v1.grade}/6 (old scoring)
                   </span>
                   <span className="text-xs text-neutral-400">
-                    {new Date(entry.submittedAt).toLocaleString(undefined, {
+                    {new Date(v1.submittedAt).toLocaleString(undefined, {
                       month: "short", day: "numeric",
                       hour: "2-digit", minute: "2-digit",
                     })}
@@ -129,22 +260,22 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
               <div className="mb-4">
                 <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Your text</p>
                 <div className="text-neutral-700 text-sm leading-relaxed whitespace-pre-wrap bg-neutral-50 rounded-xl p-4 border border-neutral-100">
-                  {entry.essayBody || "(No text)"}
+                  {v1.essayBody || "(No text)"}
                 </div>
               </div>
 
               <div className="mb-4">
                 <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Feedback</p>
                 <div className="text-neutral-600 text-sm leading-relaxed whitespace-pre-wrap">
-                  {entry.feedbackText}
+                  {v1.feedbackText}
                 </div>
               </div>
 
-              {entry.languageErrors && entry.languageErrors.length > 0 && (
+              {v1.languageErrors && v1.languageErrors.length > 0 && (
                 <div className="border-t border-amber-100 pt-4">
                   <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Language corrections</p>
                   <ul className="space-y-2">
-                    {entry.languageErrors.map((err, j) => (
+                    {v1.languageErrors.map((err, j) => (
                       <li key={j} className="text-sm flex flex-wrap items-center gap-1.5">
                         <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold bg-amber-100 text-amber-800 uppercase">
                           {err.type.replace(/_/g, " ")}
@@ -169,8 +300,8 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
               <h2 className="text-sm font-bold text-violet-800 uppercase tracking-wider">Model essay</h2>
             </div>
             {attempt.lastRewriteGrade != null && (
-              <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 mb-5 ${gradeStyle(attempt.lastRewriteGrade)}`}>
-                Grade: {attempt.lastRewriteGrade} / 6
+              <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 mb-5 ${rewriteScoreStyle(attempt.lastRewriteGrade)}`}>
+                Score: {attempt.lastRewriteGrade} / 20
                 {attempt.lastRewriteReason && (
                   <span className="font-normal opacity-80 ml-1">{attempt.lastRewriteReason}</span>
                 )}

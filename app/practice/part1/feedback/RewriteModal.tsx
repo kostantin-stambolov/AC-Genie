@@ -5,10 +5,17 @@ import { Sparkles } from "@/components/icons";
 
 type Part = { label: string; text: string };
 
+type RewriteScore = {
+  ideaContent: number;
+  structure: number;
+  language: number;
+  total: number;
+};
+
 type RewriteResult = {
   parts: Part[];
-  grade: number;
-  gradeReason: string;
+  score: RewriteScore;
+  scoreReason: string;
 };
 
 type Props = {
@@ -17,10 +24,10 @@ type Props = {
   onClose: () => void;
 };
 
-function gradeColor(g: number): string {
-  if (g >= 6) return "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200";
-  if (g >= 5) return "bg-blue-50 text-blue-800 ring-1 ring-blue-200";
-  if (g >= 4) return "bg-yellow-50 text-yellow-800 ring-1 ring-yellow-200";
+function totalScoreStyle(total: number): string {
+  if (total >= 18) return "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200";
+  if (total >= 15) return "bg-blue-50 text-blue-800 ring-1 ring-blue-200";
+  if (total >= 12) return "bg-yellow-50 text-yellow-800 ring-1 ring-yellow-200";
   return "bg-orange-50 text-orange-800 ring-1 ring-orange-200";
 }
 
@@ -45,11 +52,18 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
         setError((data as { error?: string }).error || `Request failed (${res.status})`);
         return;
       }
-      const raw = data as { parts?: Part[]; grade?: number; gradeReason?: string };
+      const raw = data as { parts?: Part[]; score?: RewriteScore; scoreReason?: string };
       const parts = Array.isArray(raw.parts) ? raw.parts : [];
-      const grade = typeof raw.grade === "number" ? raw.grade : 5;
-      const gradeReason = typeof raw.gradeReason === "string" ? raw.gradeReason : "";
-      setResult({ parts, grade, gradeReason });
+      const score: RewriteScore = raw.score && typeof raw.score === "object"
+        ? {
+            ideaContent: typeof raw.score.ideaContent === "number" ? raw.score.ideaContent : 7,
+            structure:   typeof raw.score.structure   === "number" ? raw.score.structure   : 3,
+            language:    typeof raw.score.language    === "number" ? raw.score.language    : 5,
+            total:       typeof raw.score.total       === "number" ? raw.score.total       : 15,
+          }
+        : { ideaContent: 7, structure: 3, language: 5, total: 15 };
+      const scoreReason = typeof raw.scoreReason === "string" ? raw.scoreReason : "";
+      setResult({ parts, score, scoreReason });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");
     } finally {
@@ -139,19 +153,31 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                 </div>
               ))}
 
-              {/* Grade section */}
+              {/* Score section */}
               <div className="border-t border-neutral-100 pt-5 mt-2">
-                <div className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 mb-3 ${gradeColor(result.grade)}`}>
+                <div className={`inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 mb-4 ${totalScoreStyle(result.score.total)}`}>
                   <span
-                    className="text-xl font-bold"
+                    className="text-2xl font-bold"
                     style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
                   >
-                    {result.grade}
+                    {result.score.total}
                   </span>
-                  <span className="text-sm font-medium opacity-70">/ 6</span>
+                  <span className="text-sm font-medium opacity-70">/ 20</span>
                 </div>
-                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Why this grade</p>
-                <p className="text-neutral-700 text-[15px] leading-relaxed">{result.gradeReason}</p>
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  {[
+                    { label: "Idea & Content", value: result.score.ideaContent, max: 10 },
+                    { label: "Structure",      value: result.score.structure,   max: 4  },
+                    { label: "Language",       value: result.score.language,    max: 6  },
+                  ].map((sub) => (
+                    <div key={sub.label} className="bg-neutral-50 rounded-xl p-3 text-center">
+                      <p className="text-[11px] text-neutral-400 font-medium mb-1 leading-tight">{sub.label}</p>
+                      <p className="text-base font-bold text-neutral-800">{sub.value}<span className="text-xs font-normal text-neutral-400">/{sub.max}</span></p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Why this score</p>
+                <p className="text-neutral-700 text-[15px] leading-relaxed">{result.scoreReason}</p>
               </div>
             </div>
           )}

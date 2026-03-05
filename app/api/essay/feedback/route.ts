@@ -5,6 +5,7 @@ import {
   buildEssayFeedbackSystemPrompt,
   buildEssayFeedbackUserPrompt,
   type LanguageErrorItem,
+  type ExaminerScore,
 } from "@/lib/essay-feedback-prompt";
 
 const VALID_TYPES: LanguageErrorItem["type"][] = [
@@ -51,6 +52,23 @@ function parsePrompt(promptText: string | null): {
   } catch {
     return null;
   }
+}
+
+function clamp(v: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, Math.round(v)));
+}
+
+function normalizeExaminerScore(
+  raw: Record<string, unknown> | undefined,
+  fallback: ExaminerScore
+): ExaminerScore {
+  if (!raw || typeof raw !== "object") return fallback;
+  const ideaContent = clamp(typeof raw.ideaContent === "number" ? raw.ideaContent : fallback.ideaContent, 0, 10);
+  const structure = clamp(typeof raw.structure === "number" ? raw.structure : fallback.structure, 0, 4);
+  const language = clamp(typeof raw.language === "number" ? raw.language : fallback.language, 0, 6);
+  const total = ideaContent + structure + language;
+  const notes = typeof raw.notes === "string" ? raw.notes : "";
+  return { ideaContent, structure, language, total, notes };
 }
 
 export async function POST(request: NextRequest) {
@@ -127,7 +145,8 @@ export async function POST(request: NextRequest) {
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        temperature: 0.3,
+        temperature: 0.5,
+        response_format: { type: "json_object" },
       }),
     });
 
@@ -147,43 +166,115 @@ export async function POST(request: NextRequest) {
     const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
     if (jsonMatch) rawContent = jsonMatch[0];
 
-    let grade: number;
+    const fallbackExaminer: ExaminerScore = { ideaContent: 5, structure: 2, language: 3, total: 10, notes: "" };
+
+    let examiner1: ExaminerScore;
+    let examiner2: ExaminerScore;
+    let finalScore: number;
+    let arbitrated: boolean;
+    let keyTakeaway: string;
     let feedback: string;
     let languageErrors: LanguageErrorItem[];
 
     try {
       const parsed = JSON.parse(rawContent) as {
-        grade?: number;
+        examiner1?: Record<string, unknown>;
+        examiner2?: Record<string, unknown>;
+        finalScore?: number;
+        arbitrated?: boolean;
+        keyTakeaway?: string;
         feedback?: string;
         languageErrors?: unknown;
         language_errors?: unknown;
       };
-      grade = typeof parsed.grade === "number" ? Math.min(6, Math.max(2, Math.round(parsed.grade))) : 4;
-      feedback = typeof parsed.feedback === "string" ? parsed.feedback : rawContent || "No feedback generated.";
+
+      examiner1 = normalizeExaminerScore(parsed.examiner1, fallbackExaminer);
+      examiner2 = normalizeExaminerScore(parsed.examiner2, fallbackExaminer);
+
+      // Recompute finalScore based on arbitration rule
+      const diff = Math.abs(examiner1.total - examiner2.total);
+      if (diff >= 4) {
+        arbitrated = true;
+        finalScore = Math.round((examiner1.total + examiner2.total) / 2) * 2;
+      } else {
+        arbitrated = false;
+        finalScore = examiner1.total + examiner2.total;
+      }
+
+      keyTakeaway = typeof parsed.keyTakeaway === "string" && parsed.keyTakeaway.trim().length > 0
+        ? parsed.keyTakeaway.trim()
+        : "";
+      feedback = typeof parsed.feedback === "string" && parsed.feedback.trim().length > 0
+        ? parsed.feedback
+        : "No feedback generated. Please try again.";
       languageErrors = normalizeLanguageErrors(parsed.languageErrors ?? parsed.language_errors ?? []);
+
+      // Server-side variance enforcement: if examiners returned identical scores, nudge examiner2
+      if (examiner1.total === examiner2.total) {
+        const nudge = examiner2.ideaContent > 0 ? -1 : 1;
+        examiner2 = {
+          ...examiner2,
+          ideaContent: clamp(examiner2.ideaContent + nudge, 0, 10),
+          total: 0,
+          notes: examiner2.notes,
+        };
+        examiner2.total = examiner2.ideaContent + examiner2.structure + examiner2.language;
+        // Recompute arbitration after nudge
+        const diff2 = Math.abs(examiner1.total - examiner2.total);
+        if (diff2 >= 4) {
+          arbitrated = true;
+          finalScore = Math.round((examiner1.total + examiner2.total) / 2) * 2;
+        } else {
+          arbitrated = false;
+          finalScore = examiner1.total + examiner2.total;
+        }
+      }
     } catch {
-      grade = 4;
-      feedback = rawContent || "Could not parse feedback. Please try again.";
+      examiner1 = fallbackExaminer;
+      examiner2 = { ...fallbackExaminer, ideaContent: 4, total: 9, notes: "" };
+      finalScore = fallbackExaminer.total + 9;
+      arbitrated = false;
+      keyTakeaway = "";
+      feedback = "Could not parse feedback. Please try again.";
       languageErrors = [];
     }
 
     const languageErrorsJson = JSON.stringify(languageErrors);
     const now = new Date();
 
-    type HistoryEntry = {
+    const scoreBreakdown = { examiner1, examiner2, finalScore, arbitrated, keyTakeaway };
+
+    type HistoryEntryV2 = {
+      version: 2;
+      submittedAt: string;
+      essayBody: string;
+      finalScore: number;
+      scoreBreakdown: typeof scoreBreakdown;
+      feedbackText: string;
+      languageErrors: LanguageErrorItem[];
+    };
+
+    type HistoryEntryV1 = {
+      version?: 1;
       submittedAt: string;
       essayBody: string;
       grade: number;
       feedbackText: string;
-      languageErrors: LanguageErrorItem[];
+      languageErrors?: LanguageErrorItem[];
     };
-    const newEntry: HistoryEntry = {
+
+    type HistoryEntry = HistoryEntryV1 | HistoryEntryV2;
+
+    const newEntry: HistoryEntryV2 = {
+      version: 2,
       submittedAt: now.toISOString(),
       essayBody,
-      grade,
+      finalScore,
+      scoreBreakdown,
       feedbackText: feedback,
       languageErrors,
     };
+
     let history: HistoryEntry[] = [];
     if (attempt.feedbackHistory) {
       try {
@@ -199,7 +290,8 @@ export async function POST(request: NextRequest) {
     await prisma.attempt.update({
       where: { id: attemptId },
       data: {
-        lastFeedbackGrade: grade,
+        lastFeedbackGrade: finalScore,
+        lastFeedbackScoreBreakdown: JSON.stringify(scoreBreakdown),
         lastFeedbackText: feedback,
         lastFeedbackLanguageErrors: languageErrorsJson,
         lastFeedbackAt: now,
@@ -207,7 +299,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ grade, feedback, languageErrors });
+    return NextResponse.json({ examiner1, examiner2, finalScore, arbitrated, keyTakeaway, feedback, languageErrors });
   } catch (err) {
     console.error("POST /api/essay/feedback error:", err);
     return NextResponse.json(

@@ -38,11 +38,12 @@ model Attempt {
   completedAt DateTime?
   promptText       String?   // Part 1: chosen essay prompt
   essayBody        String?   // Part 1: student's essay text
-  lastFeedbackGrade          Int?      // Part 1: last AI grade 2–6 (Bulgarian)
+  lastFeedbackGrade          Int?      // Part 1: final score 0–40 (was 2–6 in old scoring)
+  lastFeedbackScoreBreakdown String?   // Part 1: JSON: {"examiner1":{...},"examiner2":{...},"finalScore":N,"arbitrated":bool}
   lastFeedbackText           String?   // Part 1: last AI feedback
   lastFeedbackLanguageErrors String?   // Part 1: JSON array of {type, original, correction, note}
   lastFeedbackAt             DateTime? // Part 1: when feedback was given
-  feedbackHistory            String?   // Part 1: JSON array of {submittedAt, essayBody, grade, feedbackText, languageErrors}
+  feedbackHistory            String?   // Part 1: JSON array of history entries (v1: {grade,feedbackText,...}, v2: {finalScore,scoreBreakdown,...})
   lastRewriteParts           String?   // Part 1: JSON array of {label, text} (suggested essay)
   lastRewriteGrade           Int?      // Part 1: grade for the suggested essay
   lastRewriteReason          String?   // Part 1: why this grade for suggested essay

@@ -30,6 +30,17 @@ function parsePrompt(promptText: string | null): {
 
 export type RewritePart = { label: string; text: string };
 
+export type RewriteScore = {
+  ideaContent: number;
+  structure: number;
+  language: number;
+  total: number;
+};
+
+function clamp(v: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, Math.round(v)));
+}
+
 export async function POST(request: NextRequest) {
   try {
     const userId = await getSessionUserId();
@@ -119,14 +130,21 @@ export async function POST(request: NextRequest) {
     if (jsonMatch) rawContent = jsonMatch[0];
 
     let parts: RewritePart[];
-    let grade: number;
-    let gradeReason: string;
+    let score: RewriteScore;
+    let scoreReason: string;
+
     try {
       const parsed = JSON.parse(rawContent) as {
         parts?: Array<{ label?: string; text?: string }>;
-        grade?: number;
-        gradeReason?: string;
+        score?: {
+          ideaContent?: number;
+          structure?: number;
+          language?: number;
+          total?: number;
+        };
+        scoreReason?: string;
       };
+
       const raw = parsed?.parts;
       if (Array.isArray(raw) && raw.length > 0) {
         parts = raw.map((p) => ({
@@ -136,13 +154,22 @@ export async function POST(request: NextRequest) {
       } else {
         parts = [{ label: "Essay", text: rawContent || "Could not generate rewrite." }];
       }
-      const g = parsed?.grade;
-      grade = typeof g === "number" ? Math.min(6, Math.max(2, Math.round(g))) : 5;
-      gradeReason = typeof parsed?.gradeReason === "string" ? parsed.gradeReason : "No explanation provided.";
+
+      const rawScore = parsed?.score;
+      if (rawScore && typeof rawScore === "object") {
+        const ideaContent = clamp(typeof rawScore.ideaContent === "number" ? rawScore.ideaContent : 7, 0, 10);
+        const structure = clamp(typeof rawScore.structure === "number" ? rawScore.structure : 3, 0, 4);
+        const language = clamp(typeof rawScore.language === "number" ? rawScore.language : 5, 0, 6);
+        score = { ideaContent, structure, language, total: ideaContent + structure + language };
+      } else {
+        score = { ideaContent: 7, structure: 3, language: 5, total: 15 };
+      }
+
+      scoreReason = typeof parsed?.scoreReason === "string" ? parsed.scoreReason : "No explanation provided.";
     } catch {
       parts = [{ label: "Essay", text: rawContent || "Could not parse rewrite." }];
-      grade = 5;
-      gradeReason = "No explanation provided.";
+      score = { ideaContent: 7, structure: 3, language: 5, total: 15 };
+      scoreReason = "No explanation provided.";
     }
 
     const now = new Date();
@@ -150,13 +177,13 @@ export async function POST(request: NextRequest) {
       where: { id: attemptId },
       data: {
         lastRewriteParts: JSON.stringify(parts),
-        lastRewriteGrade: grade,
-        lastRewriteReason: gradeReason,
+        lastRewriteGrade: score.total,
+        lastRewriteReason: scoreReason,
         lastRewriteAt: now,
       },
     });
 
-    return NextResponse.json({ parts, grade, gradeReason });
+    return NextResponse.json({ parts, score, scoreReason });
   } catch (err) {
     console.error("POST /api/essay/rewrite error:", err);
     return NextResponse.json(
