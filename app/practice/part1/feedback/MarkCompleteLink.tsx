@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { CheckCircle } from "@/components/icons";
 
 export function MarkCompleteLink({ attemptId }: { attemptId: string }) {
   const router = useRouter();
@@ -27,16 +28,16 @@ export function MarkCompleteLink({ attemptId }: { attemptId: string }) {
 
   return (
     <>
-      When you are done,{" "}
+      Happy with this version?{" "}
       <button
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="text-blue-600 hover:underline font-medium disabled:opacity-50"
+        className="inline-flex items-center gap-1 text-violet-600 hover:underline font-semibold disabled:opacity-50 cursor-pointer"
       >
-        mark as complete
+        <CheckCircle size={14} />
+        {loading ? "Saving…" : "Mark as complete"}
       </button>
-      .
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { Mic, StopCircle } from "@/components/icons";
 
 type Props = {
   attemptId: string;
@@ -22,12 +23,11 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
     async (newBody: string) => {
       setSaving(true);
       try {
-        const res = await fetch(`/api/attempts/${attemptId}`, {
+        await fetch(`/api/attempts/${attemptId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ essayBody: newBody }),
         });
-        if (!res.ok) return;
       } finally {
         setSaving(false);
       }
@@ -57,26 +57,21 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
       const recorder = new MediaRecorder(stream);
       mediaRecorderRef.current = recorder;
       chunksRef.current = [];
-      recorder.ondataavailable = (e) => {
-        if (e.data.size) chunksRef.current.push(e.data);
-      };
+      recorder.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data); };
       recorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType });
         setDictating(false);
+        setUploading(true);
         const formData = new FormData();
         formData.append("audio", blob, "recording.webm");
-        setUploading(true);
         try {
-          const res = await fetch("/api/transcribe", {
-            method: "POST",
-            body: formData,
-          });
+          const res = await fetch("/api/transcribe", { method: "POST", body: formData });
           const data = await res.json().catch(() => ({}));
           if (res.ok && typeof data.text === "string") {
             appendTranscription(data.text);
           } else {
-            setTranscribeError(data.error || "Transcription not available. Add an API key (see docs).");
+            setTranscribeError(data.error || "Transcription not available.");
           }
         } catch {
           setTranscribeError("Upload failed.");
@@ -96,49 +91,62 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
     if (rec && rec.state !== "inactive") rec.stop();
   };
 
-  return (
-    <div className="bg-white rounded-xl border border-neutral-200 p-4 space-y-4">
-      <textarea
-        value={body}
-        onChange={handleChange}
-        placeholder="Write your essay here. You can also use the button below to dictate."
-        className="w-full min-h-[240px] p-3 rounded-lg border border-neutral-200 bg-neutral-50 text-neutral-800 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        aria-label="Essay text"
-      />
-      {saving && <p className="text-xs text-neutral-500">Saving…</p>}
+  const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0;
 
-      <div className="pt-2 border-t border-neutral-100">
-        <p className="text-xs font-medium text-neutral-500 mb-2">Or add by voice</p>
-        <div className="flex flex-wrap gap-2 items-center">
+  return (
+    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm overflow-hidden">
+      {/* Toolbar row — always visible at the top */}
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-100 bg-neutral-50/60">
+        <div className="flex items-center gap-2 text-xs text-neutral-400">
+          <span>{wordCount} {wordCount === 1 ? "word" : "words"}</span>
+          {saving && <span className="animate-pulse">· Saving…</span>}
+          {uploading && (
+            <span className="flex items-center gap-1 text-violet-500">
+              <span className="w-3 h-3 border border-violet-400 border-t-transparent rounded-full animate-spin inline-block" />
+              Transcribing…
+            </span>
+          )}
+        </div>
+
+        {/* Dictation button — top right, always visible */}
         {!dictating ? (
           <button
             type="button"
             onClick={startDictation}
             disabled={uploading}
-            className="h-10 px-4 rounded-lg border border-neutral-300 bg-white text-neutral-700 text-sm font-medium hover:bg-neutral-50 disabled:opacity-50"
+            title="Dictate — speak and the text will be added automatically"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-600 text-xs font-medium hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50 transition disabled:opacity-50 cursor-pointer"
           >
-            🎤 Dictate
+            <Mic size={14} />
+            <span className="hidden sm:inline">Dictate</span>
           </button>
         ) : (
           <button
             type="button"
             onClick={stopDictation}
-            className="h-10 px-4 rounded-lg bg-red-100 text-red-800 text-sm font-medium"
+            title="Stop recording"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold cursor-pointer animate-pulse"
           >
-            ⏹ Stop recording
+            <StopCircle size={14} />
+            <span className="hidden sm:inline">Stop</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 sm:hidden" />
           </button>
         )}
-        {(uploading || dictating) && (
-          <span className="text-sm text-neutral-500">
-            {dictating ? "Recording…" : "Transcribing…"}
-          </span>
-        )}
-        </div>
       </div>
+
+      {/* Textarea */}
+      <textarea
+        value={body}
+        onChange={handleChange}
+        placeholder="Start writing here…"
+        className="w-full min-h-[300px] p-5 text-neutral-800 text-[15px] leading-relaxed placeholder:text-neutral-300 focus:outline-none resize-none block"
+        aria-label="Essay text"
+      />
+
       {transcribeError && (
-        <p className="text-sm text-amber-700" role="alert">
-          {transcribeError}
-        </p>
+        <div className="px-5 py-3 border-t border-amber-100 bg-amber-50/50">
+          <p className="text-xs text-amber-700">{transcribeError}</p>
+        </div>
       )}
     </div>
   );

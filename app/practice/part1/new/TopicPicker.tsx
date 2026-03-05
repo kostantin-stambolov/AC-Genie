@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { EssayPrompt } from "@/lib/essay-prompts";
+import { ChevronRight } from "@/components/icons";
 
 function formatPromptForStorage(p: EssayPrompt): string {
   return JSON.stringify({
@@ -10,6 +11,12 @@ function formatPromptForStorage(p: EssayPrompt): string {
     body: p.body,
   });
 }
+
+const TOPIC_COLORS = [
+  { border: "border-violet-200", badge: "bg-violet-100 text-violet-700", dot: "bg-violet-400" },
+  { border: "border-indigo-200", badge: "bg-indigo-100 text-indigo-700", dot: "bg-indigo-400" },
+  { border: "border-sky-200",    badge: "bg-sky-100 text-sky-700",       dot: "bg-sky-400" },
+];
 
 export function TopicPicker({ options }: { options: EssayPrompt[] }) {
   const [loading, setLoading] = useState<string | null>(null);
@@ -23,16 +30,12 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          part: 1,
-          promptText: formatPromptForStorage(prompt),
-        }),
+        body: JSON.stringify({ part: 1, promptText: formatPromptForStorage(prompt) }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setLoading(null);
-        const msg = (data as { error?: string }).error;
-        setError(msg || `Request failed (${res.status})`);
+        setError((data as { error?: string }).error || `Request failed (${res.status})`);
         return;
       }
       const attemptId = (data as { attempt?: { id?: string } }).attempt?.id;
@@ -41,7 +44,6 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
         setError("Invalid response from server.");
         return;
       }
-      // Full page navigation so we always land on the essay page
       window.location.href = `/practice/part1?attemptId=${attemptId}`;
     } catch (e) {
       setLoading(null);
@@ -50,35 +52,55 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {error && (
-        <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800" role="alert">
+        <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700" role="alert">
           {error}
         </div>
       )}
       <ul className="space-y-3">
-      {options.map((prompt) => (
-        <li key={prompt.id}>
-          <button
-            type="button"
-            onClick={() => handleSelect(prompt)}
-            disabled={loading !== null}
-            className="w-full text-left bg-white rounded-xl border border-neutral-200 p-4 hover:border-blue-400 hover:bg-blue-50/50 transition-colors disabled:opacity-60"
-          >
-            <span className="font-medium text-neutral-900 block mb-1">
-              {prompt.title}
-            </span>
-            <span className="text-sm text-neutral-600 line-clamp-2">
-              {prompt.body}
-            </span>
-            {loading === prompt.id ? (
-              <span className="text-sm text-blue-600 mt-2 block">Taking you to Part 1 Essay…</span>
-            ) : (
-              <span className="text-xs text-neutral-500 mt-2 block">Select to open Part 1 Essay page</span>
-            )}
-          </button>
-        </li>
-      ))}
+        {options.map((prompt, idx) => {
+          const color = TOPIC_COLORS[idx % TOPIC_COLORS.length];
+          const isLoading = loading === prompt.id;
+          const isDisabled = loading !== null;
+          return (
+            <li key={prompt.id}>
+              <button
+                type="button"
+                onClick={() => handleSelect(prompt)}
+                disabled={isDisabled}
+                className={`w-full text-left bg-white rounded-2xl border-2 ${color.border} p-5 hover:shadow-md active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer group`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-2.5 py-0.5 ${color.badge}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${color.dot}`} />
+                        Topic {idx + 1}
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-neutral-900 text-base mb-1.5 leading-snug">
+                      {prompt.title}
+                    </h3>
+                    <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed">
+                      {prompt.body}
+                    </p>
+                  </div>
+                  <div className="shrink-0 mt-1">
+                    {isLoading ? (
+                      <div className="w-5 h-5 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <ChevronRight size={20} className="text-neutral-300 group-hover:text-violet-500 transition" />
+                    )}
+                  </div>
+                </div>
+                {isLoading && (
+                  <p className="text-xs text-violet-600 mt-3 font-medium">Opening essay…</p>
+                )}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

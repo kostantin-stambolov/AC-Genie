@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { EssayEditor } from "./EssayEditor";
+import { ArrowRight } from "@/components/icons";
 
 type Props = {
   attemptId: string;
@@ -36,32 +37,40 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
     }
   }, [attemptId, currentBody]);
 
+  const isEmpty = !currentBody.trim();
+
   return (
-    <div className="space-y-6">
-      <section aria-label="Essay input">
-        <h2 className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-2">
-          Your essay
-        </h2>
+    <div className="space-y-4">
+      <div>
+        <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Your essay</p>
         <EssayEditor
           attemptId={attemptId}
           initialBody={initialBody}
           onBodyChange={setCurrentBody}
         />
-      </section>
+      </div>
 
-      <div>
+      <div className="pt-2">
         <button
           type="button"
           onClick={handleSubmitFeedback}
-          disabled={loading}
-          className="w-full h-12 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50"
+          disabled={loading || isEmpty}
+          className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
         >
-          {loading ? "Analyzing…" : "Submit for feedback"}
+          {loading ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+              Analysing your essay…
+            </>
+          ) : (
+            <>Submit for feedback <ArrowRight size={16} /></>
+          )}
         </button>
+        {isEmpty && !loading && (
+          <p className="mt-2 text-xs text-neutral-400 text-center">Write something first to submit</p>
+        )}
         {error && (
-          <p className="mt-2 text-sm text-red-600" role="alert">
-            {error}
-          </p>
+          <p className="mt-3 text-sm text-red-600 text-center" role="alert">{error}</p>
         )}
       </div>
     </div>

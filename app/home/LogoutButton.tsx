@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { LogOut } from "@/components/icons";
 
 export function LogoutButton() {
   const router = useRouter();
@@ -13,9 +14,11 @@ export function LogoutButton() {
     <button
       type="button"
       onClick={handleLogout}
-      className="text-sm text-neutral-600 hover:text-neutral-900"
+      className="flex items-center gap-1.5 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition cursor-pointer px-2 py-2 rounded-lg hover:bg-neutral-100 -mr-2"
+      aria-label="Sign out"
     >
-      Log out
+      <LogOut size={16} />
+      <span className="hidden sm:inline">Sign out</span>
     </button>
   );
 }
