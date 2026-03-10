@@ -48,6 +48,12 @@ model Attempt {
   lastRewriteGrade           Int?      // Part 1: grade for the suggested essay
   lastRewriteReason          String?   // Part 1: why this grade for suggested essay
   lastRewriteAt              DateTime? // Part 1: when rewrite was generated
+  coachingMode               String?   // "v1" | "v2" — null treated as "v1" for backward compat
+  coachingPhase              String?   // v2: comprehension|outline|writing|review|feedback|revision|completed
+  comprehensionData          String?   // v2: JSON {q1,q2,q3,aiCheck}
+  outlineData                String?   // v2: JSON {opening,arg1,arg2,closing,aiCheck}
+  selfReviewData             String?   // v2: JSON {q1..q6 booleans}
+  phaseTimings               String?   // v2: JSON tracking seconds per phase
   @@index([userId])
   @@index([userId, part, section])
 }

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    let body: { part?: unknown; section?: unknown; promptText?: unknown };
+    let body: { part?: unknown; section?: unknown; promptText?: unknown; coachingMode?: unknown };
     try {
       body = await request.json();
     } catch {
@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     const part = Number(body?.part);
     const section = body?.section != null ? Number(body.section) : null;
     const promptText = typeof body?.promptText === "string" ? body.promptText : undefined;
+    const coachingMode: "v1" | "v2" = body?.coachingMode === "v2" ? "v2" : "v1";
 
     if (part !== PART_1 && part !== PART_2) {
       return NextResponse.json({ error: "Invalid part" }, { status: 400 });
@@ -33,7 +34,8 @@ export async function POST(request: NextRequest) {
       userId,
       part,
       part === PART_1 ? null : section,
-      part === PART_1 ? promptText : undefined
+      part === PART_1 ? promptText : undefined,
+      part === PART_1 ? coachingMode : undefined
     );
     return NextResponse.json({ attempt: { id: attempt.id, part, section } });
   } catch (err) {

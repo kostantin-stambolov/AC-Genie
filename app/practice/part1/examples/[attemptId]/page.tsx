@@ -123,6 +123,16 @@ function SubScoreBars({ examiner1, examiner2 }: { examiner1: ExaminerScore; exam
   );
 }
 
+type PhaseTimings = Record<string, { startedAt?: string; completedAt?: string; seconds?: number }>;
+
+function formatSeconds(s?: number): string {
+  if (!s) return "—";
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  if (m === 0) return `${sec}s`;
+  return sec === 0 ? `${m} min` : `${m} min ${sec}s`;
+}
+
 type Props = { params: Promise<{ attemptId: string }> };
 
 export default async function Part1ExampleDetailPage({ params }: Props) {
@@ -139,6 +149,11 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
   const topicTitle = getTopicTitle(attempt.promptText);
   const history = parseHistory(attempt.feedbackHistory);
+  const isV2Attempt = attempt.coachingMode === "v2";
+  let phaseTimings: PhaseTimings | null = null;
+  try {
+    if (attempt.phaseTimings) phaseTimings = JSON.parse(attempt.phaseTimings) as PhaseTimings;
+  } catch { /* ignore */ }
 
   const iterations: HistoryEntry[] =
     history.length > 0
@@ -164,12 +179,42 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
       <main className="max-w-2xl mx-auto px-4 py-10">
 
         <div className="mb-8">
-          <p className="text-xs font-semibold text-violet-500 uppercase tracking-wider mb-1">Essay history</p>
+          <div className="flex items-center gap-2 mb-2">
+            <p className="text-xs font-semibold text-violet-500 uppercase tracking-wider">Essay history</p>
+            {isV2Attempt ? (
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-violet-100 text-violet-700 border border-violet-200 rounded-full px-2 py-0.5">🧭 Guided Coaching</span>
+            ) : (
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-neutral-100 text-neutral-500 rounded-full px-2 py-0.5">⚡ Quick Practice</span>
+            )}
+          </div>
           <h1 className="text-xl font-bold text-neutral-900 leading-snug">{topicTitle}</h1>
           <p className="text-neutral-500 text-sm mt-1">
             Your submitted drafts and feedback for each round.
           </p>
         </div>
+
+        {/* Time breakdown for v2 */}
+        {isV2Attempt && phaseTimings && (
+          <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-4 mb-5">
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Time breakdown</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { key: "comprehension", label: "Understanding prompt" },
+                { key: "outline",       label: "Outlining" },
+                { key: "writing",       label: "Writing" },
+                { key: "review",        label: "Self-review" },
+                { key: "revision",      label: "Revision" },
+              ].map(({ key, label }) => (
+                phaseTimings[key] ? (
+                  <div key={key} className="flex items-center justify-between bg-neutral-50 rounded-xl px-3 py-2">
+                    <span className="text-xs text-neutral-600">{label}</span>
+                    <span className="text-xs font-bold text-neutral-700">{formatSeconds(phaseTimings[key]?.seconds)}</span>
+                  </div>
+                ) : null
+              ))}
+            </div>
+          </div>
+        )}
 
         {iterations.map((entry, i) => {
           const isV2 = (entry as HistoryEntryV2).version === 2;

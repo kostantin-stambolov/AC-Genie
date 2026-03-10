@@ -13,6 +13,20 @@ export default async function HomePage() {
 
   const hasActive = state.part1.hasActive;
   const hasCompleted = state.part1.hasCompleted;
+  const activeMode = state.part1.activeCoachingMode ?? "v1";
+  const activePhase = state.part1.activeCoachingPhase;
+  const activeHref = activeMode === "v2"
+    ? `/practice/part1/coach?attemptId=${state.part1.activeId}`
+    : `/practice/part1?attemptId=${state.part1.activeId}`;
+
+  const PHASE_LABELS: Record<string, string> = {
+    comprehension: "Phase 1 of 6: Understand",
+    outline:       "Phase 2 of 6: Outline",
+    writing:       "Phase 3 of 6: Write",
+    review:        "Phase 4 of 6: Review",
+    feedback:      "Phase 5 of 6: Score",
+    revision:      "Phase 6 of 6: Improve",
+  };
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
@@ -63,12 +77,24 @@ export default async function HomePage() {
           <div className="px-6 py-5 space-y-3">
             {hasActive ? (
               <>
-                <p className="text-sm text-neutral-600">You have an essay in progress. Continue where you left off.</p>
+                {activeMode === "v2" ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-violet-500 bg-violet-50 border border-violet-200 rounded-full px-2.5 py-1">🧭 Guided Coaching</span>
+                      {activePhase && PHASE_LABELS[activePhase] && (
+                        <span className="text-xs text-neutral-400">{PHASE_LABELS[activePhase]}</span>
+                      )}
+                    </div>
+                    <p className="text-sm text-neutral-600">Your coaching session is in progress. Pick up where you left off.</p>
+                  </>
+                ) : (
+                  <p className="text-sm text-neutral-600">You have an essay in progress. Continue where you left off.</p>
+                )}
                 <Link
-                  href={`/practice/part1?attemptId=${state.part1.activeId}`}
+                  href={activeHref}
                   className="flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition cursor-pointer"
                 >
-                  Continue writing <ArrowRight size={16} />
+                  {activeMode === "v2" ? <>Continue coaching session <ArrowRight size={16} /></> : <>Continue writing <ArrowRight size={16} /></>}
                 </Link>
                 <Link
                   href="/practice/part1/examples"

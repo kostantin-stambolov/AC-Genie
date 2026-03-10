@@ -40,10 +40,12 @@ export async function startAttempt(
   userId: string,
   part: number,
   section: number | null,
-  promptText?: string | null
+  promptText?: string | null,
+  coachingMode?: "v1" | "v2"
 ) {
   const existing = await getActiveAttempt(userId, part, section);
   if (existing) return existing; // already in progress – reuse
+  const mode = coachingMode ?? "v1";
   return prisma.attempt.create({
     data: {
       userId,
@@ -51,6 +53,8 @@ export async function startAttempt(
       section,
       status: "in_progress",
       ...(part === PART_1 && promptText != null && { promptText }),
+      ...(part === PART_1 && { coachingMode: mode }),
+      ...(part === PART_1 && mode === "v2" && { coachingPhase: "comprehension" }),
     },
   });
 }
@@ -93,6 +97,8 @@ export async function getHomeState(userId: string) {
       hasActive: !!part1Active,
       activeId: part1Active?.id ?? null,
       hasCompleted: part1Completed.length > 0,
+      activeCoachingMode: part1Active?.coachingMode ?? "v1",
+      activeCoachingPhase: part1Active?.coachingPhase ?? null,
     },
     part2: part2BySection,
   };

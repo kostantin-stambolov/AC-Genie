@@ -5,11 +5,7 @@ import type { EssayPrompt } from "@/lib/essay-prompts";
 import { ChevronRight } from "@/components/icons";
 
 function formatPromptForStorage(p: EssayPrompt): string {
-  return JSON.stringify({
-    title: p.title,
-    instruction: p.instruction,
-    body: p.body,
-  });
+  return JSON.stringify({ title: p.title, instruction: p.instruction, body: p.body });
 }
 
 const TOPIC_COLORS = [
@@ -18,7 +14,9 @@ const TOPIC_COLORS = [
   { border: "border-sky-200",    badge: "bg-sky-100 text-sky-700",       dot: "bg-sky-400" },
 ];
 
-export function TopicPicker({ options }: { options: EssayPrompt[] }) {
+type Props = { options: EssayPrompt[]; coachingMode?: "v1" | "v2" };
+
+export function TopicPicker({ options, coachingMode = "v1" }: Props) {
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +28,7 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ part: 1, promptText: formatPromptForStorage(prompt) }),
+        body: JSON.stringify({ part: 1, promptText: formatPromptForStorage(prompt), coachingMode }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -44,7 +42,9 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
         setError("Invalid response from server.");
         return;
       }
-      window.location.href = `/practice/part1?attemptId=${attemptId}`;
+      window.location.href = coachingMode === "v2"
+        ? `/practice/part1/coach?attemptId=${attemptId}`
+        : `/practice/part1?attemptId=${attemptId}`;
     } catch (e) {
       setLoading(null);
       setError(e instanceof Error ? e.message : "Something went wrong.");
@@ -79,12 +79,8 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
                         Topic {idx + 1}
                       </span>
                     </div>
-                    <h3 className="font-semibold text-neutral-900 text-base mb-1.5 leading-snug">
-                      {prompt.title}
-                    </h3>
-                    <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed">
-                      {prompt.body}
-                    </p>
+                    <h3 className="font-semibold text-neutral-900 text-base mb-1.5 leading-snug">{prompt.title}</h3>
+                    <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed">{prompt.body}</p>
                   </div>
                   <div className="shrink-0 mt-1">
                     {isLoading ? (
@@ -95,7 +91,9 @@ export function TopicPicker({ options }: { options: EssayPrompt[] }) {
                   </div>
                 </div>
                 {isLoading && (
-                  <p className="text-xs text-violet-600 mt-3 font-medium">Opening essay…</p>
+                  <p className="text-xs text-violet-600 mt-3 font-medium">
+                    {coachingMode === "v2" ? "Opening coaching session…" : "Opening essay…"}
+                  </p>
                 )}
               </button>
             </li>
