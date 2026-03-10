@@ -122,6 +122,15 @@ export function CoachingFlow({
   return (
     <div>
       <PhaseBar current={phase} />
+
+      {/* Topic banner — visible on every phase */}
+      <div className="bg-white border-b border-neutral-100">
+        <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-start gap-2.5">
+          <span className="shrink-0 mt-0.5 text-[10px] font-bold text-violet-400 uppercase tracking-widest whitespace-nowrap">Topic</span>
+          <span className="text-sm font-semibold text-neutral-700 leading-snug line-clamp-2">{prompt.title}</span>
+        </div>
+      </div>
+
       <main className="max-w-2xl mx-auto px-4 py-8">
         {phase === "comprehension" && (
           <PhaseComprehension
