@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUserId } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
-type CoachPhase = "comprehension" | "outline" | "writing" | "review" | "feedback" | "revision" | "completed";
+type CoachPhase = "comprehension" | "outline" | "writing" | "review" | "feedback" | "reflect" | "completed";
 
 const LEGAL_TRANSITIONS: Record<CoachPhase, CoachPhase | null> = {
   comprehension: "outline",
   outline:       "writing",
   writing:       "review",
   review:        "feedback",
-  feedback:      "revision",
-  revision:      "completed",
+  feedback:      "reflect",
+  reflect:       "completed",
   completed:     null,
 };
 
@@ -47,13 +47,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build the update payload
     const updateData: Record<string, unknown> = { coachingPhase: target };
 
     // Save phase-specific data
     if (current === "comprehension" && data) updateData.comprehensionData = JSON.stringify(data);
     if (current === "outline"       && data) updateData.outlineData       = JSON.stringify(data);
     if (current === "review"        && data) updateData.selfReviewData    = JSON.stringify(data);
+    if (current === "reflect"       && data?.reflection) {
+      updateData.reflectionText = String(data.reflection);
+    }
 
     // Update phase timings
     if (timingSeconds != null) {

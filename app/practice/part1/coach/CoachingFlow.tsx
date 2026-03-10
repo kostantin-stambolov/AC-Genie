@@ -6,17 +6,17 @@ import { PhaseOutline }       from "./phases/PhaseOutline";
 import { PhaseWriting }       from "./phases/PhaseWriting";
 import { PhaseReview }        from "./phases/PhaseReview";
 import { PhaseFeedback }      from "./phases/PhaseFeedback";
-import { PhaseRevision }      from "./phases/PhaseRevision";
+import { PhaseReflect }       from "./phases/PhaseReflect";
 
-export type CoachPhase = "comprehension" | "outline" | "writing" | "review" | "feedback" | "revision" | "completed";
+export type CoachPhase = "comprehension" | "outline" | "writing" | "review" | "feedback" | "reflect" | "completed";
 
-export type PromptData    = { title: string; instruction: string; body: string };
+export type PromptData        = { title: string; instruction: string; body: string };
 export type ComprehensionData = { q1: string; q2: string; q3: string; aiCheck?: Record<string, unknown> };
-export type OutlineData   = { opening: string; arg1: string; arg2: string; closing: string; aiCheck?: Record<string, unknown> };
-export type SelfReviewData = { q1: boolean; q2: boolean; q3: boolean; q4: boolean; q5: boolean; q6: boolean };
-export type PhaseTimingsData = Record<string, { startedAt?: string; completedAt?: string; seconds?: number; timerExpired?: boolean }>;
-export type ExaminerScore  = { ideaContent: number; structure: number; language: number; total: number; notes?: string };
-export type FeedbackData   = {
+export type OutlineData       = { opening: string; arg1: string; arg2: string; closing: string; aiCheck?: Record<string, unknown> };
+export type SelfReviewData    = { q1: boolean; q2: boolean; q3: boolean; q4: boolean; q5: boolean; q6: boolean };
+export type PhaseTimingsData  = Record<string, { startedAt?: string; completedAt?: string; seconds?: number; timerExpired?: boolean }>;
+export type ExaminerScore     = { ideaContent: number; structure: number; language: number; total: number; notes?: string };
+export type FeedbackData      = {
   breakdown: { examiner1: ExaminerScore; examiner2: ExaminerScore; finalScore: number; arbitrated: boolean; keyTakeaway?: string } | null;
   feedbackText: string;
   languageErrors: Array<{ type: string; original: string; correction: string; note?: string }>;
@@ -34,14 +34,14 @@ type Props = {
   existingFeedback: FeedbackData | null;
 };
 
-const PHASE_ORDER: CoachPhase[] = ["comprehension", "outline", "writing", "review", "feedback", "revision"];
+const PHASE_ORDER: CoachPhase[] = ["comprehension", "outline", "writing", "review", "feedback", "reflect"];
 const PHASE_LABELS: Record<CoachPhase, string> = {
   comprehension: "Understand",
   outline:       "Outline",
   writing:       "Write",
   review:        "Review",
   feedback:      "Score",
-  revision:      "Improve",
+  reflect:       "Reflect",
   completed:     "Done",
 };
 const PHASE_ICONS: Record<CoachPhase, string> = {
@@ -50,7 +50,7 @@ const PHASE_ICONS: Record<CoachPhase, string> = {
   writing:       "✍️",
   review:        "🔍",
   feedback:      "📊",
-  revision:      "🎯",
+  reflect:       "🪞",
   completed:     "✅",
 };
 
@@ -60,7 +60,7 @@ function PhaseBar({ current }: { current: CoachPhase }) {
     <div className="bg-white border-b border-neutral-100 px-4 py-3">
       <div className="max-w-2xl mx-auto flex items-center justify-between gap-1">
         {PHASE_ORDER.map((ph, i) => {
-          const done = i < currentIdx;
+          const done   = i < currentIdx;
           const active = i === currentIdx;
           return (
             <div key={ph} className="flex items-center flex-1 min-w-0">
@@ -96,10 +96,8 @@ export function CoachingFlow({
   const [phase, setPhase]         = useState<CoachPhase>(initialPhase);
   const [compData, setCompData]   = useState<ComprehensionData | null>(comprehensionData);
   const [outData, setOutData]     = useState<OutlineData | null>(outlineData);
-  const [selfData, setSelfData]   = useState<SelfReviewData | null>(selfReviewData);
   const [timings, setTimings]     = useState<PhaseTimingsData>(phaseTimings ?? {});
   const [feedData, setFeedData]   = useState<FeedbackData | null>(existingFeedback);
-  const [revFeedData, setRevFeedData] = useState<FeedbackData | null>(null);
   const [advancing, setAdvancing] = useState(false);
   const [essay, setEssay]         = useState(essayBody);
 
@@ -160,7 +158,6 @@ export function CoachingFlow({
           <PhaseReview
             attemptId={attemptId} essayBody={essay} advancing={advancing}
             onAdvance={async (selfReview, feedbackResult, timing) => {
-              setSelfData(selfReview);
               setFeedData(feedbackResult);
               await advancePhase("feedback", selfReview as unknown as Record<string, unknown>, timing);
             }}
@@ -168,22 +165,15 @@ export function CoachingFlow({
         )}
         {phase === "feedback" && (
           <PhaseFeedback
-            feedbackData={feedData} selfReviewData={selfData} advancing={advancing}
-            onAdvance={async () => await advancePhase("revision")}
+            attemptId={attemptId} feedbackData={feedData} advancing={advancing}
+            onAdvance={async () => await advancePhase("reflect")}
           />
         )}
-        {phase === "revision" && (
-          <PhaseRevision
-            attemptId={attemptId} essayBody={essay} feedbackData={feedData}
-            revisionFeedback={revFeedData} advancing={advancing}
-            onRevisionFeedback={setRevFeedData}
-            onAdvance={async () => {
-              await fetch("/api/attempts/complete", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ attemptId }),
-              });
-              window.location.href = "/home";
+        {phase === "reflect" && (
+          <PhaseReflect
+            feedbackData={feedData} phaseTimings={timings} advancing={advancing}
+            onAdvance={async (reflection) => {
+              await advancePhase("completed", { reflection });
             }}
           />
         )}

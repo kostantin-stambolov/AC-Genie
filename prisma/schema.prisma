@@ -54,6 +54,7 @@ model Attempt {
   outlineData                String?   // v2: JSON {opening,arg1,arg2,closing,aiCheck}
   selfReviewData             String?   // v2: JSON {q1..q6 booleans}
   phaseTimings               String?   // v2: JSON tracking seconds per phase
+  reflectionText             String?   // v2: student's reflection from Phase 6
   @@index([userId])
   @@index([userId, part, section])
 }
