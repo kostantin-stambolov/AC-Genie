@@ -137,20 +137,25 @@ export function PhaseRevision({
       const data = await res.json().catch(() => ({}));
       if (!res.ok) { setError((data as {error?:string}).error ?? "Scoring failed"); return; }
 
+      // API returns flat fields: examiner1, examiner2, finalScore, arbitrated, keyTakeaway, feedback, languageErrors
       const d = data as {
-        scoreBreakdown?: { examiner1?: unknown; examiner2?: unknown; finalScore?: number; arbitrated?: boolean; keyTakeaway?: string };
-        feedbackText?: string;
+        examiner1?: unknown;
+        examiner2?: unknown;
+        finalScore?: number;
+        arbitrated?: boolean;
+        keyTakeaway?: string;
+        feedback?: string;
         languageErrors?: Array<{ type: string; original: string; correction: string; note?: string }>;
       };
       const revFeed: FeedbackData = {
-        breakdown: d.scoreBreakdown ? {
-          examiner1: d.scoreBreakdown.examiner1 as ExaminerScore,
-          examiner2: d.scoreBreakdown.examiner2 as ExaminerScore,
-          finalScore: d.scoreBreakdown.finalScore ?? 0,
-          arbitrated: d.scoreBreakdown.arbitrated ?? false,
-          keyTakeaway: d.scoreBreakdown.keyTakeaway,
+        breakdown: d.examiner1 && d.examiner2 ? {
+          examiner1: d.examiner1 as ExaminerScore,
+          examiner2: d.examiner2 as ExaminerScore,
+          finalScore: d.finalScore ?? 0,
+          arbitrated: d.arbitrated ?? false,
+          keyTakeaway: d.keyTakeaway,
         } : null,
-        feedbackText: d.feedbackText ?? "",
+        feedbackText: d.feedback ?? "",
         languageErrors: d.languageErrors ?? [],
       };
       onRevisionFeedback(revFeed);
