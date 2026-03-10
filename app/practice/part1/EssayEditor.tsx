@@ -71,10 +71,10 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
           if (res.ok && typeof data.text === "string") {
             appendTranscription(data.text);
           } else {
-            setTranscribeError(data.error || "Transcription not available.");
+            setTranscribeError(data.error || "Транскрипцията не е налична.");
           }
         } catch {
-          setTranscribeError("Upload failed.");
+          setTranscribeError("Качването не бе успешно.");
         } finally {
           setUploading(false);
         }
@@ -82,7 +82,7 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
       recorder.start(1000);
       setDictating(true);
     } catch {
-      setTranscribeError("Microphone access denied or not available.");
+      setTranscribeError("Достъпът до микрофона е отказан или недостъпен.");
     }
   };
 
@@ -98,12 +98,12 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
       {/* Toolbar row — always visible at the top */}
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-100 bg-neutral-50/60">
         <div className="flex items-center gap-2 text-xs text-neutral-400">
-          <span>{wordCount} {wordCount === 1 ? "word" : "words"}</span>
-          {saving && <span className="animate-pulse">· Saving…</span>}
+          <span>{wordCount} {wordCount === 1 ? "дума" : "думи"}</span>
+          {saving && <span className="animate-pulse">· Записва…</span>}
           {uploading && (
             <span className="flex items-center gap-1 text-violet-500">
               <span className="w-3 h-3 border border-violet-400 border-t-transparent rounded-full animate-spin inline-block" />
-              Transcribing…
+              Транскрибира…
             </span>
           )}
         </div>
@@ -114,21 +114,21 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
             type="button"
             onClick={startDictation}
             disabled={uploading}
-            title="Dictate — speak and the text will be added automatically"
+            title="Диктувай — говори и текстът ще се добави автоматично"
             className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-600 text-xs font-medium hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50 transition disabled:opacity-50 cursor-pointer"
           >
             <Mic size={14} />
-            <span className="hidden sm:inline">Dictate</span>
+            <span className="hidden sm:inline">Диктувай</span>
           </button>
         ) : (
           <button
             type="button"
             onClick={stopDictation}
-            title="Stop recording"
+            title="Спри записа"
             className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold cursor-pointer animate-pulse"
           >
             <StopCircle size={14} />
-            <span className="hidden sm:inline">Stop</span>
+            <span className="hidden sm:inline">Спри</span>
             <span className="w-1.5 h-1.5 rounded-full bg-red-500 sm:hidden" />
           </button>
         )}
@@ -138,9 +138,9 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
       <textarea
         value={body}
         onChange={handleChange}
-        placeholder="Start writing here…"
+        placeholder="Започни да пишеш тук…"
         className="w-full min-h-[300px] p-5 text-neutral-800 text-[15px] leading-relaxed placeholder:text-neutral-300 focus:outline-none resize-none block"
-        aria-label="Essay text"
+        aria-label="Текст на есето"
       />
 
       {transcribeError && (

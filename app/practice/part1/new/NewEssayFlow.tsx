@@ -12,9 +12,9 @@ export function NewEssayFlow({ options }: { options: EssayPrompt[] }) {
     return (
       <div>
         <div className="mb-8">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Step 1 of 2</p>
-          <h1 className="text-2xl font-bold text-neutral-900 mb-2">How do you want to practise?</h1>
-          <p className="text-neutral-500 text-sm">Choose your practice mode, then pick a topic.</p>
+          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Стъпка 1 от 2</p>
+          <h1 className="text-2xl font-bold text-neutral-900 mb-2">Как искаш да тренираш?</h1>
+          <p className="text-neutral-500 text-sm">Избери режим на практика, след което избери тема.</p>
         </div>
         <ModeSelector onSelect={setMode} />
       </div>
@@ -30,13 +30,13 @@ export function NewEssayFlow({ options }: { options: EssayPrompt[] }) {
             onClick={() => setMode(null)}
             className="text-[10px] font-bold text-violet-400 uppercase tracking-widest hover:text-violet-600 transition cursor-pointer"
           >
-            ← Change mode
+            ← Промени режима
           </button>
-          <span className="text-[10px] text-neutral-300 font-bold uppercase tracking-widest">· Step 2 of 2</span>
+          <span className="text-[10px] text-neutral-300 font-bold uppercase tracking-widest">· Стъпка 2 от 2</span>
         </div>
-        <h1 className="text-2xl font-bold text-neutral-900 mb-2">Choose your essay topic</h1>
+        <h1 className="text-2xl font-bold text-neutral-900 mb-2">Избери тема за есето</h1>
         <p className="text-neutral-500 text-sm">
-          Three topics have been generated for you. Pick the one that speaks to you most.
+          Три теми са избрани специално за теб. Избери тази, която те вдъхновява най-много.
         </p>
       </div>
       <TopicPicker options={options} coachingMode={mode} />

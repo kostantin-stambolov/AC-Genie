@@ -37,7 +37,7 @@ export default async function CoachPage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/home" backLabel="Home" title="Coaching session" />
+      <NavHeader backHref="/home" backLabel="Начало" title="Обучителна сесия" />
       <CoachingFlow
         attemptId={attemptId}
         initialPhase={(attempt.coachingPhase ?? "comprehension") as never}

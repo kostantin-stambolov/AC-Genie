@@ -24,7 +24,7 @@ export default async function Part1NewPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/home" backLabel="Home" title="New essay" />
+      <NavHeader backHref="/home" backLabel="Начало" title="Ново есе" />
       <main className="max-w-2xl mx-auto px-4 py-10">
         <NewEssayFlow options={options} />
       </main>

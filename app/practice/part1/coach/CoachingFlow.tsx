@@ -36,13 +36,13 @@ type Props = {
 
 const PHASE_ORDER: CoachPhase[] = ["comprehension", "outline", "writing", "review", "feedback", "reflect"];
 const PHASE_LABELS: Record<CoachPhase, string> = {
-  comprehension: "Understand",
-  outline:       "Outline",
-  writing:       "Write",
-  review:        "Review",
-  feedback:      "Score",
-  reflect:       "Reflect",
-  completed:     "Done",
+  comprehension: "Разбери",
+  outline:       "Планирай",
+  writing:       "Пиши",
+  review:        "Провери",
+  feedback:      "Оценка",
+  reflect:       "Размисли",
+  completed:     "Готово",
 };
 const PHASE_ICONS: Record<CoachPhase, string> = {
   comprehension: "💡",
@@ -126,7 +126,7 @@ export function CoachingFlow({
       {/* Topic banner — visible on every phase */}
       <div className="bg-white border-b border-neutral-100">
         <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-start gap-2.5">
-          <span className="shrink-0 mt-0.5 text-[10px] font-bold text-violet-400 uppercase tracking-widest whitespace-nowrap">Topic</span>
+          <span className="shrink-0 mt-0.5 text-[10px] font-bold text-violet-400 uppercase tracking-widest whitespace-nowrap">Тема</span>
           <span className="text-sm font-semibold text-neutral-700 leading-snug line-clamp-2">{prompt.title}</span>
         </div>
       </div>

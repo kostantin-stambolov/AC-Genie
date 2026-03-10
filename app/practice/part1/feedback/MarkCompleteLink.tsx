@@ -28,7 +28,7 @@ export function MarkCompleteLink({ attemptId }: { attemptId: string }) {
 
   return (
     <>
-      Happy with this version?{" "}
+      Доволен/а от тази версия?{" "}
       <button
         type="button"
         onClick={handleClick}
@@ -36,7 +36,7 @@ export function MarkCompleteLink({ attemptId }: { attemptId: string }) {
         className="inline-flex items-center gap-1 text-violet-600 hover:underline font-semibold disabled:opacity-50 cursor-pointer"
       >
         <CheckCircle size={14} />
-        {loading ? "Saving…" : "Mark as complete"}
+        {loading ? "Записва…" : "Отбележи като завършено"}
       </button>
     </>
   );

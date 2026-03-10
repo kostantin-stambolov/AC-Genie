@@ -17,14 +17,14 @@ export function ModeSelector({ onSelect }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-neutral-900 text-base">Quick Practice</h3>
+              <h3 className="font-bold text-neutral-900 text-base">Бързо упражнение</h3>
             </div>
-            <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-2">Write freely, get scored</p>
+            <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-2">Пиши свободно, получи оценка</p>
             <p className="text-sm text-neutral-600 leading-relaxed">
-              Jump straight into writing. Submit when ready and get your score with detailed feedback.
+              Започни да пишеш директно. Изпрати есето и получи оценка с подробна обратна връзка.
             </p>
             <p className="text-xs text-neutral-400 mt-2">
-              <span className="font-semibold">Best for:</span> Testing yourself or practising under time pressure.
+              <span className="font-semibold">Подходящо за:</span> Самопроверка или упражнение под времево налягане.
             </p>
           </div>
         </div>
@@ -38,7 +38,7 @@ export function ModeSelector({ onSelect }: Props) {
       >
         <div className="absolute top-3 right-3">
           <span className="text-[11px] font-bold uppercase tracking-widest bg-violet-600 text-white rounded-full px-2.5 py-1">
-            Recommended
+            Препоръчано
           </span>
         </div>
         <div className="flex items-start gap-4">
@@ -47,17 +47,17 @@ export function ModeSelector({ onSelect }: Props) {
           </div>
           <div className="flex-1 min-w-0 pr-20">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-neutral-900 text-base">Guided Coaching</h3>
+              <h3 className="font-bold text-neutral-900 text-base">Насочено обучение</h3>
             </div>
-            <p className="text-xs font-semibold text-violet-500 uppercase tracking-widest mb-2">Step-by-step coaching</p>
+            <p className="text-xs font-semibold text-violet-500 uppercase tracking-widest mb-2">Стъпка по стъпка</p>
             <p className="text-sm text-neutral-600 leading-relaxed">
-              A coach walks you through understanding the prompt, planning, writing under time, and reviewing — just like the real exam.
+              Коуч те води през разбирането на темата, планирането, писането с таймер и самопроверката — точно като на реалния изпит.
             </p>
             <p className="text-xs text-neutral-400 mt-2">
-              <span className="font-semibold">Best for:</span> Building real skills and learning the process.
+              <span className="font-semibold">Подходящо за:</span> Изграждане на реални умения и овладяване на процеса.
             </p>
             <div className="flex flex-wrap gap-1.5 mt-3">
-              {["💡 Understand", "📝 Outline", "✍️ Write", "🔍 Review", "📊 Score", "🎯 Improve"].map((s) => (
+              {["💡 Разбери", "📝 Планирай", "✍️ Пиши", "🔍 Провери", "📊 Оценка", "🎯 Размисли"].map((s) => (
                 <span key={s} className="text-[11px] font-medium text-violet-700 bg-violet-50 border border-violet-100 rounded-full px-2 py-0.5">{s}</span>
               ))}
             </div>

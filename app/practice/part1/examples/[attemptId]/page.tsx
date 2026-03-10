@@ -45,12 +45,12 @@ type HistoryEntry = HistoryEntryV1 | HistoryEntryV2;
 type RewritePart = { label: string; text: string };
 
 function getTopicTitle(promptText: string | null): string {
-  if (!promptText) return "Essay";
+  if (!promptText) return "Есе";
   try {
     const p = JSON.parse(promptText) as { title?: string };
-    return typeof p.title === "string" ? p.title : "Essay";
+    return typeof p.title === "string" ? p.title : "Есе";
   } catch {
-    return "Essay";
+    return "Есе";
   }
 }
 
@@ -102,9 +102,9 @@ function avgToDisplay(avg: number): string {
 
 function SubScoreBars({ examiner1, examiner2 }: { examiner1: ExaminerScore; examiner2: ExaminerScore }) {
   const bars = [
-    { label: "Idea & Content", avg: (examiner1.ideaContent + examiner2.ideaContent) / 2, max: 10, color: "bg-violet-400" },
-    { label: "Structure",      avg: (examiner1.structure   + examiner2.structure)   / 2, max: 4,  color: "bg-blue-400" },
-    { label: "Language",       avg: (examiner1.language    + examiner2.language)    / 2, max: 6,  color: "bg-teal-400" },
+    { label: "Идея и съдържание", avg: (examiner1.ideaContent + examiner2.ideaContent) / 2, max: 10, color: "bg-violet-400" },
+    { label: "Структура",         avg: (examiner1.structure   + examiner2.structure)   / 2, max: 4,  color: "bg-blue-400" },
+    { label: "Език",              avg: (examiner1.language    + examiner2.language)    / 2, max: 6,  color: "bg-teal-400" },
   ];
   return (
     <div className="space-y-2 mt-3">
@@ -175,35 +175,35 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/practice/part1/examples" backLabel="Attempts" />
+      <NavHeader backHref="/practice/part1/examples" backLabel="Опити" />
       <main className="max-w-2xl mx-auto px-4 py-10">
 
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <p className="text-xs font-semibold text-violet-500 uppercase tracking-wider">Essay history</p>
+            <p className="text-xs font-semibold text-violet-500 uppercase tracking-wider">История на есето</p>
             {isV2Attempt ? (
-              <span className="text-[10px] font-bold uppercase tracking-widest bg-violet-100 text-violet-700 border border-violet-200 rounded-full px-2 py-0.5">🧭 Guided Coaching</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-violet-100 text-violet-700 border border-violet-200 rounded-full px-2 py-0.5">🧭 Насочено обучение</span>
             ) : (
-              <span className="text-[10px] font-bold uppercase tracking-widest bg-neutral-100 text-neutral-500 rounded-full px-2 py-0.5">⚡ Quick Practice</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-neutral-100 text-neutral-500 rounded-full px-2 py-0.5">⚡ Бързо упражнение</span>
             )}
           </div>
           <h1 className="text-xl font-bold text-neutral-900 leading-snug">{topicTitle}</h1>
           <p className="text-neutral-500 text-sm mt-1">
-            Your submitted drafts and feedback for each round.
+            Изпратените ти черновики и обратна връзка за всеки кръг.
           </p>
         </div>
 
         {/* Time breakdown for v2 */}
         {isV2Attempt && phaseTimings && (
           <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-4 mb-5">
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Time breakdown</p>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Времеразпределение</p>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { key: "comprehension", label: "Understanding prompt" },
-                { key: "outline",       label: "Outlining" },
-                { key: "writing",       label: "Writing" },
-                { key: "review",        label: "Self-review" },
-                { key: "revision",      label: "Revision" },
+                { key: "comprehension", label: "Разбиране на темата" },
+                { key: "outline",       label: "Планиране" },
+                { key: "writing",       label: "Писане" },
+                { key: "review",        label: "Самопроверка" },
+                { key: "revision",      label: "Редакция" },
               ].map(({ key, label }) => (
                 phaseTimings[key] ? (
                   <div key={key} className="flex items-center justify-between bg-neutral-50 rounded-xl px-3 py-2">
@@ -225,7 +225,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
             return (
               <section key={i} className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 mb-5">
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Draft {i + 1}</h2>
+                  <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Черновик {i + 1}</h2>
                   <div className="flex items-center gap-2">
                     <span className={`inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 ${gs}`}>
                       {v2.finalScore} / 20
@@ -242,20 +242,20 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                 {/* Sub-score bars */}
                 {v2.scoreBreakdown?.examiner1 && v2.scoreBreakdown?.examiner2 && (
                   <div className="mb-4">
-                    <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Sub-scores (averaged)</p>
+                    <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Частични оценки (средно)</p>
                     <SubScoreBars examiner1={v2.scoreBreakdown.examiner1} examiner2={v2.scoreBreakdown.examiner2} />
                   </div>
                 )}
 
                 <div className="mb-4">
-                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Your text</p>
+                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Твоят текст</p>
                   <div className="text-neutral-700 text-sm leading-relaxed whitespace-pre-wrap bg-neutral-50 rounded-xl p-4 border border-neutral-100">
-                    {v2.essayBody || "(No text)"}
+                    {v2.essayBody || "(Няма текст)"}
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Feedback</p>
+                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Обратна връзка</p>
                   <div className="text-neutral-600 text-sm leading-relaxed whitespace-pre-wrap">
                     {v2.feedbackText}
                   </div>
@@ -263,7 +263,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
                 {v2.languageErrors && v2.languageErrors.length > 0 && (
                   <div className="border-t border-amber-100 pt-4">
-                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Language corrections</p>
+                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Езикови корекции</p>
                     <ul className="space-y-2">
                       {v2.languageErrors.map((err, j) => (
                         <li key={j} className="text-sm flex flex-wrap items-center gap-1.5">
@@ -288,10 +288,10 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
           return (
             <section key={i} className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-6 mb-5">
               <div className="flex items-center justify-between gap-3 mb-4">
-                <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Draft {i + 1}</h2>
+                <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Черновик {i + 1}</h2>
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 bg-neutral-100 text-neutral-600 ring-neutral-200">
-                    Grade {v1.grade}/6 (old scoring)
+                    Оценка {v1.grade}/6 (стара система)
                   </span>
                   <span className="text-xs text-neutral-400">
                     {new Date(v1.submittedAt).toLocaleString(undefined, {
@@ -303,14 +303,14 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
               </div>
 
               <div className="mb-4">
-                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Your text</p>
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Твоят текст</p>
                 <div className="text-neutral-700 text-sm leading-relaxed whitespace-pre-wrap bg-neutral-50 rounded-xl p-4 border border-neutral-100">
-                  {v1.essayBody || "(No text)"}
+                  {v1.essayBody || "(Няма текст)"}
                 </div>
               </div>
 
               <div className="mb-4">
-                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Feedback</p>
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Обратна връзка</p>
                 <div className="text-neutral-600 text-sm leading-relaxed whitespace-pre-wrap">
                   {v1.feedbackText}
                 </div>
@@ -318,9 +318,9 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
               {v1.languageErrors && v1.languageErrors.length > 0 && (
                 <div className="border-t border-amber-100 pt-4">
-                  <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Language corrections</p>
-                  <ul className="space-y-2">
-                    {v1.languageErrors.map((err, j) => (
+                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2">Езикови корекции</p>
+                    <ul className="space-y-2">
+                      {v1.languageErrors.map((err, j) => (
                       <li key={j} className="text-sm flex flex-wrap items-center gap-1.5">
                         <span className="inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold bg-amber-100 text-amber-800 uppercase">
                           {err.type.replace(/_/g, " ")}
@@ -342,11 +342,11 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
           <section className="bg-white rounded-2xl border border-violet-100 shadow-sm p-6 mb-5">
             <div className="flex items-center gap-2 mb-4">
               <Sparkles size={16} className="text-violet-500" />
-              <h2 className="text-sm font-bold text-violet-800 uppercase tracking-wider">Model essay</h2>
+              <h2 className="text-sm font-bold text-violet-800 uppercase tracking-wider">Примерно есе</h2>
             </div>
             {attempt.lastRewriteGrade != null && (
               <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 mb-5 ${rewriteScoreStyle(attempt.lastRewriteGrade)}`}>
-                Score: {attempt.lastRewriteGrade} / 20
+                Оценка: {attempt.lastRewriteGrade} / 20
                 {attempt.lastRewriteReason && (
                   <span className="font-normal opacity-80 ml-1">{attempt.lastRewriteReason}</span>
                 )}

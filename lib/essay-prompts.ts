@@ -11,352 +11,352 @@ export interface EssayPrompt {
 }
 
 export const ESSAY_PROMPTS: EssayPrompt[] = [
-  // ── QUOTES TO REFLECT ON ─────────────────────────────────────────────────
+  // ── ЦИТАТИ ЗА РАЗМИСЪЛ ────────────────────────────────────────────────────
   {
     id: "quote-lao-tzu",
-    title: "The first step",
-    body: `"The longest journey begins with a single step." — Lao Tzu`,
+    title: "Първата стъпка",
+    body: `„Най-дългото пътуване започва с една-единствена стъпка." — Лао Дзъ`,
     instruction:
-      "Describe a goal or aspiration you have. What is the first step you need to take toward it? How do you imagine a plan that would motivate you to achieve that goal?",
+      "Опиши цел или мечта, която имаш. Каква е първата стъпка, която трябва да направиш към нея? Как си представяш план, който би те мотивирал да я постигнеш?",
   },
   {
     id: "quote-thoreau",
-    title: "Castles in the air",
-    body: `"If you have built castles in the air, your work need not be lost; that is where they should be. Now put the foundations under them." — Henry David Thoreau`,
+    title: "Въздушни кули",
+    body: `„Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат. Сега сложи основите под тях." — Хенри Дейвид Торо`,
     instruction:
-      "What do you think Thoreau means by 'castles in the air'? Do you agree that building them is worthwhile? If you could build your own 'castle', what would it be and how would you lay the foundations?",
+      "Какво мислиш, че Торо има предвид с „въздушни кули"? Съгласен ли си, че изграждането им си заслужава? Ако можеш да изградиш своята „кула", каква би тя и как би положил основите?",
   },
   {
     id: "quote-orwell",
-    title: "Words and freedom",
-    body: `"If liberty means anything at all, it means the right to tell people what they do not want to hear." — George Orwell`,
+    title: "Думи и свобода",
+    body: `„Ако свободата изобщо нещо означава, тя означава правото да казваш на хората това, което не искат да чуят." — Джордж Оруел`,
     instruction:
-      "What is freedom, and when do we feel truly free? What is the link between freedom and the need to be heard? Write an essay on the theme 'Words and freedom'.",
+      "Какво е свободата и кога се чувстваме наистина свободни? Каква е връзката между свободата и нуждата да бъдем чути? Напиши есе на тема „Думи и свобода".",
   },
   {
     id: "quote-twain",
-    title: "Courage and fear",
-    body: `"Courage is resistance to fear, mastery of fear — not absence of fear." — Mark Twain`,
+    title: "Смелост и страх",
+    body: `„Смелостта е съпротива срещу страха, власт над страха — не отсъствие на страх." — Марк Твен`,
     instruction:
-      "Do you agree with Twain's definition of courage? Describe a moment when you or someone you know had to resist fear rather than simply be without it. What made it possible?",
+      "Съгласен ли си с определението на Твен за смелост? Опиши момент, в който ти или някой, когото познаваш, е трябвало да се противопостави на страха, а не просто да го няма. Какво го е направило възможно?",
   },
   {
     id: "quote-einstein",
-    title: "Imagination and knowledge",
-    body: `"Imagination is more important than knowledge. For knowledge is limited, whereas imagination encircles the world." — Albert Einstein`,
+    title: "Въображение и знание",
+    body: `„Въображението е по-важно от знанието. Защото знанието е ограничено, докато въображението обхваща целия свят." — Алберт Айнщайн`,
     instruction:
-      "Do you agree that imagination is more important than knowledge? In what situations does imagination lead where knowledge cannot? Support your view with examples from your own experience or from books and films you know.",
+      "Съгласен ли си, че въображението е по-важно от знанието? В какви ситуации въображението води нас натам, където знанието не може? Подкрепи мнението си с примери от собствения си опит или от книги и филми, които познаваш.",
   },
   {
     id: "quote-mandela",
-    title: "Education as a weapon",
-    body: `"Education is the most powerful weapon which you can use to change the world." — Nelson Mandela`,
+    title: "Образованието като оръжие",
+    body: `„Образованието е най-мощното оръжие, с което можеш да промениш света." — Нелсън Мандела`,
     instruction:
-      "Do you believe education is the most powerful force for change in the world? What does 'education' mean to you beyond the classroom? Argue your position with examples.",
+      "Вярваш ли, че образованието е най-мощната сила за промяна в света? Какво означава „образование" за теб извън класната стая? Защити позицията си с примери.",
   },
   {
     id: "quote-confucius",
-    title: "Knowing yourself",
-    body: `"Real knowledge is to know the extent of one's ignorance." — Confucius`,
+    title: "Да познаеш себе си",
+    body: `„Истинското знание е да знаеш до каква степен не знаеш." — Конфуций`,
     instruction:
-      "What does it mean to truly know yourself? Have you ever discovered something about yourself that surprised you? How has that knowledge changed how you think or act?",
+      "Какво означава наистина да познаваш себе си? Открил ли си някога нещо за себе си, което те е изненадало? Как това знание е променило начина ти на мислене или действие?",
   },
   {
     id: "quote-wilde",
-    title: "Being yourself",
-    body: `"Be yourself; everyone else is already taken." — Oscar Wilde`,
+    title: "Бъди себе си",
+    body: `„Бъди себе си — всички останали са вече заети." — Оскар Уайлд`,
     instruction:
-      "Is it always easy to 'be yourself'? Are there moments when it feels dangerous or difficult to show who you really are? Write an essay that explores the price — and the reward — of authenticity.",
+      "Лесно ли е винаги да „бъдеш себе си"? Има ли моменти, в които е трудно или дори рисковано да покажеш кой наистина си? Напиши есе, което изследва цената — и наградата — на автентичността.",
   },
   {
     id: "quote-tolstoy",
-    title: "Three most important things",
-    body: `"Remember then: there is only one time that is important — Now! It is the most important time because it is the only time when we have any power." — Leo Tolstoy`,
+    title: "Настоящият момент",
+    body: `„Помни: има само едно важно време — Сега! То е най-важното, защото е единственото, в което имаме сила." — Лев Толстой`,
     instruction:
-      "Do you live in the present, or does your mind often drift to the past or future? Is that a problem? Write an essay in which you reflect on how you relate to time and the present moment.",
+      "Живееш ли в настоящето, или мислите ти често се отнасят към миналото или бъдещето? Проблем ли е това? Напиши есе, в което размишляваш върху отношението си към времето и настоящия момент.",
   },
   {
     id: "quote-helen-keller",
-    title: "The best things",
-    body: `"The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart." — Helen Keller`,
+    title: "Най-хубавите неща",
+    body: `„Най-добрите и най-красивите неща в света не могат да бъдат видени или докоснати — трябва да бъдат усетени със сърцето." — Хелън Келър`,
     instruction:
-      "What are the most important things in your life that cannot be measured or held? How do you recognise them, and how do they shape who you are?",
+      "Кои са най-важните неща в живота ти, които не могат да бъдат измерени или хванати? Как ги разпознаваш и как оформят кой си?",
   },
   {
     id: "quote-gandhi",
-    title: "Be the change",
-    body: `"Be the change you wish to see in the world." — Mahatma Gandhi`,
+    title: "Бъди промяната",
+    body: `„Бъди промяната, която искаш да видиш в света." — Махатма Ганди`,
     instruction:
-      "What change do you wish to see in the world around you — in your school, your city, or society? What would it take for you to become the person who makes that change happen?",
+      "Каква промяна искаш да видиш в света около теб — в училището си, в града, в обществото? Какво би трябвало да направиш, за да станеш човекът, който предизвиква тази промяна?",
   },
   {
     id: "quote-aristotle",
-    title: "Excellence is a habit",
-    body: `"We are what we repeatedly do. Excellence, then, is not an act, but a habit." — Aristotle`,
+    title: "Съвършенството е навик",
+    body: `„Ние сме това, което многократно правим. Следователно съвършенството не е действие, а навик." — Аристотел`,
     instruction:
-      "Think of a skill or quality you are trying to build through repeated practice. Do you believe that habits shape who we are? Write an essay that argues for or against Aristotle's idea, drawing on your own experience.",
+      "Помисли за умение или качество, което се стараеш да изградиш чрез повторна практика. Вярваш ли, че навиците оформят кои сме? Напиши есе, което аргументира за или против идеята на Аристотел, опирайки се на собствения си опит.",
   },
   {
     id: "quote-kafka",
-    title: "Books that change us",
-    body: `"A book must be the axe for the frozen sea within us." — Franz Kafka`,
+    title: "Книги, които ни променят",
+    body: `„Книгата трябва да бъде брадвата за замръзналото море вътре в нас." — Франц Кафка`,
     instruction:
-      "Has a book, film, or piece of music ever 'cracked something open' inside you — changed how you see yourself or the world? Describe the experience and explain why it affected you so deeply.",
+      "Дали книга, филм или музика са „разбили нещо" вътре в теб — промениле начина, по който виждаш себе си или света? Опиши преживяването и обясни защо те е засегнало толкова дълбоко.",
   },
   {
     id: "quote-sagan",
-    title: "Pale blue dot",
-    body: `"Our planet is a lonely speck in the great enveloping cosmic dark. In our obscurity, in all this vastness, there is no hint that help will come from elsewhere to save us from ourselves." — Carl Sagan`,
+    title: "Блед синя точка",
+    body: `„Нашата планета е самотна точица в голямата обгръщаща космическа тъмнина. В нашата незначителност, в цялата тази необятност, няма намек, че помощ ще дойде отвън, за да ни спаси от самите нас." — Карл Сейгън`,
     instruction:
-      "What responsibilities do we have toward one another and toward Earth, given how small and fragile our world is? Write an essay in which you reflect on what Sagan's words mean to you.",
+      "Какви отговорности имаме един към друг и към Земята, предвид колко малък и крехък е нашият свят? Напиши есе, в което размишляваш какво означават думите на Сейгън за теб.",
   },
   {
     id: "quote-seneca",
-    title: "How we spend our days",
-    body: `"It is not that we have a short time to live, but that we waste much of it." — Seneca`,
+    title: "Как прекарваме дните си",
+    body: `„Не е, че живеем кратко — а че губим много от живота си." — Сенека`,
     instruction:
-      "Do you feel you use your time well? What does it mean to 'waste' time, and is it always bad? Write an essay in which you reflect on how you spend your days and what you would change.",
+      "Чувстваш ли, че използваш добре времето си? Какво означава да „губиш" времето и лошо ли е винаги? Напиши есе, в което размишляваш върху това как прекарваш дните си и какво бихte променил.",
   },
 
-  // ── PERSONAL THEMES ──────────────────────────────────────────────────────
+  // ── ЛИЧНИ ТЕМИ ────────────────────────────────────────────────────────────
   {
     id: "theme-travel",
-    title: "When I travel",
-    body: "Theme: When I travel.",
+    title: "Когато пътувам",
+    body: "Тема: Когато пътувам.",
     instruction:
-      "Write an essay on this theme. Do not change the title. Consider: Do you travel, and why? What does travel mean to you? What does it give or take from you? Formulate a thesis and support it with reasoning and examples.",
+      "Напиши есе на тази тема. Не променяй заглавието. Помисли: Пътуваш ли и защо? Какво означава пътуването за теб? Какво ти дава или отнема? Формулирай теза и я подкрепи с аргументи и примери.",
   },
   {
     id: "theme-alone",
-    title: "When I am alone",
-    body: "Theme: When I am alone.",
+    title: "Когато съм сам/а",
+    body: "Тема: Когато съм сам/а.",
     instruction:
-      "Write an essay on this theme. Do you enjoy being alone, or do you find it uncomfortable? What do you do and think when no one is watching? What does solitude reveal about you?",
+      "Напиши есе на тази тема. Харесваш ли да си сам/а, или ти е неудобно? Какво правиш и мислиш, когато никой не те гледа? Какво разкрива самотата за теб?",
   },
   {
     id: "theme-fail",
-    title: "When I failed",
-    body: "Theme: When I failed.",
+    title: "Когато се провалих",
+    body: "Тема: Когато се провалих.",
     instruction:
-      "Write an essay on this theme. Describe a time you failed at something that mattered to you. What happened? What did you feel, and what did you learn? How did failure change you?",
+      "Напиши есе на тази тема. Опиши момент, в който се провали в нещо важно за теб. Какво се случи? Какво почувства и какво научи? Как провалът те промени?",
   },
   {
     id: "theme-helped",
-    title: "When I helped",
-    body: "Theme: When I helped.",
+    title: "Когато помогнах",
+    body: "Тема: Когато помогнах.",
     instruction:
-      "Write an essay on this theme. Describe a time when you genuinely helped someone. Why did you choose to help? What was the outcome — for them and for you? Does helping others change the helper?",
+      "Напиши есе на тази тема. Опиши момент, в който наистина помогна на някого. Защо реши да помогнеш? Какъв беше резултатът — за тях и за теб? Помагането на другите променя ли помагащия?",
   },
   {
     id: "theme-afraid",
-    title: "When I was afraid",
-    body: "Theme: When I was afraid.",
+    title: "Когато се страхувах",
+    body: "Тема: Когато се страхувах.",
     instruction:
-      "Write an essay on this theme. What were you afraid of, and how did that fear affect your choices? Did you face it or avoid it? What did the experience teach you about yourself?",
+      "Напиши есе на тази тема. От какво се страхуваше и как този страх повлия на изборите ти? Изправи ли се пред него или го избегна? Какво те научи преживяването за самия/самата теб?",
   },
   {
     id: "theme-unfair",
-    title: "When something was unfair",
-    body: "Theme: When something was unfair.",
+    title: "Когато нещо беше несправедливо",
+    body: "Тема: Когато нещо беше несправедливо.",
     instruction:
-      "Write an essay on this theme. Describe a situation you found deeply unfair — at school, at home, or in the wider world. How did you respond? Do you think fairness is always possible?",
+      "Напиши есе на тази тема. Опиши ситуация, която намери за дълбоко несправедлива — в училище, у дома или в по-широкия свят. Как реагира? Мислиш ли, че справедливостта е винаги постижима?",
   },
   {
     id: "theme-changed-my-mind",
-    title: "When I changed my mind",
-    body: "Theme: When I changed my mind.",
+    title: "Когато промених мнението си",
+    body: "Тема: Когато промених мнението си.",
     instruction:
-      "Write an essay on this theme. Describe something you once believed strongly but no longer believe. What made you change? Is changing your mind a sign of weakness or of growth?",
+      "Напиши есе на тази тема. Опиши нещо, в което някога си вярвал/а силно, но вече не вярваш. Какво те накара да промениш мнението си? Промяната на убеждения знак ли е за слабост или за израстване?",
   },
 
-  // ── PERSONAL QUESTIONS ───────────────────────────────────────────────────
+  // ── ЛИЧНИ ВЪПРОСИ ─────────────────────────────────────────────────────────
   {
     id: "someone-special",
-    title: "Someone you would choose",
-    body: "If at this moment, instead of taking the exam, you could spend your time with someone who is not a member of your family and not a close friend or relative, who would that person be and why?",
+    title: "Човекът, когото бих избрал/а",
+    body: "Ако в момента, вместо да полагаш изпит, можеш да прекараш времето с някого, който не е член на твоето семейство и не е близък приятел или роднина, кой би бил той/тя и защо?",
     instruction:
-      "Read the question carefully. Answer in an essay and give it a title. Who would you choose to spend your time with, and what would you do or talk about?",
+      "Прочети внимателно въпроса. Отговори с есе и му дай заглавие. С кого би избрал/а да прекараш времето и какво би правил/а или обсъждал/а?",
   },
   {
     id: "significant-book",
-    title: "A book that mattered",
-    body: "What is the most significant or impactful book you have read so far?",
+    title: "Книга, която имаше значение",
+    body: "Коя е най-значимата или въздействаща книга, която си чел/а досега?",
     instruction:
-      "Write an essay that explains why this book moved you — through its ideas, a character, or something you learned. What does the book mean to you? Will it still matter in thirty years?",
+      "Напиши есе, което обяснява защо тази книга те е трогнала — чрез идеите си, герой или нещо научено. Какво означава тя за теб? Ще има ли значение след трийсет години?",
   },
   {
     id: "one-rule",
-    title: "One rule for the world",
-    body: "If you could make one rule that every person in the world had to follow, what would it be?",
+    title: "Едно правило за света",
+    body: "Ако можеш да наложиш едно правило, което всеки човек в света трябва да спазва, какво би то?",
     instruction:
-      "Choose your rule carefully. Explain why you chose it, what problem it would solve, and what objections people might raise. Defend your position with reasoning and examples.",
+      "Избери правилото си внимателно. Обясни защо си го избрал/а, какъв проблем би решило и какви възражения биха повдигнали хората. Защити позицията си с аргументи и примери.",
   },
   {
     id: "superpower",
-    title: "One ability you wish you had",
-    body: "If you could have one extraordinary ability — real or imaginary — what would it be and how would you use it?",
+    title: "Способност, която бих искал/а",
+    body: "Ако можеш да притежаваш една изключителна способност — реална или въображаема — каква би тя и как би я използвал/а?",
     instruction:
-      "Think beyond the obvious. What ability would you choose, and why? What problems would you solve? What responsibilities would come with it? What would you learn about yourself?",
+      "Помисли отвъд очевидното. Каква способност би избрал/а и защо? Какви проблеми би решил/а? Каква отговорност би дошла с нея? Какво би научил/а за себе си?",
   },
   {
     id: "letter-to-self",
-    title: "A letter to your future self",
-    body: "Write a letter to yourself ten years from now.",
+    title: "Писмо до бъдещото ти аз",
+    body: "Напиши писмо до себе си след десет години.",
     instruction:
-      "What do you hope will have changed? What do you hope will have stayed the same? What advice would you give your future self, and what questions would you ask?",
+      "Какво се надяваш да се е променило? Какво се надяваш да е останало? Какъв съвет би дал/а на бъдещото си аз и какви въпроси би му задал/а?",
   },
   {
     id: "place-matters",
-    title: "A place that matters",
-    body: "Describe a place — real or imaginary — that matters deeply to you.",
+    title: "Място, което е важно",
+    body: "Опиши място — реално или въображаемо — което е дълбоко важно за теб.",
     instruction:
-      "What makes this place special? Is it the people, the memories, the feeling it gives you, or something else? What would you lose if that place disappeared?",
+      "Какво прави това място особено? Хората ли са, спомените, усещането, което ти дава, или нещо друго? Какво би загубил/а, ако то изчезнеше?",
   },
   {
     id: "admire-most",
-    title: "The person I admire most",
-    body: "Who do you admire most — a person you know personally, a historical figure, or a character from fiction? Why?",
+    title: "Човекът, когото най-много уважавам",
+    body: "Кого уважаваш най-много — човек, когото познаваш лично, историческа личност или литературен герой? Защо?",
     instruction:
-      "Write an essay explaining who this person is, what qualities you admire in them, and what you have learned from them. How have they influenced who you are or want to be?",
+      "Напиши есе, обясняващо кой е този човек, какви качества уважаваш в него/нея и какво си научил/а от него/нея. Как са повлияли върху кой/коя си или искаш да бъдеш?",
   },
 
-  // ── ETHICAL DILEMMAS ─────────────────────────────────────────────────────
+  // ── ЕТИЧНИ ДИЛЕМИ ─────────────────────────────────────────────────────────
   {
     id: "witness-choice",
-    title: "What would you do?",
-    body: `Just then the gate of a nearby house opened and a boy ran out. He looked frightened, and no wonder — five other boys were chasing him. They caught up, pushed him against the fence, and threw themselves on him. The five began to hit and shove him. He started to cry and covered his face with his hands to protect himself.`,
+    title: "Какво би направил/а?",
+    body: `Точно тогава портата на близка къща се отвори и момче изтича навън. Изглеждаше уплашено — и не без причина: пет момчета го преследваха. Настигнаха го, блъснаха го в оградата и се нахвърлиха върху него. Петимата започнаха да го удрят и бутат. То се разплака и закри лицето си с ръце, за да се защити.`,
     instruction:
-      "Imagine you are a witness to this scene. What would you do? Justify your choice in an essay. Support your position with examples from your own life. Give your essay a title.",
+      "Представи си, че си свидетел на тази сцена. Какво би направил/а? Обоснови избора си в есе. Подкрепи позицията си с примери от собствения си живот. Дай заглавие на есето.",
   },
   {
     id: "punishment",
-    title: "On punishment",
-    body: `"Have you ever been punished?" asked the White Queen.\n"Only for misdeeds!" replied Alice.\n"And after the punishment you were always better, I'm sure!" the Queen exclaimed.\n— Lewis Carroll, Through the Looking-Glass`,
+    title: "За наказанието",
+    body: `„Наказван ли си бил?" — попита Белата кралица.\n„Само за лоши постъпки!" — отвърна Алис.\n„И след наказанието винаги си ставал по-добър, сигурна съм!" — възкликна кралицата.\n— Люис Карол, „В огледалото"`,
     instruction:
-      "Are punishments necessary? Does a person become better after being punished? Write an essay in response and give it a title. Support your view with examples.",
+      "Необходими ли са наказанията? Ставал ли е човек по-добър след като е бил наказан? Напиши есе в отговор и му дай заглавие. Подкрепи мнението си с примери.",
   },
   {
     id: "lie-for-good",
-    title: "A good lie",
-    body: "Is there such a thing as a lie that does more good than harm?",
+    title: "Добра лъжа",
+    body: "Съществува ли лъжа, която прави повече добро, отколкото вреда?",
     instruction:
-      "Think of a situation where telling the truth would cause serious harm. Is it ever right to lie? Write an essay that explores the ethics of honesty and explores when, if ever, dishonesty is justified.",
+      "Помисли за ситуация, в която казването на истината би причинило сериозна вреда. Правилно ли е понякога да лъжем? Напиши есе, което изследва етиката на честността и кога — ако изобщо — нечестността е оправдана.",
   },
   {
     id: "social-media",
-    title: "The price of connection",
-    body: "We are more connected than ever — and yet many people feel more lonely than ever. Why?",
+    title: "Цената на свързаността",
+    body: "Свързани сме повече от всякога — и въпреки това много хора се чувстват по-самотни от всякога. Защо?",
     instruction:
-      "Explore the relationship between technology, social media, and loneliness. Do digital connections replace real ones, or do they deepen them? Support your view with examples.",
+      "Изследвай връзката между технологиите, социалните медии и самотата. Дигиталните връзки заместват ли реалните, или ги задълбочават? Подкрепи мнението си с примери.",
   },
   {
     id: "privacy-vs-safety",
-    title: "Privacy or safety?",
-    body: "Some argue that giving up personal privacy in exchange for greater safety is a reasonable trade. Others disagree strongly.",
+    title: "Личен живот или сигурност?",
+    body: "Някои твърдят, че отказването от личния живот в замяна на по-голяма сигурност е разумна размяна. Други категорично не са съгласни.",
     instruction:
-      "Do you think it is acceptable to sacrifice personal privacy for the sake of security? Think about where you draw the line, and why. Support your view with reasoning and examples.",
+      "Смяташ ли, че е допустимо да пожертваме личния живот в името на сигурността? Помисли докъде би позволил/а и защо. Подкрепи мнението си с аргументи и примери.",
   },
 
-  // ── LITERATURE & POETRY ──────────────────────────────────────────────────
+  // ── ЛИТЕРАТУРА И ПОЕЗИЯ ──────────────────────────────────────────────────
   {
     id: "two-roads",
-    title: "Two roads",
-    body: `Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\n— Robert Frost`,
+    title: "Два пътя",
+    body: `Два пътя се разделиха в жълта гора,\nи жален, че не мога и двата да поема,\nдълго стоях — само един пътник аз —\nи надничах надолу по единия, доколкото можех.\n— Робърт Фрост`,
     instruction:
-      "What situation in life is the poet describing? Name the problem as the title of your essay. Explain how you see the solution. Support your view with personal experience.",
+      "Каква жизнена ситуация описва поетът? Назови проблема като заглавие на есето. Обясни как виждаш решението. Подкрепи мнението си с личен опит.",
   },
   {
     id: "poem-desiderata",
-    title: "Go placidly",
-    body: `"Go placidly amid the noise and haste, and remember what peace there may be in silence. As far as possible, without surrender, be on good terms with all persons." — Max Ehrmann, Desiderata`,
+    title: "Върви спокойно",
+    body: `„Върви спокойно всред шума и бързината и помни какъв мир може да има в мълчанието. Доколкото е възможно, без да се предаваш, живей в мир с всички хора." — Макс Ерман, „Desiderata"`,
     instruction:
-      "Is it truly possible to be 'on good terms with all persons'? Is staying calm amid conflict a sign of wisdom or weakness? Write an essay that responds to this idea.",
+      "Наистина ли е възможно да живееш „в мир с всички хора"? Запазването на спокойствие сред конфликта признак ли е за мъдрост или за слабост? Напиши есе в отговор на тази идея.",
   },
   {
     id: "poem-roads-not-taken",
-    title: "The road not taken",
-    body: `"I shall be telling this with a sigh\nSomewhere ages and ages hence:\nTwo roads diverged in a wood, and I —\nI took the one less traveled by,\nAnd that has made all the difference." — Robert Frost`,
+    title: "Пътят, непоет",
+    body: `„Ще го разказвам с въздишка\nнякъде в далечни времена:\nдва пътя се делиха в гора, и аз —\nпоех по по-рядко извървяния,\nи от това всичко се промени." — Робърт Фрост`,
     instruction:
-      "Have you ever made a choice that went against what most people around you would have done? What was it? Did it 'make all the difference'? Write an essay about a time you chose your own path.",
+      "Правил ли си некога избор, противен на това, което повечето около теб биха направили? Какъв беше той? Промени ли „всичко"? Напиши есе за момент, в който поe собствения си път.",
   },
 
-  // ── SOCIETY & THE WORLD ──────────────────────────────────────────────────
+  // ── ОБЩЕСТВО И СВЯТ ──────────────────────────────────────────────────────
   {
     id: "environment",
-    title: "Our responsibility to nature",
-    body: "Every year, thousands of animal and plant species disappear forever. Yet most people continue their daily lives unchanged.",
+    title: "Нашата отговорност към природата",
+    body: "Всяка година хиляди видове животни и растения изчезват завинаги. Въпреки това повечето хора продължават ежедневния си живот непроменени.",
     instruction:
-      "Do we have a moral responsibility toward nature and future generations? What, if anything, are you personally willing to do? Write an essay that argues your position.",
+      "Имаме ли морална отговорност към природата и бъдещите поколения? Какво, ако изобщо нещо, си лично готов/а да направиш? Напиши есе, което защитава позицията ти.",
   },
   {
     id: "ai-and-humans",
-    title: "Machines and us",
-    body: "Artificial intelligence can now write essays, paint pictures, compose music, and diagnose diseases. Some people celebrate this; others are worried.",
+    title: "Машини и хора",
+    body: "Изкуственият интелект вече може да пише есета, рисува картини, съчинява музика и диагностицира болести. Едни хора го приветстват; други се тревожат.",
     instruction:
-      "What does the rise of artificial intelligence mean for you personally? What can machines never replace about a human being? Write an essay that explores what makes us uniquely human.",
+      "Какво означава за теб лично възходът на изкуствения интелект? Какво машините никога не могат да заменят в човека? Напиши есе, което изследва какво ни прави уникално човешки.",
   },
   {
     id: "fairness",
-    title: "Is life fair?",
-    body: "Some people are born into wealth and opportunity; others are not. Some have good health; others are born with illness or disability.",
+    title: "Справедлив ли е животът?",
+    body: "Едни хора се раждат в богатство и възможности; други — не. Едни имат добро здраве; други се раждат с болест или увреждане.",
     instruction:
-      "Is fairness possible in the world? Should we strive for it even if perfect fairness is impossible? Write an essay that argues your position and explores what a fairer world would look like.",
+      "Възможна ли е справедливостта в света? Трябва ли да се стремим към нея, дори ако съвършената справедливост е невъзможна? Напиши есе, което защитава позицията ти и изследва как би изглеждал по-справедлив свят.",
   },
   {
     id: "heroes",
-    title: "What makes a hero?",
-    body: "We use the word 'hero' to describe soldiers, athletes, activists, and even fictional characters. But what does it really mean to be a hero?",
+    title: "Какво прави героя?",
+    body: "Думата „герой" използваме за войници, спортисти, активисти и дори измислени герои. Но какво наистина означава да си герой?",
     instruction:
-      "Write an essay that defines what a hero truly is. Use examples from history, literature, or your own experience. Is heroism always dramatic, or can it be quiet and everyday?",
+      "Напиши есе, което дефинира какво наистина е герой. Използвай примери от историята, литературата или собствения си опит. Героизмът винаги ли е драматичен, или може да бъде тих и ежедневен?",
   },
   {
     id: "success",
-    title: "What is success?",
-    body: "For some, success means wealth. For others, it means happiness, contribution, or simply peace of mind.",
+    title: "Какво е успехът?",
+    body: "За едни успехът означава богатство. За други — щастие, принос или просто спокойствие на духа.",
     instruction:
-      "What does success mean to you personally? How will you know when you have achieved it? Is success something you reach, or something you live? Write an essay that defines your own vision of success.",
+      "Какво означава успехът лично за теб? Как ще разбереш, че си го постигнал/а? Успехът нещо, до което се стига ли е, или нещо, което се живее? Напиши есе, което дефинира твоята визия за успех.",
   },
   {
     id: "tradition-vs-change",
-    title: "Tradition or progress?",
-    body: "Every generation faces the tension between preserving what has been inherited and changing what no longer serves the present.",
+    title: "Традиция или прогрес?",
+    body: "Всяко поколение се изправя пред напрежението между запазването на наследеното и промяната на онова, което вече не служи на настоящето.",
     instruction:
-      "Do you think it is important to preserve traditions? When should tradition give way to change? Use examples from your own life, culture, or the wider world.",
+      "Смяташ ли, че е важно да се пазят традициите? Кога традицията трябва да отстъпи пред промяната? Използвай примери от собствения си живот, от културата или по-широкия свят.",
   },
   {
     id: "childhood",
-    title: "The end of childhood",
-    body: "At what point does childhood end and adulthood begin? Is it an age, an event, a feeling, or a choice?",
+    title: "Краят на детството",
+    body: "В кой момент детството свършва и зрелостта започва? Дали е определена възраст, събитие, чувство или избор?",
     instruction:
-      "Write an essay that explores what childhood means to you. Was there a moment when you felt you had left it behind? Was that moment welcome, or did you resist it?",
+      "Напиши есе, което изследва какво означава детството за теб. Имало ли е момент, в който си усетил/а, че го оставяш зад гърба си? Беше ли добре дошъл той или му се съпротивляваше?",
   },
   {
     id: "gratitude",
-    title: "Things we take for granted",
-    body: "Often we only appreciate something after we lose it — clean water, health, a person, a place, a feeling.",
+    title: "Неща, приети за даденост",
+    body: "Често оценяваме нещо чак след като го изгубим — чиста вода, здраве, близък човек, място, чувство.",
     instruction:
-      "Write an essay about something in your life that you now realise you were taking for granted. What changed your perspective? How do you think differently because of it?",
+      "Напиши есе за нещо в живота ти, което сега осъзнаваш, че си приемал/а за даденост. Какво промени гледната ти точка? Как мислиш по-различно заради това?",
   },
   {
     id: "goal-first-step",
-    title: "Your goal and your first step",
-    body: "Describe a goal or dream you have. What is the first step you would take toward it? How would you plan the rest so you stay motivated?",
+    title: "Твоята цел и първата стъпка",
+    body: "Опиши цел или мечта, която имаш. Каква е първата стъпка, която би предприел/а към нея? Как би планирал/а останалото, за да останеш мотивиран/а?",
     instruction:
-      "Think of a goal that genuinely matters to you. What makes it worth pursuing? What obstacles will you face, and how will you stay motivated when progress is slow?",
+      "Помисли за цел, която наистина ти е важна. Какво я прави достойна за преследване? Какви пречки ще срещнеш и как ще останеш мотивиран/а, когато напредъкът е бавен?",
   },
   {
     id: "language-identity",
-    title: "Language and who we are",
-    body: "The language you speak shapes the way you think, the way you see the world, and even the way you feel.",
+    title: "Езикът и кои сме",
+    body: "Езикът, на който говориш, оформя начина, по който мислиш, начина, по който виждаш света, и дори начина, по който се чувстваш.",
     instruction:
-      "Do you agree that language shapes identity? If you speak more than one language, does your personality feel different in each? Write an essay that explores the relationship between language and who we are.",
+      "Съгласен/на ли си, че езикът оформя идентичността? Ако говориш повече от един език, усещаш ли различна личност на всеки? Напиши есе, което изследва връзката между езика и кои сме.",
   },
   {
     id: "kindness-strength",
-    title: "Is kindness a strength?",
-    body: "In a competitive world, some see kindness as a weakness — something that can be taken advantage of. Others believe the opposite.",
+    title: "Силата на добротата",
+    body: "В конкурентен свят някои виждат добротата като слабост — нещо, от което могат да се възползват. Други вярват в обратното.",
     instruction:
-      "Is kindness a strength or a vulnerability? Write an essay that argues your view. Use examples from your own experience, or from people you admire.",
+      "Добротата сила ли е или уязвимост? Напиши есе, което защитава мнението ти. Използвай примери от собствения си опит или от хора, които уважаваш.",
   },
 ];
 

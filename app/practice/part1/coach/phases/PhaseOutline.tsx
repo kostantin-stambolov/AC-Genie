@@ -14,10 +14,10 @@ type Props = {
 };
 
 const TIPS: Record<string, string> = {
-  opening: "A strong opening introduces your topic and states your position clearly. Try: \"In this essay, I will argue that…\" or open with a short story that leads into your thesis.",
-  arg1: "Your first argument should directly support your thesis. Include a specific example from your own life or something you've observed.",
-  arg2: "Your second argument should be a DIFFERENT point — not a repeat of the first. Think: what else supports your thesis?",
-  closing: "A strong ending echoes your first sentence. If you opened with a question, answer it here. If you opened with a personal moment, refer back to it.",
+  opening: "Силното начало въвежда темата и ясно заявява позицията ти. Опитай: „В това есе ще твърдя, че…" или започни с кратка история, която води към тезата ти.",
+  arg1: "Първият ти аргумент трябва директно да подкрепя тезата. Включи конкретен пример от живота ти или нещо, което си наблюдавал/а.",
+  arg2: "Вторият ти аргумент трябва да е РАЗЛИЧНА точка — не повторение на първата. Помисли: какво друго подкрепя тезата ти?",
+  closing: "Силният край отеква първото изречение. Ако си започнал/а с въпрос, отговори тук. Ако си открил/а с личен момент, върни се към него.",
 };
 
 export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props) {
@@ -57,15 +57,15 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 2 · Outline</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Plan your essay structure</h2>
-        <p className="text-sm text-neutral-500">Don't write full sentences — just note your key points. This is your map.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 2 · Планиране</p>
+        <h2 className="text-xl font-bold text-neutral-900 mb-1">Планирай структурата на есето</h2>
+        <p className="text-sm text-neutral-500">Не пиши цели изречения — само отбележи ключовите си точки. Това е твоята карта.</p>
       </div>
 
       {/* Thesis reminder */}
       {thesis && (
         <div className="bg-violet-50 rounded-2xl border border-violet-200 px-4 py-3">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Your thesis</p>
+          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Твоята теза</p>
           <p className="text-sm font-semibold text-violet-900 leading-snug">"{thesis}"</p>
         </div>
       )}
@@ -73,16 +73,16 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
       {/* Outline fields */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 space-y-4">
         {[
-          { key: "opening", label: "Opening (1 sentence)", placeholder: "How will you introduce your topic and state your position?", value: opening, set: setOpening },
-          { key: "arg1",    label: "Argument 1 (1–2 sentences)", placeholder: "First supporting point + what example will you use?", value: arg1, set: setArg1 },
-          { key: "arg2",    label: "Argument 2 (1–2 sentences)", placeholder: "Second supporting point or example?", value: arg2, set: setArg2 },
-          { key: "closing", label: "Closing (1 sentence)", placeholder: "How will you end? Try to connect back to your opening.", value: closing, set: setClosing },
+          { key: "opening", label: "Начало (1 изречение)", placeholder: "Как ще въведеш темата и ще заявиш позицията си?", value: opening, set: setOpening },
+          { key: "arg1",    label: "Аргумент 1 (1–2 изречения)", placeholder: "Първа подкрепяща точка + какъв пример ще използваш?", value: arg1, set: setArg1 },
+          { key: "arg2",    label: "Аргумент 2 (1–2 изречения)", placeholder: "Втора подкрепяща точка или пример?", value: arg2, set: setArg2 },
+          { key: "closing", label: "Заключение (1 изречение)", placeholder: "Как ще завършиш? Опитай се да се върнеш към началото.", value: closing, set: setClosing },
         ].map(({ key, label, placeholder, value, set }) => (
           <div key={key}>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-sm font-semibold text-neutral-800">{label}</label>
               <button type="button" onClick={() => setShowTip(showTip === key ? null : key)} className="text-[11px] text-violet-500 font-medium hover:underline cursor-pointer">
-                {showTip === key ? "Hide tip" : "Need help?"}
+                {showTip === key ? "Скрий съвета" : "Нужна помощ?"}
               </button>
             </div>
             {showTip === key && (
@@ -98,7 +98,7 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
 
       {showWarning && checkResult?.suggestion && (
         <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
-          <p className="text-xs font-semibold text-amber-700 mb-1">One thing to consider</p>
+          <p className="text-xs font-semibold text-amber-700 mb-1">Нещо за обмисляне</p>
           <p className="text-sm text-amber-800 leading-relaxed">{checkResult.suggestion}</p>
         </div>
       )}
@@ -112,8 +112,8 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
         className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
       >
         {checking || advancing
-          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />{checking ? "Checking…" : "Saving…"}</>
-          : <>Move to writing <ArrowRight size={16} /></>}
+          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />{checking ? "Проверява…" : "Записва…"}</>
+          : <>Към писането <ArrowRight size={16} /></>}
       </button>
     </div>
   );

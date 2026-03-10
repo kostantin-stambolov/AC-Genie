@@ -92,7 +92,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
           <div className="flex items-center gap-2">
             <Sparkles size={16} className="text-violet-500" />
             <h2 id="rewrite-modal-title" className="text-base font-bold text-neutral-900">
-              Model essay
+              Примерно есе
             </h2>
           </div>
           <button
@@ -112,8 +112,8 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
           {loading && (
             <div className="flex flex-col items-center justify-center py-16 gap-4">
               <div className="w-12 h-12 border-[3px] border-violet-200 border-t-violet-600 rounded-full animate-spin" />
-              <p className="text-neutral-500 text-sm font-medium">Generating model essay…</p>
-              <p className="text-neutral-400 text-xs">This usually takes a few seconds</p>
+              <p className="text-neutral-500 text-sm font-medium">Генерира примерно есе…</p>
+              <p className="text-neutral-400 text-xs">Обикновено отнема няколко секунди</p>
             </div>
           )}
 
@@ -126,7 +126,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                 onClick={fetchRewrite}
                 className="mt-3 text-sm text-red-600 font-medium underline"
               >
-                Try again
+                Опитай отново
               </button>
             </div>
           )}
@@ -135,7 +135,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
           {result && !loading && (
             <div className="space-y-6">
               <p className="text-sm text-neutral-500 leading-relaxed">
-                A well-structured model essay on your topic. Labels mark the essay structure.
+                Добре структурирано примерно есе по твоята тема. Етикетите показват структурата на есето.
               </p>
 
               {/* Essay parts */}
@@ -166,9 +166,9 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                 </div>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {[
-                    { label: "Idea & Content", value: result.score.ideaContent, max: 10 },
-                    { label: "Structure",      value: result.score.structure,   max: 4  },
-                    { label: "Language",       value: result.score.language,    max: 6  },
+                    { label: "Идея и съдържание", value: result.score.ideaContent, max: 10 },
+                    { label: "Структура",         value: result.score.structure,   max: 4  },
+                    { label: "Език",              value: result.score.language,    max: 6  },
                   ].map((sub) => (
                     <div key={sub.label} className="bg-neutral-50 rounded-xl p-3 text-center">
                       <p className="text-[11px] text-neutral-400 font-medium mb-1 leading-tight">{sub.label}</p>
@@ -176,7 +176,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Why this score</p>
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Защо тази оценка</p>
                 <p className="text-neutral-700 text-[15px] leading-relaxed">{result.scoreReason}</p>
               </div>
             </div>
@@ -190,7 +190,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
             onClick={onClose}
             className="w-full h-11 rounded-xl border border-neutral-200 text-neutral-700 text-sm font-semibold hover:bg-neutral-50 transition cursor-pointer"
           >
-            Close
+            Затвори
           </button>
         </div>
       </div>

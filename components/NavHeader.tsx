@@ -11,7 +11,7 @@ type Props = {
  * Shared page header for all inner screens.
  * Shows a back button with a proper icon on the left and an optional title.
  */
-export function NavHeader({ backHref, backLabel = "Back", title }: Props) {
+export function NavHeader({ backHref, backLabel = "Назад", title }: Props) {
   return (
     <header className="bg-white border-b border-neutral-100 px-4 h-14 flex items-center gap-3 sticky top-0 z-20">
       <Link

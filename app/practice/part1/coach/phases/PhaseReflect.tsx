@@ -30,13 +30,13 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
   if (!bd) {
     return (
       <div className="space-y-4">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest">Phase 6 · Reflect</p>
-        <p className="text-sm text-neutral-500">No scoring data available.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest">Фаза 6 · Размисли</p>
+        <p className="text-sm text-neutral-500">Няма налични данни за оценяване.</p>
         <button
           type="button" onClick={() => onAdvance("")} disabled={advancing}
           className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold cursor-pointer disabled:opacity-50"
         >
-          Finish session
+          Приключи сесията
         </button>
       </div>
     );
@@ -64,10 +64,10 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
 
   if (done) {
     const timingRows = [
-      { key: "comprehension", label: "Understanding" },
-      { key: "outline",       label: "Outlining" },
-      { key: "writing",       label: "Writing" },
-      { key: "review",        label: "Self-review" },
+      { key: "comprehension", label: "Разбиране" },
+      { key: "outline",       label: "Планиране" },
+      { key: "writing",       label: "Писане" },
+      { key: "review",        label: "Самопроверка" },
     ];
     const totalSecs = timingRows.reduce((sum, r) => sum + (phaseTimings[r.key]?.seconds ?? 0), 0);
 
@@ -75,16 +75,16 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
       <div className="space-y-5">
         <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-6 py-6">
           <p className="text-2xl mb-3">🎯</p>
-          <h2 className="text-xl font-bold text-neutral-900 mb-4">Session complete!</h2>
+          <h2 className="text-xl font-bold text-neutral-900 mb-4">Сесията е завършена!</h2>
 
           <div className="mb-4">
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Your score</p>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Твоят резултат</p>
             <p className="text-3xl font-black text-neutral-900">{finalScore}<span className="text-lg font-semibold text-neutral-300">/20</span></p>
-            <p className="text-xs text-neutral-400 mt-0.5">Avg of Examiner 1 ({e1.total}) + Examiner 2 ({e2.total})</p>
+            <p className="text-xs text-neutral-400 mt-0.5">Средно от Проверяващ 1 ({e1.total}) + Проверяващ 2 ({e2.total})</p>
           </div>
 
           <div className="mb-4">
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-2">Time breakdown</p>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-2">Времеразпределение</p>
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {timingRows.map(({ key, label }) => (
                 phaseTimings[key]?.seconds
@@ -92,20 +92,20 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
                   : null
               ))}
               {totalSecs > 0 && (
-                <span className="text-xs text-neutral-500">Total: <strong>{formatSeconds(totalSecs)}</strong></span>
+                <span className="text-xs text-neutral-500">Общо: <strong>{formatSeconds(totalSecs)}</strong></span>
               )}
             </div>
           </div>
 
           {reflection.trim() && (
             <div className="mb-4">
-              <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Your focus for next time</p>
+              <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Твоят фокус за следващия път</p>
               <p className="text-sm text-neutral-700 leading-relaxed italic">"{reflection}"</p>
             </div>
           )}
 
           <p className="text-xs text-neutral-400 leading-relaxed">
-            Today you practiced: understanding the prompt, outlining, timed writing, self-review, and reflecting on your weakest area. Keep going — exam day is March 22.
+            Днес тренира: разбиране на темата, планиране, писане с таймер, самопроверка и размисъл върху най-слабата ти област. Продължавай — денят на изпита наближава.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
           onClick={() => { window.location.href = "/home"; }}
           className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition cursor-pointer"
         >
-          Done — back to home
+          Готово — към началото
         </button>
       </div>
     );
@@ -123,33 +123,33 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 6 · Reflect</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">What will you do differently next time?</h2>
-        <p className="text-sm text-neutral-500">One quick reflection closes the loop and makes the practice stick.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 6 · Размисли</p>
+        <h2 className="text-xl font-bold text-neutral-900 mb-1">Какво ще направиш по-различно следващия път?</h2>
+        <p className="text-sm text-neutral-500">Един бърз размисъл затваря кръга и прави практиката по-ефективна.</p>
       </div>
 
       {/* Weakest area card */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5">
         <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-3">
-          Your weakest area: {dimLabel} (avg {avgValue.toFixed(1)} / {dimMax})
+          Твоята най-слаба област: {dimLabel} (средно {avgValue.toFixed(1)} / {dimMax})
         </p>
 
         {relevantNote && (
           <div className="rounded-xl bg-neutral-50 border border-neutral-200 px-4 py-3 mb-4">
-            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Your examiners noted</p>
+            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Твоите проверяващи отбелязаха</p>
             <p className="text-sm text-neutral-700 leading-relaxed italic">"{relevantNote}"</p>
           </div>
         )}
 
         <p className="text-sm text-neutral-600 leading-relaxed">
-          In the model essay, you saw how <strong>{DIMENSION_MODEL_OBSERVATIONS[weakest]}</strong>.
+          В примерното есе видя как <strong>{DIMENSION_MODEL_OBSERVATIONS[weakest]}</strong>.
         </p>
       </div>
 
       {/* Reflection textarea */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
         <label className="block text-sm font-semibold text-neutral-800 mb-3">
-          Write one thing you'll focus on in your next essay:
+          Напиши едно нещо, върху което ще се фокусираш в следващото есе:
         </label>
         <textarea
           value={reflection}
@@ -167,8 +167,8 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
         className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
       >
         {advancing
-          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Saving…</>
-          : "Finish session →"}
+          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Записва…</>
+          : "Приключи сесията →"}
       </button>
     </div>
   );

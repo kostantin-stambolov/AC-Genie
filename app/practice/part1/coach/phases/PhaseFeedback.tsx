@@ -24,10 +24,10 @@ type Props = {
 // ── Score helpers ──────────────────────────────────────────────────────────────
 
 function scoreColor(s: number) {
-  if (s >= 16) return { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-800", label: "Competitive score" };
-  if (s >= 12) return { bg: "bg-amber-50",   border: "border-amber-200",   text: "text-amber-800",   label: "Solid foundation, room to grow" };
-  if (s >= 8)  return { bg: "bg-orange-50",  border: "border-orange-200",  text: "text-orange-800",  label: "Keep practising" };
-  return        { bg: "bg-red-50",    border: "border-red-200",    text: "text-red-800",    label: "Focus on the basics first" };
+  if (s >= 16) return { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-800", label: "Конкурентна оценка" };
+  if (s >= 12) return { bg: "bg-amber-50",   border: "border-amber-200",   text: "text-amber-800",   label: "Добра основа, има какво да се подобри" };
+  if (s >= 8)  return { bg: "bg-orange-50",  border: "border-orange-200",  text: "text-orange-800",  label: "Продължавай да тренираш" };
+  return        { bg: "bg-red-50",    border: "border-red-200",    text: "text-red-800",    label: "Фокусирай се първо върху основите" };
 }
 
 function SubBar({
@@ -41,7 +41,7 @@ function SubBar({
           {label}
           {isWeakest && (
             <span className="ml-1.5 text-[10px] font-bold text-red-500 bg-red-50 border border-red-200 rounded-full px-1.5 py-0.5">
-              ← weakest
+              ← най-слаб
             </span>
           )}
         </span>
@@ -63,13 +63,13 @@ function ExaminerCard({
   return (
     <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex-1">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Examiner {n}</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Проверяващ {n}</p>
         <span className="text-lg font-black text-neutral-800">{score.total}<span className="text-sm font-semibold text-neutral-300">/20</span></span>
       </div>
       <div className="space-y-2.5">
-        <SubBar label="Idea & Content" value={score.ideaContent} max={10} isWeakest={weakest === "ideaContent"} />
-        <SubBar label="Structure"      value={score.structure}   max={4}  isWeakest={weakest === "structure"} />
-        <SubBar label="Language"       value={score.language}    max={6}  isWeakest={weakest === "language"} />
+        <SubBar label="Идея и съдържание" value={score.ideaContent} max={10} isWeakest={weakest === "ideaContent"} />
+        <SubBar label="Структура"          value={score.structure}   max={4}  isWeakest={weakest === "structure"} />
+        <SubBar label="Език"               value={score.language}    max={6}  isWeakest={weakest === "language"} />
       </div>
       {score.notes && (
         <p className="mt-3 text-xs text-neutral-500 leading-relaxed italic">"{score.notes}"</p>
@@ -95,11 +95,11 @@ function LangErrorCard({ err }: { err: { type: string; original: string; correct
       </div>
       <div className="px-4 py-3 grid grid-cols-2 gap-3">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-red-400 mb-1">You wrote</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-red-400 mb-1">Написал/а си</p>
           <p className="text-sm font-medium text-red-700 line-through">{err.original}</p>
         </div>
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Should be</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Трябва да бъде</p>
           <p className="text-sm font-bold text-emerald-700">{err.correction}</p>
         </div>
       </div>
@@ -136,9 +136,9 @@ function ModelEssaySection({
   return (
     <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-5">
       <div className="mb-4">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">📝 Model essay</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">📝 Примерно есе</p>
         <p className="text-sm text-neutral-500 leading-snug">
-          See how a well-structured response handles this prompt. Pay attention to the highlighted observations — they address your weakest area.
+          Виж как добре структуриран отговор обработва тази тема. Обърни внимание на маркираните наблюдения — те касаят твоята най-слаба област.
         </p>
       </div>
 
@@ -164,16 +164,16 @@ function ModelEssaySection({
 
       {/* Model essay score */}
       <div className="mt-6 pt-4 border-t border-violet-100">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Model essay score (single examiner)</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Оценка на примерното есе (един проверяващ)</p>
         <div className="flex items-end gap-1.5 mb-3">
           <span className="text-3xl font-black text-emerald-600">{score.total}</span>
           <span className="text-lg font-semibold text-neutral-300 mb-0.5">/20</span>
         </div>
         <div className="space-y-2 mb-3">
           {[
-            { l: "Idea & Content", v: score.ideaContent, m: 10 },
-            { l: "Structure",      v: score.structure,   m: 4 },
-            { l: "Language",       v: score.language,    m: 6 },
+            { l: "Идея и съдържание", v: score.ideaContent, m: 10 },
+            { l: "Структура",         v: score.structure,   m: 4 },
+            { l: "Език",              v: score.language,    m: 6 },
           ].map(({ l, v, m }) => (
             <div key={l}>
               <div className="flex justify-between mb-0.5">
@@ -187,8 +187,8 @@ function ModelEssaySection({
           ))}
         </div>
         <p className="text-xs text-neutral-500 leading-relaxed">
-          This model essay scores approximately <strong>{score.total}/20</strong> from a single examiner. Your essay averaged <strong>{studentFinalScore}/20</strong>.
-          {gap > 0 && ` That's a ${gap}-point gap — that's what consistent practice closes.`}
+          Примерното есе получава приблизително <strong>{score.total}/20</strong> от един проверяващ. Твоето есе средно получи <strong>{studentFinalScore}/20</strong>.
+          {gap > 0 && ` Разлика от ${gap} точки — именно това се затваря с редовна практика.`}
         </p>
       </div>
     </div>
@@ -213,10 +213,10 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         });
         const data = await res.json().catch(() => ({}));
         if (cancelled) return;
-        if (!res.ok) { setRwErr("Could not generate model essay."); return; }
+          if (!res.ok) { setRwErr("Не можа да се генерира примерно есе."); return; }
         setRewrite(data as RewriteData);
       } catch {
-        if (!cancelled) setRwErr("Could not load model essay.");
+        if (!cancelled) setRwErr("Не можа да се зареди примерното есе.");
       } finally {
         if (!cancelled) setRwLoad(false);
       }
@@ -228,9 +228,9 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
   if (!feedbackData?.breakdown) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <p className="text-neutral-500">Feedback data is unavailable.</p>
+        <p className="text-neutral-500">Данните за обратна връзка не са налични.</p>
         <button type="button" onClick={onAdvance} disabled={advancing} className="h-12 px-6 rounded-xl bg-violet-600 text-white text-sm font-semibold cursor-pointer disabled:opacity-50">
-          Continue →
+          Продължи →
         </button>
       </div>
     );
@@ -248,8 +248,8 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 5 · Score</p>
-        <h2 className="text-xl font-bold text-neutral-900">Your assessment</h2>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 5 · Оценка</p>
+        <h2 className="text-xl font-bold text-neutral-900">Твоята оценка</h2>
       </div>
 
       {/* ── Section A: Examiner Cards ───────────────────────────────────────── */}
@@ -264,22 +264,22 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {arbitrated ? (
         <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Arbitrated</p>
+            <p className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Арбитраж</p>
             <span className={`text-3xl font-black ${col.text}`}>{finalScore}<span className="text-base font-semibold text-neutral-300 ml-0.5">/20</span></span>
           </div>
-          <p className={`text-sm ${col.text} leading-relaxed mb-1`}>Examiners disagreed by 4+ points. In the real exam, an arbitrator would re-score your essay.</p>
-          <p className={`text-sm font-semibold ${col.text}`}>Arbitrated average: {finalScore} / 20</p>
+          <p className={`text-sm ${col.text} leading-relaxed mb-1`}>Проверяващите се различиха с 4+ точки. На реалния изпит арбитратор би преоценил есето ти.</p>
+          <p className={`text-sm font-semibold ${col.text}`}>Арбитражна средна: {finalScore} / 20</p>
         </div>
       ) : (
         <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-0.5">Final score</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-0.5">Краен резултат</p>
               <p className={`text-xs font-semibold ${col.text}`}>{col.label}</p>
             </div>
             <span className={`text-4xl font-black ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-neutral-300 ml-0.5">/20</span></span>
           </div>
-          <p className={`text-xs ${col.text} mb-2`}>Examiner 1: {e1.total}/20 · Examiner 2: {e2.total}/20 · Average: {finalScore}/20</p>
+          <p className={`text-xs ${col.text} mb-2`}>Проверяващ 1: {e1.total}/20 · Проверяващ 2: {e2.total}/20 · Средно: {finalScore}/20</p>
           <div className="h-2.5 rounded-full bg-neutral-200 overflow-hidden">
             <div className={`h-full rounded-full ${finalScore >= 16 ? "bg-emerald-500" : finalScore >= 12 ? "bg-amber-500" : finalScore >= 8 ? "bg-orange-500" : "bg-red-500"}`} style={{ width: `${pct20}%` }} />
           </div>
@@ -291,7 +291,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         <div className="bg-violet-50 rounded-2xl border border-violet-200 px-5 py-4 flex gap-3 items-start">
           <span className="text-violet-500 text-xl shrink-0">🎯</span>
           <div>
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Key takeaway</p>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Основен извод</p>
             <p className="text-sm font-semibold text-violet-900 leading-relaxed">{keyTakeaway}</p>
           </div>
         </div>
@@ -301,7 +301,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {paragraphs.length > 0 && (
         <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Feedback</p>
+          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Обратна връзка</p>
           <div className="space-y-4 text-sm text-neutral-700 leading-relaxed">
             {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
           </div>
@@ -311,7 +311,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {feedbackData.languageErrors.length > 0 && (
         <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
           <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">
-            Language & spelling ({feedbackData.languageErrors.length})
+            Езикови грешки и правопис ({feedbackData.languageErrors.length})
           </p>
           <div className="space-y-3">
             {feedbackData.languageErrors.map((err, i) => <LangErrorCard key={i} err={err} />)}
@@ -331,7 +331,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
             <div className="h-3 bg-neutral-100 rounded-full w-full" />
             <div className="h-3 bg-neutral-100 rounded-full w-2/3" />
           </div>
-          <p className="mt-4 text-xs text-neutral-400 text-center">Generating model essay…</p>
+          <p className="mt-4 text-xs text-neutral-400 text-center">Генерира примерно есе…</p>
         </div>
       )}
 
@@ -357,8 +357,8 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
       >
         {advancing
-          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Saving…</>
-          : <>Continue to reflection <ArrowRight size={16} /></>}
+          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Записва…</>
+          : <>Продължи към размисъла <ArrowRight size={16} /></>}
       </button>
     </div>
   );

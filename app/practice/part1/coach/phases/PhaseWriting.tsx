@@ -63,7 +63,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
               onClick={() => setOutlineOpen(o => !o)}
               className="text-xs font-semibold text-neutral-500 bg-white border border-neutral-200 rounded-xl px-3 py-2 hover:bg-neutral-50 transition cursor-pointer"
             >
-              {outlineOpen ? "Hide outline" : "Show outline"}
+              {outlineOpen ? "Скрий плана" : "Покажи плана"}
             </button>
           </div>
         </div>
@@ -72,13 +72,13 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
       {/* Time's up notification */}
       {timeUp && (
         <div className="bg-amber-50 rounded-2xl border border-amber-200 px-5 py-4">
-          <p className="text-sm font-semibold text-amber-800 mb-1">⏰ Time's up!</p>
-          <p className="text-sm text-amber-700">In the real exam, you'd now move to review. Let's do that.</p>
+          <p className="text-sm font-semibold text-amber-800 mb-1">⏰ Времето изтече!</p>
+          <p className="text-sm text-amber-700">На реалния изпит сега ще преминеш към самопроверка. Нека го направим.</p>
           <button
             type="button" onClick={handleDone} disabled={advancing}
             className="mt-3 h-10 px-5 rounded-xl bg-amber-600 text-white text-sm font-semibold hover:bg-amber-700 transition cursor-pointer disabled:opacity-50"
           >
-            Go to review →
+            Към самопроверката →
           </button>
         </div>
       )}
@@ -86,13 +86,13 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
       {/* Outline reference */}
       {outlineOpen && outline && (
         <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-4">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Your outline (read-only)</p>
+          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Твоят план (само за четене)</p>
           <div className="space-y-2 text-sm">
             {[
-              { l: "Opening",     v: outline.opening },
-              { l: "Argument 1",  v: outline.arg1 },
-              { l: "Argument 2",  v: outline.arg2 },
-              { l: "Closing",     v: outline.closing },
+              { l: "Начало",      v: outline.opening },
+              { l: "Аргумент 1",  v: outline.arg1 },
+              { l: "Аргумент 2",  v: outline.arg2 },
+              { l: "Заключение",  v: outline.closing },
             ].map(({ l, v }) => v ? (
               <div key={l} className="flex gap-2">
                 <span className="shrink-0 text-[10px] font-bold text-violet-400 uppercase tracking-widest mt-0.5 w-20">{l}</span>
@@ -105,9 +105,9 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
 
       {/* Phase header */}
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 3 · Write</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Write your essay</h2>
-        <p className="text-sm text-neutral-500">Focus. No AI help here — this is your writing, under your own steam.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 3 · Писане</p>
+        <h2 className="text-xl font-bold text-neutral-900 mb-1">Напиши есето си</h2>
+        <p className="text-sm text-neutral-500">Концентрирай се. Без AI помощ тук — това е твоето писане, с твоите сили.</p>
       </div>
 
       <EssayEditor
@@ -122,7 +122,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
             type="button" onClick={handleDone} disabled={advancing}
             className="text-sm text-neutral-400 hover:text-neutral-700 transition cursor-pointer disabled:opacity-50 underline underline-offset-2"
           >
-            I'm done writing →
+            Приключих с писането →
           </button>
         </div>
       )}

@@ -36,23 +36,23 @@ export default async function Part1ExamplesPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/home" backLabel="Home" title="Previous attempts" />
+      <NavHeader backHref="/home" backLabel="Начало" title="Предишни опити" />
       <main className="max-w-xl mx-auto px-4 py-10">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">Previous attempts</h1>
-          <p className="text-neutral-500 text-sm">Each entry shows your essay drafts, feedback rounds, and the model essay.</p>
+          <h1 className="text-2xl font-bold text-neutral-900 mb-1">Предишни опити</h1>
+          <p className="text-neutral-500 text-sm">Всеки запис показва черновиките на есето ти, кръговете с обратна връзка и примерното есе.</p>
         </div>
 
         {attempts.length === 0 ? (
           <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-8 text-center">
             <p className="text-3xl mb-3">📝</p>
-            <p className="font-semibold text-neutral-800 mb-1">Nothing here yet</p>
-            <p className="text-neutral-500 text-sm mb-5">Submit at least one essay for feedback to see your history.</p>
+            <p className="font-semibold text-neutral-800 mb-1">Все още няма нищо</p>
+            <p className="text-neutral-500 text-sm mb-5">Изпрати поне едно есе за обратна връзка, за да видиш историята си.</p>
             <Link
               href="/practice/part1/new"
               className="inline-flex items-center gap-1.5 h-10 px-5 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 transition cursor-pointer"
             >
-              Start an essay <ArrowRight size={15} />
+              Напиши есе <ArrowRight size={15} />
             </Link>
           </div>
         ) : (
@@ -74,12 +74,12 @@ export default async function Part1ExamplesPage() {
                     {a.status === "in_progress" && (
                       <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                        In progress
+                        В процес
                       </span>
                     )}
                     {a.status === "completed" && (
                       <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
-                        Done
+                        Завършено
                       </span>
                     )}
                     <ChevronRight size={18} className="text-neutral-300 group-hover:text-violet-500 transition" />

@@ -16,21 +16,21 @@ export function getWeakestDimension(
 }
 
 export const DIMENSION_LABELS: Record<WeakestDimension, string> = {
-  ideaContent: "Idea & Content",
-  structure:   "Structure",
-  language:    "Language",
+  ideaContent: "Идея и съдържание",
+  structure:   "Структура",
+  language:    "Език",
 };
 
 export const DIMENSION_MODEL_OBSERVATIONS: Record<WeakestDimension, string> = {
-  ideaContent: "a clear thesis sentence and specific personal examples made the argument convincing",
-  structure:   "a deliberate opening and conclusion that echo each other made the essay feel complete",
-  language:    "varied vocabulary and clean grammar created a polished, confident impression",
+  ideaContent: "ясното тезисно изречение и конкретните лични примери направиха аргумента убедителен",
+  structure:   "обмисленото начало и заключение, които си отекват, направиха есето пълноценно",
+  language:    "разнообразната лексика и чистата граматика създадоха полиран, уверен стил",
 };
 
 export const DIMENSION_REFLECTION_PLACEHOLDERS: Record<WeakestDimension, string> = {
-  ideaContent: "Next time I will start by writing my thesis as one clear sentence before I write anything else…",
-  structure:   "Next time I will plan my opening and closing sentences before I start writing the body…",
-  language:    "Next time I will leave 3 minutes at the end to re-read for spelling and grammar…",
+  ideaContent: "Следващия път ще започна с написването на тезата като едно ясно изречение, преди да напиша нещо друго…",
+  structure:   "Следващия път ще планирам началното и заключителното изречение, преди да пиша основната част…",
+  language:    "Следващия път ще оставя 3 минути накрая да препрочета за правописни и граматически грешки…",
 };
 
 export const DIMENSION_ANNOTATION_NOTES: Record<
@@ -38,14 +38,14 @@ export const DIMENSION_ANNOTATION_NOTES: Record<
   Array<{ position: "before" | "after" | "top"; partLabel?: string; text: string }>
 > = {
   ideaContent: [
-    { position: "top", text: "✦ Notice: the Introduction states the thesis in one specific, arguable sentence — not a general statement." },
-    { position: "before", partLabel: "Body", text: "✦ Notice: the first argument is directly tied to the thesis, with a concrete personal example to back it up." },
+    { position: "top", text: "✦ Забележи: Въведението заявява тезата в едно конкретно, спорно изречение — не общо твърдение." },
+    { position: "before", partLabel: "Body", text: "✦ Забележи: първият аргумент е директно свързан с тезата, с конкретен личен пример в подкрепа." },
   ],
   structure: [
-    { position: "top", text: "✦ Notice: the first sentence of the Introduction sets up the whole essay. The last sentence of the Conclusion deliberately echoes it — this is what makes an essay feel complete." },
-    { position: "after", partLabel: "Body", text: "✦ Notice: each paragraph develops ONE point, then the next paragraph starts a new one. No mixing." },
+    { position: "top", text: "✦ Забележи: първото изречение на Въведението задава тона на цялото есе. Последното изречение на Заключението умишлено го отеква — това е, което прави едно есе завършено." },
+    { position: "after", partLabel: "Body", text: "✦ Забележи: всеки параграф развива ЕДИН аспект, след което следващият параграф започва нов. Без смесване." },
   ],
   language: [
-    { position: "top", text: "✦ Notice the vocabulary variety — the model avoids repeating the same words. Notice how sentences vary in length — some short, some longer. This is what a clean, expressive style looks like for a 13–14 year old." },
+    { position: "top", text: "✦ Забележи разнообразието на речника — моделът избягва повтарянето на едни и същи думи. Забележи как изреченията варират по дължина — някои кратки, други по-дълги. Това е чист, изразителен стил за ученик на 13–14 години." },
   ],
 };

@@ -19,17 +19,17 @@ type ScoreBreakdown = {
 
 function scoreColor(score: number, max: number): { chip: string; text: string; label: string } {
   const pct = score / max;
-  if (pct >= 0.8)  return { chip: "bg-emerald-100 ring-1 ring-emerald-200", text: "text-emerald-700", label: "Strong" };
-  if (pct >= 0.6)  return { chip: "bg-amber-100 ring-1 ring-amber-200",     text: "text-amber-700",   label: "Solid" };
-  if (pct >= 0.4)  return { chip: "bg-orange-100 ring-1 ring-orange-200",   text: "text-orange-700",  label: "Developing" };
-  return               { chip: "bg-red-100 ring-1 ring-red-200",         text: "text-red-700",     label: "Needs work" };
+  if (pct >= 0.8)  return { chip: "bg-emerald-100 ring-1 ring-emerald-200", text: "text-emerald-700", label: "Силен" };
+  if (pct >= 0.6)  return { chip: "bg-amber-100 ring-1 ring-amber-200",     text: "text-amber-700",   label: "Добър" };
+  if (pct >= 0.4)  return { chip: "bg-orange-100 ring-1 ring-orange-200",   text: "text-orange-700",  label: "Развиващ се" };
+  return               { chip: "bg-red-100 ring-1 ring-red-200",         text: "text-red-700",     label: "Нужна е работа" };
 }
 
 function finalScoreLabel(score: number): string {
-  if (score >= 16) return "Strong — competitive for ACS";
-  if (score >= 12) return "Solid — room to improve";
-  if (score >= 8)  return "Developing — needs significant work";
-  return "Below threshold — keep practising";
+  if (score >= 16) return "Силен — конкурентен за АКС";
+  if (score >= 12) return "Добър — има какво да се подобри";
+  if (score >= 8)  return "Развиващ се — нужна е сериозна работа";
+  return "Под прага — продължавай да тренираш";
 }
 
 function parseScoreBreakdown(json: string | null): ScoreBreakdown | null {
@@ -54,9 +54,9 @@ function safeFeedback(raw: string): string {
 
 function SubScoreBars({ e1, e2 }: { e1: ExaminerScore; e2: ExaminerScore }) {
   const bars = [
-    { label: "Idea & Content", avg: (e1.ideaContent + e2.ideaContent) / 2, max: 10, fill: "bg-violet-500" },
-    { label: "Structure",      avg: (e1.structure   + e2.structure)   / 2, max: 4,  fill: "bg-indigo-400" },
-    { label: "Language",       avg: (e1.language    + e2.language)    / 2, max: 6,  fill: "bg-sky-400" },
+    { label: "Идея и съдържание", avg: (e1.ideaContent + e2.ideaContent) / 2, max: 10, fill: "bg-violet-500" },
+    { label: "Структура",         avg: (e1.structure   + e2.structure)   / 2, max: 4,  fill: "bg-indigo-400" },
+    { label: "Език",              avg: (e1.language    + e2.language)    / 2, max: 6,  fill: "bg-sky-400" },
   ];
   const fmt = (v: number) => Number.isInteger(v) ? String(v) : v.toFixed(1);
   return (
@@ -116,13 +116,13 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/home" backLabel="Home" title="Feedback" />
+      <NavHeader backHref="/home" backLabel="Начало" title="Обратна връзка" />
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-4">
 
         {/* ── Score overview card ── */}
         <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm overflow-hidden">
           <div className="px-6 pt-5 pb-4 border-b border-neutral-100">
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Your score</p>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Твоят резултат</p>
             <div className="flex items-center gap-4">
               <div className={`rounded-2xl px-5 py-3 flex flex-col items-center shrink-0 ${sc.chip}`}>
               <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
@@ -130,10 +130,10 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
               </div>
               <div>
                 <p className="text-base font-bold text-neutral-900 leading-snug">{finalScoreLabel(finalScore)}</p>
-                <p className="text-sm text-neutral-500 mt-0.5">Average of two independent examiners (20 pts each).</p>
+                <p className="text-sm text-neutral-500 mt-0.5">Средна оценка на двама независими проверяващи (по 20 т.).</p>
                 {arbitrated && (
                   <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
-                    <AlertCircle size={12} /> Arbitration applied
+                    <AlertCircle size={12} /> Приложен арбитраж
                   </span>
                 )}
               </div>
@@ -143,7 +143,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
           {/* Sub-score bars */}
           {e1 && e2 && (
             <div className="px-6 py-4">
-              <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Sub-scores (averaged)</p>
+              <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Частични оценки (средно)</p>
               <SubScoreBars e1={e1} e2={e2} />
             </div>
           )}
@@ -152,10 +152,10 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
         {/* ── Arbitration notice ── */}
         {arbitrated && (
           <div className="bg-amber-50 rounded-2xl border border-amber-200 px-5 py-4">
-            <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-1">What is arbitration?</p>
+            <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-1">Какво е арбитраж?</p>
             <p className="text-sm text-amber-800 leading-relaxed">
-              The two examiners differed by 4+ points. On exam day, this triggers a third reader whose score is doubled
-              to produce the final result. Consistent performance across all three criteria is what keeps scores stable.
+              Двамата проверяващи се различават с 4+ точки. На изпита това задейства трети проверяващ, чиято оценка
+              се удвоява за крайния резултат. Постоянното представяне и по трите критерия е ключово за стабилен резултат.
             </p>
           </div>
         )}
@@ -170,9 +170,9 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                   <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">{label}</p>
                   <div className="space-y-2 mb-4">
                     {[
-                      { name: "Idea & Content", val: e.ideaContent, max: 10 },
-                      { name: "Structure",      val: e.structure,   max: 4  },
-                      { name: "Language",       val: e.language,    max: 6  },
+                      { name: "Идея и съдържание", val: e.ideaContent, max: 10 },
+                      { name: "Структура",         val: e.structure,   max: 4  },
+                      { name: "Език",              val: e.language,    max: 6  },
                     ].map((row) => (
                       <div key={row.name} className="flex justify-between items-center">
                         <span className="text-sm text-neutral-600">{row.name}</span>
@@ -181,7 +181,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                     ))}
                   </div>
                   <div className="border-t border-neutral-100 pt-3 flex justify-between items-center">
-                    <span className="text-xs text-neutral-400 font-medium">Total</span>
+                    <span className="text-xs text-neutral-400 font-medium">Общо</span>
                     <span className={`text-xl font-bold ${c.text}`}>{e.total}<span className="text-sm font-normal text-neutral-400"> / 20</span></span>
                   </div>
                   {e.notes && (
@@ -200,7 +200,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
               <span className="text-white text-xs font-bold">!</span>
             </div>
             <div>
-              <p className="text-[10px] font-bold text-violet-600 uppercase tracking-widest mb-1">Most important to improve</p>
+              <p className="text-[10px] font-bold text-violet-600 uppercase tracking-widest mb-1">Най-важното за подобряване</p>
               <p className="text-sm font-semibold text-violet-900 leading-snug">{keyTakeaway}</p>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
 
         {/* ── Feedback text ── */}
         <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-6 py-5">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Feedback</p>
+          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Обратна връзка</p>
           <div className="space-y-4">
             {feedback.split(/\n\n+/).map((para, i) => (
               <p key={i} className="text-neutral-700 text-[15px] leading-relaxed">{para.trim()}</p>
@@ -222,11 +222,11 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
             <div className="flex items-center gap-2 mb-1">
               <AlertCircle size={14} className="text-amber-500 shrink-0" />
               <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">
-                Language &amp; spelling errors ({languageErrors.length})
+                Езикови и правописни грешки ({languageErrors.length})
               </p>
             </div>
             <p className="text-sm text-neutral-500 mb-5">
-              Fix these in your next draft — each one directly affects your score.
+              Поправи ги в следващия черновик — всяка от тях влияе директно на оценката ти.
             </p>
             <ul className="space-y-3">
               {languageErrors.map((err, i) => {
@@ -245,16 +245,16 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                       <span className={`text-[11px] font-bold uppercase tracking-widest rounded-full px-2.5 py-0.5 ${ts.badge}`}>
                         {err.type.replace(/_/g, " ")}
                       </span>
-                      <span className="text-xs text-neutral-400">Error {i + 1}</span>
+                      <span className="text-xs text-neutral-400">Грешка {i + 1}</span>
                     </div>
                     {/* Before / After */}
                     <div className="grid grid-cols-2 divide-x divide-neutral-100">
                       <div className="px-4 py-3">
-                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">You wrote</p>
+                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Написал/а си</p>
                         <p className="text-sm font-medium text-red-600 line-through">{err.original}</p>
                       </div>
                       <div className="px-4 py-3">
-                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Should be</p>
+                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Трябва да бъде</p>
                         <p className="text-sm font-semibold text-emerald-700">{err.correction}</p>
                       </div>
                     </div>

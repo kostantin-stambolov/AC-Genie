@@ -39,7 +39,7 @@ export function TopicPicker({ options, coachingMode = "v1" }: Props) {
       const attemptId = (data as { attempt?: { id?: string } }).attempt?.id;
       if (!attemptId) {
         setLoading(null);
-        setError("Invalid response from server.");
+                    setError("Невалиден отговор от сървъра.");
         return;
       }
       window.location.href = coachingMode === "v2"
@@ -76,7 +76,7 @@ export function TopicPicker({ options, coachingMode = "v1" }: Props) {
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-2.5 py-0.5 ${color.badge}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${color.dot}`} />
-                        Topic {idx + 1}
+                        Тема {idx + 1}
                       </span>
                     </div>
                     <h3 className="font-semibold text-neutral-900 text-base mb-1.5 leading-snug">{prompt.title}</h3>
@@ -92,7 +92,7 @@ export function TopicPicker({ options, coachingMode = "v1" }: Props) {
                 </div>
                 {isLoading && (
                   <p className="text-xs text-violet-600 mt-3 font-medium">
-                    {coachingMode === "v2" ? "Opening coaching session…" : "Opening essay…"}
+                    {coachingMode === "v2" ? "Отваря обучителна сесия…" : "Отваря есето…"}
                   </p>
                 )}
               </button>

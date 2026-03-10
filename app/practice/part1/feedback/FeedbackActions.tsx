@@ -17,14 +17,14 @@ export function FeedbackActions({ attemptId }: Props) {
           href={`/practice/part1?attemptId=${attemptId}`}
           className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition cursor-pointer"
         >
-          <RotateCcw size={15} /> Try again
+          <RotateCcw size={15} /> Опитай отново
         </Link>
         <button
           type="button"
           onClick={() => setRewriteOpen(true)}
           className="flex items-center justify-center gap-2 w-full h-12 rounded-xl border border-neutral-200 bg-white text-neutral-700 text-sm font-semibold hover:bg-neutral-50 active:scale-[0.98] transition cursor-pointer"
         >
-          <Sparkles size={16} /> See model essay
+          <Sparkles size={16} /> Виж примерно есе
         </button>
       </div>
 

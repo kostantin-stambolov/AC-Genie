@@ -5,12 +5,12 @@ import { ArrowRight } from "@/components/icons";
 import type { SelfReviewData, FeedbackData } from "../CoachingFlow";
 
 const CHECKLIST_ITEMS = [
-  { key: "q1" as const, label: "Am I answering the question the prompt asked?", category: "Idea", tip: "Re-read the prompt. What exactly is it asking? Make sure your first paragraph responds to that." },
-  { key: "q2" as const, label: "Is it clear what my position/thesis is?", category: "Idea", tip: "Look for one sentence that states your main idea. If you can't find it, you may need to add one." },
-  { key: "q3" as const, label: "Did I give at least two supporting arguments with specific examples?", category: "Idea", tip: "Count your examples. Can you recall a specific moment from your life that supports your point?" },
-  { key: "q4" as const, label: "Does my essay have a clear beginning and ending?", category: "Structure", tip: "Check your first and last paragraphs. Do they feel like a deliberate beginning and ending, or does the essay just start/stop?" },
-  { key: "q5" as const, label: "Does my conclusion connect back to my opening?", category: "Structure", tip: "Try to echo a word or idea from your opening in your closing sentence." },
-  { key: "q6" as const, label: "Did I re-read for spelling and grammar mistakes?", category: "Language", tip: "Read your essay out loud in your head — errors often become obvious that way." },
+  { key: "q1" as const, label: "Отговарям ли на въпроса, зададен в темата?", category: "Идея", tip: "Прочети отново темата. Какво точно се иска? Увери се, че първият ти параграф отговаря на това." },
+  { key: "q2" as const, label: "Ясна ли е позицията/тезата ми?", category: "Идея", tip: "Потърси едно изречение, което изразява основната ти идея. Ако не можеш да го намериш, може би трябва да го добавиш." },
+  { key: "q3" as const, label: "Дал/а ли съм поне два подкрепящи аргумента с конкретни примери?", category: "Идея", tip: "Преброй примерите си. Можеш ли да си спомниш конкретен момент от живота ти, който подкрепя точката ти?" },
+  { key: "q4" as const, label: "Есето ми има ли ясно начало и край?", category: "Структура", tip: "Провери първия и последния параграф. Усещат ли се като обмислено начало и край, или есето просто започва/спира?" },
+  { key: "q5" as const, label: "Свързва ли се заключението ми с началото?", category: "Структура", tip: "Опитай се да отекнеш дума или идея от началото си в заключителното изречение." },
+  { key: "q6" as const, label: "Прочетох ли за правописни и граматически грешки?", category: "Език", tip: "Прочети есето наум на глас — грешките често стават очевидни по този начин." },
 ];
 
 type Props = {
@@ -45,7 +45,7 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError((data as {error?:string}).error ?? "AI scoring failed. Please try again.");
+          setError((data as {error?:string}).error ?? "AI оценяването не бе успешно. Моля, опитай отново.");
         return;
       }
 
@@ -79,27 +79,27 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
 
       const timing = Math.round((Date.now() - startRef.current) / 1000);
       await onAdvance(selfReview, feedbackResult, timing);
-    } catch { setError("Something went wrong. Please try again."); }
+    } catch { setError("Нещо се обърка. Моля, опитай отново."); }
     finally { setSubmitting(false); }
   }
 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 4 · Self-Review</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Read your essay and check yourself</h2>
-        <p className="text-sm text-neutral-500">Read your essay carefully, then answer honestly. On exam day, you'll be your own editor.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 4 · Самопроверка</p>
+        <h2 className="text-xl font-bold text-neutral-900 mb-1">Прочети есето си и се провери</h2>
+        <p className="text-sm text-neutral-500">Прочети внимателно, след това отговори честно. На изпита ти ще бъдеш собственият си редактор.</p>
       </div>
 
       {/* Read-only essay */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5 max-h-64 overflow-y-auto">
-        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">Your essay (read-only)</p>
+        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">Твоето есе (само за четене)</p>
         <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-wrap">{essayBody}</p>
       </div>
 
       {/* Checklist */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 space-y-3">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Self-assessment checklist</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Контролен списък за самооценка</p>
         {CHECKLIST_ITEMS.map(({ key, label, category, tip }) => {
           const val = answers[key] as boolean | undefined;
           return (
@@ -108,7 +108,7 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`text-[10px] font-bold uppercase tracking-widest ${
-                      category === "Idea" ? "text-violet-500" : category === "Structure" ? "text-indigo-500" : "text-sky-500"
+                      category === "Идея" ? "text-violet-500" : category === "Структура" ? "text-indigo-500" : "text-sky-500"
                     }`}>{category}</span>
                   </div>
                   <p className="text-sm text-neutral-800 leading-snug">{label}</p>
@@ -125,7 +125,7 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
                           : "border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-50"
                       }`}
                     >
-                      {v ? "Yes" : "No"}
+                      {v ? "Да" : "Не"}
                     </button>
                   ))}
                 </div>
@@ -149,11 +149,11 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
         className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
       >
         {submitting || advancing
-          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Analysing your essay…</>
-          : <>Submit for AI assessment <ArrowRight size={16} /></>}
+          ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Анализира есето ти…</>
+          : <>Изпрати за AI оценяване <ArrowRight size={16} /></>}
       </button>
       {!allAnswered && (
-        <p className="text-xs text-neutral-400 text-center">Answer all checklist items to continue</p>
+        <p className="text-xs text-neutral-400 text-center">Отговори на всички въпроси, за да продължиш</p>
       )}
     </div>
   );

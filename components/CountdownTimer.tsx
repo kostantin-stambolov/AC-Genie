@@ -76,7 +76,7 @@ export function CountdownTimer({
       </div>
       <div>
         <p className={`text-xl font-bold leading-none tabular-nums ${colorClass}`}>{display}</p>
-        <p className={`text-[10px] font-semibold uppercase tracking-widest mt-0.5 ${colorClass} opacity-60`}>remaining</p>
+        <p className={`text-[10px] font-semibold uppercase tracking-widest mt-0.5 ${colorClass} opacity-60`}>оставащо</p>
       </div>
     </div>
   );

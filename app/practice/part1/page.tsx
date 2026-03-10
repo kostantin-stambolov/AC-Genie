@@ -13,12 +13,12 @@ function parsePrompt(promptText: string | null): ParsedPrompt | null {
   try {
     const p = JSON.parse(promptText) as { title?: string; instruction?: string; body?: string };
     return {
-      title: p.title ?? "Essay",
+      title: p.title ?? "Есе",
       instruction: p.instruction ?? "",
       body: p.body ?? "",
     };
   } catch {
-    return { title: "Essay", instruction: promptText, body: "" };
+    return { title: "Есе", instruction: promptText, body: "" };
   }
 }
 
@@ -75,8 +75,8 @@ function InstructionBlock({ instruction }: { instruction: string }) {
 
   return (
     <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
-      <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">
-        Your task
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">
+        Твоята задача
       </p>
 
       {seg.kind === "numbered" && (
@@ -131,7 +131,7 @@ export default async function Part1Page({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-[#f7f8fa]">
-      <NavHeader backHref="/home" backLabel="Home" title="Essay" />
+      <NavHeader backHref="/home" backLabel="Начало" title="Есе" />
       <main className="max-w-2xl mx-auto px-4 py-8">
 
         {prompt ? (
@@ -164,7 +164,7 @@ export default async function Part1Page({ searchParams }: Props) {
           </div>
         ) : (
           <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5 mb-6 text-sm text-amber-800">
-            No topic loaded. Go back to home and start a new essay.
+            Не е заредена тема. Върни се на началото и започни ново есе.
           </div>
         )}
 

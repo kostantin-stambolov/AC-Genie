@@ -19,10 +19,10 @@ type Props = {
 };
 
 function StatusPill({ ok, note }: { ok: boolean; note?: string }) {
-  if (ok) return <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">✓ Looks good</span>;
+  if (ok) return <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">✓ Добре</span>;
   return (
     <div className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2.5">
-      <p className="text-xs font-semibold text-amber-700 mb-1">Suggestion</p>
+      <p className="text-xs font-semibold text-amber-700 mb-1">Предложение</p>
       <p className="text-sm text-amber-800 leading-relaxed">{note}</p>
     </div>
   );
@@ -55,7 +55,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
       if (!res.ok) { setError((data as {error?:string}).error ?? "Check failed"); return; }
       setCheckResult(data as CheckResult);
       setCheckCount(c => c + 1);
-    } catch { setError("Something went wrong. Please try again."); }
+          } catch { setError("Нещо се обърка. Моля, опитай отново."); }
     finally { setChecking(false); }
   }
 
@@ -67,14 +67,14 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Phase 1 · Understand the prompt</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Read carefully, then answer three questions</h2>
-        <p className="text-sm text-neutral-500">Before you write a single word, make sure you understand exactly what you're being asked.</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 1 · Разбери темата</p>
+        <h2 className="text-xl font-bold text-neutral-900 mb-1">Прочети внимателно и отговори на три въпроса</h2>
+        <p className="text-sm text-neutral-500">Преди да напишеш и дума, увери се, че разбираш точно какво се иска от теб.</p>
       </div>
 
       {/* Prompt display */}
       <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-5">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Your topic</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Твоята тема</p>
         <h3 className="font-bold text-neutral-900 text-base mb-2">{prompt.title}</h3>
         {prompt.body && <p className="text-neutral-700 text-sm leading-relaxed mb-2 whitespace-pre-wrap">{prompt.body}</p>}
         {prompt.instruction && <p className="text-neutral-500 text-sm leading-relaxed italic">{prompt.instruction}</p>}
@@ -82,12 +82,12 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
 
       {/* Three questions */}
       <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 space-y-5">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest">Your answers</p>
+        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest">Твоите отговори</p>
 
         {[
-          { label: "1. What is this prompt asking you to do?", value: q1, set: setQ1, placeholder: "e.g. Argue a position about whether something visible or invisible matters more…", check: checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote } : null },
-          { label: "2. What is your position or main idea?", value: q2, set: setQ2, placeholder: "e.g. I believe that friendship matters most because it shapes who we become…", check: checkResult ? { ok: checkResult.thesisSpecific, note: checkResult.thesisSuggestion } : null },
-          { label: "3. What personal experience or example could support your idea?", value: q3, set: setQ3, placeholder: "e.g. When my friend helped me after I failed an exam…", check: checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote } : null },
+          { label: "1. Какво се иска от теб в тази тема?", value: q1, set: setQ1, placeholder: "напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…", check: checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote } : null },
+          { label: "2. Каква е твоята позиция или основна идея?", value: q2, set: setQ2, placeholder: "напр. Вярвам, че приятелството е най-важно, защото оформя кои ставаме…", check: checkResult ? { ok: checkResult.thesisSpecific, note: checkResult.thesisSuggestion } : null },
+          { label: "3. Какъв личен опит или пример може да подкрепи идеята ти?", value: q3, set: setQ3, placeholder: "напр. Когато приятелят ми ми помогна след като се провалих на изпит…", check: checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote } : null },
         ].map(({ label, value, set, placeholder, check }) => (
           <div key={label}>
             <label className="block text-sm font-semibold text-neutral-800 mb-2">{label}</label>
@@ -117,7 +117,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
             disabled={!canCheck || checking}
             className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
           >
-            {checking ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Checking…</> : "Check my understanding"}
+            {checking ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Проверява…</> : "Провери разбирането ми"}
           </button>
         )}
         {canAdvance && (
@@ -127,7 +127,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
             disabled={advancing}
             className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
           >
-            {advancing ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Saving…</> : <>Move to outlining <ArrowRight size={16} /></>}
+            {advancing ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Записва…</> : <>Към планирането <ArrowRight size={16} /></>}
           </button>
         )}
         {!canAdvance && checkCount >= 1 && !allPass && (
@@ -137,7 +137,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
             disabled={advancing}
             className="w-full h-11 rounded-xl border border-neutral-200 bg-white text-neutral-600 text-sm font-medium hover:bg-neutral-50 transition cursor-pointer"
           >
-            Continue anyway →
+            Продължи въпреки това →
           </button>
         )}
       </div>

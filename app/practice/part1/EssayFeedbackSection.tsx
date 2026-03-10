@@ -42,7 +42,7 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Your essay</p>
+        <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Твоето есе</p>
         <EssayEditor
           attemptId={attemptId}
           initialBody={initialBody}
@@ -60,14 +60,14 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
           {loading ? (
             <>
               <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-              Analysing your essay…
+              Анализира есето ти…
             </>
           ) : (
-            <>Submit for feedback <ArrowRight size={16} /></>
+            <>Изпрати за обратна връзка <ArrowRight size={16} /></>
           )}
         </button>
         {isEmpty && !loading && (
-          <p className="mt-2 text-xs text-neutral-400 text-center">Write something first to submit</p>
+          <p className="mt-2 text-xs text-neutral-400 text-center">Напиши нещо, преди да изпратиш</p>
         )}
         {error && (
           <p className="mt-3 text-sm text-red-600 text-center" role="alert">{error}</p>

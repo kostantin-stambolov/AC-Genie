@@ -18,7 +18,7 @@ export function LogoutButton() {
       aria-label="Sign out"
     >
       <LogOut size={16} />
-      <span className="hidden sm:inline">Sign out</span>
+      <span className="hidden sm:inline">Изход</span>
     </button>
   );
 }
