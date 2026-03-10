@@ -12,9 +12,9 @@ export function NewEssayFlow({ options }: { options: EssayPrompt[] }) {
     return (
       <div>
         <div className="mb-8">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Стъпка 1 от 2</p>
-          <h1 className="text-2xl font-bold text-neutral-900 mb-2">Как искаш да тренираш?</h1>
-          <p className="text-neutral-500 text-sm">Избери режим на практика, след което избери тема.</p>
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Стъпка 1 от 2</p>
+          <h1 className="text-[26px] font-semibold text-[#111827] mb-2 tracking-tight">Как искаш да тренираш?</h1>
+          <p className="text-[#6B7280] text-[15px]">Избери режим на практика, след което избери тема.</p>
         </div>
         <ModeSelector onSelect={setMode} />
       </div>
@@ -28,14 +28,14 @@ export function NewEssayFlow({ options }: { options: EssayPrompt[] }) {
           <button
             type="button"
             onClick={() => setMode(null)}
-            className="text-[10px] font-bold text-violet-400 uppercase tracking-widest hover:text-violet-600 transition cursor-pointer"
+            className="text-[12px] font-bold text-indigo-400 uppercase tracking-widest hover:text-indigo-600 transition cursor-pointer"
           >
             ← Промени режима
           </button>
-          <span className="text-[10px] text-neutral-300 font-bold uppercase tracking-widest">· Стъпка 2 от 2</span>
+          <span className="text-[12px] text-[#9CA3AF] font-bold uppercase tracking-widest">· Стъпка 2 от 2</span>
         </div>
-        <h1 className="text-2xl font-bold text-neutral-900 mb-2">Избери тема за есето</h1>
-        <p className="text-neutral-500 text-sm">
+        <h1 className="text-[26px] font-semibold text-[#111827] mb-2 tracking-tight">Избери тема за есето</h1>
+        <p className="text-[#6B7280] text-[15px]">
           Три теми са избрани специално за теб. Избери тази, която те вдъхновява най-много.
         </p>
       </div>

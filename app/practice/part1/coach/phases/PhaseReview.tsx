@@ -86,32 +86,31 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 4 · Самопроверка</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Прочети есето си и се провери</h2>
-        <p className="text-sm text-neutral-500">Прочети внимателно, след това отговори честно. На изпита ти ще бъдеш собственият си редактор.</p>
+                <h2 className="text-[22px] font-semibold text-[#111827] mb-1 tracking-tight">Прочети есето си и се провери</h2>
+        <p className="text-[15px] text-[#6B7280]">Прочети внимателно, след това отговори честно. На изпита ти ще бъдеш собственият си редактор.</p>
       </div>
 
       {/* Read-only essay */}
-      <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5 max-h-64 overflow-y-auto">
-        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">Твоето есе (само за четене)</p>
-        <p className="text-sm text-neutral-700 leading-relaxed whitespace-pre-wrap">{essayBody}</p>
+      <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5 max-h-64 overflow-y-auto">
+        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-3">Твоето есе (само за четене)</p>
+        <p className="text-[15px] text-[#6B7280] leading-relaxed whitespace-pre-wrap">{essayBody}</p>
       </div>
 
       {/* Checklist */}
-      <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5 space-y-3">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Контролен списък за самооценка</p>
+      <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5 space-y-3">
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Контролен списък за самооценка</p>
         {CHECKLIST_ITEMS.map(({ key, label, category, tip }) => {
           const val = answers[key] as boolean | undefined;
           return (
-            <div key={key} className="rounded-xl border border-neutral-100 p-3 space-y-2">
+            <div key={key} className="rounded-2xl border border-[#F3F4F6] p-3 space-y-2">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-[10px] font-bold uppercase tracking-widest ${
-                      category === "Идея" ? "text-violet-500" : category === "Структура" ? "text-indigo-500" : "text-sky-500"
+                    <span className={`text-[12px] font-bold uppercase tracking-widest ${
+                      category === "Идея" ? "text-indigo-500" : category === "Структура" ? "text-sky-500" : "text-emerald-500"
                     }`}>{category}</span>
                   </div>
-                  <p className="text-sm text-neutral-800 leading-snug">{label}</p>
+                  <p className="text-[15px] text-[#111827] leading-snug">{label}</p>
                 </div>
                 <div className="flex gap-1.5 shrink-0">
                   {[true, false].map(v => (
@@ -119,10 +118,10 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
                       key={String(v)}
                       type="button"
                       onClick={() => toggle(key, v)}
-                      className={`min-w-[44px] h-9 rounded-lg text-sm font-semibold transition cursor-pointer ${
+                      className={`min-w-[44px] h-9 rounded-xl text-[15px] font-semibold transition cursor-pointer ${
                         val === v
                           ? v ? "bg-emerald-600 text-white" : "bg-red-500 text-white"
-                          : "border border-neutral-200 bg-white text-neutral-500 hover:bg-neutral-50"
+                          : "border border-[#E5E7EB] bg-white text-[#9CA3AF] hover:bg-[#F3F4F6]"
                       }`}
                     >
                       {v ? "Да" : "Не"}
@@ -131,8 +130,8 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
                 </div>
               </div>
               {val === false && (
-                <div className="rounded-lg bg-amber-50 border border-amber-100 px-3 py-2">
-                  <p className="text-xs text-amber-800 leading-relaxed">💡 {tip}</p>
+                <div className="rounded-xl bg-amber-50 border border-amber-100 px-3 py-2">
+                  <p className="text-[13px] text-amber-800 leading-relaxed">💡 {tip}</p>
                 </div>
               )}
             </div>
@@ -140,20 +139,20 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
         })}
       </div>
 
-      {error && <p className="text-sm text-red-600 text-center" role="alert">{error}</p>}
+      {error && <p className="text-[15px] text-red-600 text-center" role="alert">{error}</p>}
 
       <button
         type="button"
         onClick={handleSubmit}
         disabled={!allAnswered || submitting || advancing}
-        className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+        className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
       >
         {submitting || advancing
           ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Анализира есето ти…</>
           : <>Изпрати за AI оценяване <ArrowRight size={16} /></>}
       </button>
       {!allAnswered && (
-        <p className="text-xs text-neutral-400 text-center">Отговори на всички въпроси, за да продължиш</p>
+        <p className="text-[13px] text-[#9CA3AF] text-center">Отговори на всички въпроси, за да продължиш</p>
       )}
     </div>
   );

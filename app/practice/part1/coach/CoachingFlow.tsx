@@ -44,46 +44,73 @@ const PHASE_LABELS: Record<CoachPhase, string> = {
   reflect:       "Размисли",
   completed:     "Готово",
 };
-const PHASE_ICONS: Record<CoachPhase, string> = {
-  comprehension: "💡",
-  outline:       "📝",
-  writing:       "✍️",
-  review:        "🔍",
-  feedback:      "📊",
-  reflect:       "🪞",
-  completed:     "✅",
+const PHASE_FULL_LABELS: Record<CoachPhase, string> = {
+  comprehension: "Разбери темата",
+  outline:       "Планирай есето",
+  writing:       "Пиши есето",
+  review:        "Провери есето",
+  feedback:      "Оценка",
+  reflect:       "Размисли",
+  completed:     "Готово",
 };
 
-function PhaseBar({ current }: { current: CoachPhase }) {
-  const currentIdx = PHASE_ORDER.indexOf(current);
+function PhaseBar({ current, topic }: { current: CoachPhase; topic: string }) {
+  const effectivePhase = current === "completed" ? "reflect" : current;
+  const currentIdx = PHASE_ORDER.indexOf(effectivePhase);
+  const phaseNumber = currentIdx + 1;
+  const total = PHASE_ORDER.length;
+
+  const r = 16;
+  const cx = 20;
+  const cy = 20;
+  const circumference = 2 * Math.PI * r;
+  const progress = phaseNumber / total;
+  const dashoffset = circumference * (1 - progress);
+
   return (
-    <div className="bg-white border-b border-neutral-100 px-4 py-3">
-      <div className="max-w-2xl mx-auto flex items-center justify-between gap-1">
-        {PHASE_ORDER.map((ph, i) => {
-          const done   = i < currentIdx;
-          const active = i === currentIdx;
-          return (
-            <div key={ph} className="flex items-center flex-1 min-w-0">
-              <div className="flex flex-col items-center gap-1 flex-shrink-0">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm transition-all ${
-                  done   ? "bg-violet-600 text-white" :
-                  active ? "bg-violet-100 ring-2 ring-violet-500 ring-offset-1 text-violet-700" :
-                           "bg-neutral-100 text-neutral-400"
-                }`}>
-                  {done ? "✓" : PHASE_ICONS[ph]}
-                </div>
-                <span className={`text-[9px] font-bold uppercase tracking-widest leading-none hidden sm:block ${
-                  active ? "text-violet-600" : done ? "text-violet-400" : "text-neutral-300"
-                }`}>
-                  {PHASE_LABELS[ph]}
-                </span>
-              </div>
-              {i < PHASE_ORDER.length - 1 && (
-                <div className={`flex-1 h-0.5 mx-1 rounded-full transition-all ${done ? "bg-violet-400" : "bg-neutral-200"}`} />
-              )}
-            </div>
-          );
-        })}
+    <div className="bg-[#F0F2F5] px-4 pt-4 pb-2">
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-4 py-3 flex items-center gap-3">
+          {/* Circular progress */}
+          <div className="shrink-0 relative w-10 h-10">
+            <svg width="40" height="40" className="-rotate-90">
+              <circle cx={cx} cy={cy} r={r} fill="none" stroke="#E5E7EB" strokeWidth="3" />
+              <circle
+                cx={cx} cy={cy} r={r} fill="none"
+                stroke="#0B1F3A" strokeWidth="3"
+                strokeDasharray={circumference}
+                strokeDashoffset={dashoffset}
+                strokeLinecap="round"
+                className="transition-all duration-500"
+              />
+            </svg>
+            <span className="absolute inset-0 flex items-center justify-center text-[13px] font-bold text-[#0B1F3A]">
+              {phaseNumber}
+            </span>
+          </div>
+
+          {/* Topic (main title) + phase name + counter */}
+          <div className="flex-1 min-w-0">
+            <p className="text-[16px] font-bold text-[#111827] leading-tight line-clamp-2">{topic}</p>
+            <p className="text-[12px] text-[#9CA3AF] mt-0.5">{PHASE_FULL_LABELS[current]} · {phaseNumber} от {total}</p>
+          </div>
+
+          {/* Dot progress */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {PHASE_ORDER.map((_, i) => (
+              <div
+                key={i}
+                className={`rounded-full transition-all duration-300 ${
+                  i < currentIdx
+                    ? "w-2 h-2 bg-[#0B1F3A]"
+                    : i === currentIdx
+                    ? "w-2.5 h-2.5 bg-[#0B1F3A]"
+                    : "w-2 h-2 bg-[#D1D5DB]"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -121,15 +148,9 @@ export function CoachingFlow({
 
   return (
     <div>
-      <PhaseBar current={phase} />
+      <PhaseBar current={phase} topic={prompt.title} />
 
-      {/* Topic banner — visible on every phase */}
-      <div className="bg-white border-b border-neutral-100">
-        <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-start gap-2.5">
-          <span className="shrink-0 mt-0.5 text-[10px] font-bold text-violet-400 uppercase tracking-widest whitespace-nowrap">Тема</span>
-          <span className="text-sm font-semibold text-neutral-700 leading-snug line-clamp-2">{prompt.title}</span>
-        </div>
-      </div>
+
 
       <main className="max-w-2xl mx-auto px-4 py-8">
         {phase === "comprehension" && (
@@ -178,9 +199,10 @@ export function CoachingFlow({
             onAdvance={async () => await advancePhase("reflect")}
           />
         )}
-        {phase === "reflect" && (
+        {(phase === "reflect" || phase === "completed") && (
           <PhaseReflect
             feedbackData={feedData} phaseTimings={timings} advancing={advancing}
+            initialDone={phase === "completed"}
             onAdvance={async (reflection) => {
               await advancePhase("completed", { reflection });
             }}

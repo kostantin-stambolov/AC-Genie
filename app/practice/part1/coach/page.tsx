@@ -3,20 +3,13 @@ import { getSessionUserId } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { NavHeader } from "@/components/NavHeader";
 import { CoachingFlow } from "./CoachingFlow";
+import { resolveStoredPrompt } from "@/lib/essay-prompts";
 
 type Props = { searchParams: Promise<{ attemptId?: string }> };
 
 function parseJson<T>(s: string | null): T | null {
   if (!s) return null;
   try { return JSON.parse(s) as T; } catch { return null; }
-}
-
-function parsePrompt(promptText: string | null) {
-  if (!promptText) return null;
-  try {
-    const p = JSON.parse(promptText) as { title?: string; instruction?: string; body?: string };
-    return { title: p.title ?? "", instruction: p.instruction ?? "", body: p.body ?? "" };
-  } catch { return null; }
 }
 
 export default async function CoachPage({ searchParams }: Props) {
@@ -32,11 +25,11 @@ export default async function CoachPage({ searchParams }: Props) {
   if (!attempt) redirect("/home");
   if (attempt.status === "completed") redirect("/practice/part1/examples");
 
-  const prompt = parsePrompt(attempt.promptText);
+  const prompt = resolveStoredPrompt(attempt.promptText);
   if (!prompt) redirect("/home");
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-[#F0F2F5]">
       <NavHeader backHref="/home" backLabel="Начало" title="Обучителна сесия" />
       <CoachingFlow
         attemptId={attemptId}

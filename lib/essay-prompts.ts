@@ -24,14 +24,14 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Въздушни кули",
     body: `„Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат. Сега сложи основите под тях." — Хенри Дейвид Торо`,
     instruction:
-      "Какво мислиш, че Торо има предвид с „въздушни кули"? Съгласен ли си, че изграждането им си заслужава? Ако можеш да изградиш своята „кула", каква би тя и как би положил основите?",
+      `Какво мислиш, че Торо има предвид с „въздушни кули"? Съгласен ли си, че изграждането им си заслужава? Ако можеш да изградиш своята „кула", каква би тя и как би положил основите?`,
   },
   {
     id: "quote-orwell",
     title: "Думи и свобода",
     body: `„Ако свободата изобщо нещо означава, тя означава правото да казваш на хората това, което не искат да чуят." — Джордж Оруел`,
     instruction:
-      "Какво е свободата и кога се чувстваме наистина свободни? Каква е връзката между свободата и нуждата да бъдем чути? Напиши есе на тема „Думи и свобода".",
+      `Какво е свободата и кога се чувстваме наистина свободни? Каква е връзката между свободата и нуждата да бъдем чути? Напиши есе на тема „Думи и свобода".`,
   },
   {
     id: "quote-twain",
@@ -52,7 +52,7 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Образованието като оръжие",
     body: `„Образованието е най-мощното оръжие, с което можеш да промениш света." — Нелсън Мандела`,
     instruction:
-      "Вярваш ли, че образованието е най-мощната сила за промяна в света? Какво означава „образование" за теб извън класната стая? Защити позицията си с примери.",
+      `Вярваш ли, че образованието е най-мощната сила за промяна в света? Какво означава „образование" за теб извън класната стая? Защити позицията си с примери.`,
   },
   {
     id: "quote-confucius",
@@ -66,7 +66,7 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Бъди себе си",
     body: `„Бъди себе си — всички останали са вече заети." — Оскар Уайлд`,
     instruction:
-      "Лесно ли е винаги да „бъдеш себе си"? Има ли моменти, в които е трудно или дори рисковано да покажеш кой наистина си? Напиши есе, което изследва цената — и наградата — на автентичността.",
+      `Лесно ли е винаги да „бъдеш себе си"? Има ли моменти, в които е трудно или дори рисковано да покажеш кой наистина си? Напиши есе, което изследва цената — и наградата — на автентичността.`,
   },
   {
     id: "quote-tolstoy",
@@ -101,7 +101,7 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Книги, които ни променят",
     body: `„Книгата трябва да бъде брадвата за замръзналото море вътре в нас." — Франц Кафка`,
     instruction:
-      "Дали книга, филм или музика са „разбили нещо" вътре в теб — промениле начина, по който виждаш себе си или света? Опиши преживяването и обясни защо те е засегнало толкова дълбоко.",
+      `Дали книга, филм или музика са „разбили нещо" вътре в теб — промениле начина, по който виждаш себе си или света? Опиши преживяването и обясни защо те е засегнало толкова дълбоко.`,
   },
   {
     id: "quote-sagan",
@@ -115,7 +115,7 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Как прекарваме дните си",
     body: `„Не е, че живеем кратко — а че губим много от живота си." — Сенека`,
     instruction:
-      "Чувстваш ли, че използваш добре времето си? Какво означава да „губиш" времето и лошо ли е винаги? Напиши есе, в което размишляваш върху това как прекарваш дните си и какво бихte променил.",
+      `Чувстваш ли, че използваш добре времето си? Какво означава да „губиш" времето и лошо ли е винаги? Напиши есе, в което размишляваш върху това как прекарваш дните си и какво би променил.`,
   },
 
   // ── ЛИЧНИ ТЕМИ ────────────────────────────────────────────────────────────
@@ -270,14 +270,14 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
     title: "Върви спокойно",
     body: `„Върви спокойно всред шума и бързината и помни какъв мир може да има в мълчанието. Доколкото е възможно, без да се предаваш, живей в мир с всички хора." — Макс Ерман, „Desiderata"`,
     instruction:
-      "Наистина ли е възможно да живееш „в мир с всички хора"? Запазването на спокойствие сред конфликта признак ли е за мъдрост или за слабост? Напиши есе в отговор на тази идея.",
+      `Наистина ли е възможно да живееш „в мир с всички хора"? Запазването на спокойствие сред конфликта признак ли е за мъдрост или за слабост? Напиши есе в отговор на тази идея.`,
   },
   {
     id: "poem-roads-not-taken",
     title: "Пътят, непоет",
     body: `„Ще го разказвам с въздишка\nнякъде в далечни времена:\nдва пътя се делиха в гора, и аз —\nпоех по по-рядко извървяния,\nи от това всичко се промени." — Робърт Фрост`,
     instruction:
-      "Правил ли си некога избор, противен на това, което повечето около теб биха направили? Какъв беше той? Промени ли „всичко"? Напиши есе за момент, в който поe собствения си път.",
+      `Правил ли си некога избор, противен на това, което повечето около теб биха направили? Какъв беше той? Промени ли „всичко"? Напиши есе за момент, в който поe собствения си път.`,
   },
 
   // ── ОБЩЕСТВО И СВЯТ ──────────────────────────────────────────────────────
@@ -305,7 +305,7 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
   {
     id: "heroes",
     title: "Какво прави героя?",
-    body: "Думата „герой" използваме за войници, спортисти, активисти и дори измислени герои. Но какво наистина означава да си герой?",
+    body: `Думата „герой" използваме за войници, спортисти, активисти и дори измислени герои. Но какво наистина означава да си герой?`,
     instruction:
       "Напиши есе, което дефинира какво наистина е герой. Използвай примери от историята, литературата или собствения си опит. Героизмът винаги ли е драматичен, или може да бъде тих и ежедневен?",
   },
@@ -364,4 +364,92 @@ export const ESSAY_PROMPTS: EssayPrompt[] = [
 export function pickRandomPrompts(n: number): EssayPrompt[] {
   const shuffled = [...ESSAY_PROMPTS].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, n);
+}
+
+/**
+ * Maps old English prompt titles (stored before the Bulgarian translation)
+ * to their corresponding prompt IDs for backwards compatibility.
+ */
+const LEGACY_TITLE_TO_ID: Record<string, string> = {
+  "The first step": "quote-lao-tzu",
+  "Castles in the air": "quote-thoreau",
+  "Words and freedom": "quote-orwell",
+  "Courage and fear": "quote-twain",
+  "Imagination and knowledge": "quote-einstein",
+  "Education as a weapon": "quote-mandela",
+  "Knowing yourself": "quote-confucius",
+  "Being yourself": "quote-wilde",
+  "Three most important things": "quote-tolstoy",
+  "The best things": "quote-helen-keller",
+  "Be the change": "quote-gandhi",
+  "Excellence is a habit": "quote-aristotle",
+  "Books that change us": "quote-kafka",
+  "Pale blue dot": "quote-sagan",
+  "How we spend our days": "quote-seneca",
+  "When I travel": "theme-travel",
+  "When I am alone": "theme-alone",
+  "When I failed": "theme-fail",
+  "When I helped": "theme-helped",
+  "When I was afraid": "theme-afraid",
+  "When something was unfair": "theme-unfair",
+  "When I changed my mind": "theme-changed-my-mind",
+  "Someone you would choose": "someone-special",
+  "A book that mattered": "significant-book",
+  "One rule for the world": "one-rule",
+  "One ability you wish you had": "superpower",
+  "A letter to your future self": "letter-to-self",
+  "A place that matters": "place-matters",
+  "The person I admire most": "admire-most",
+  "What would you do?": "witness-choice",
+  "On punishment": "punishment",
+  "A good lie": "lie-for-good",
+  "The price of connection": "social-media",
+  "Privacy or safety?": "privacy-vs-safety",
+  "Two roads": "two-roads",
+  "Go placidly": "poem-desiderata",
+  "The road not taken": "poem-roads-not-taken",
+  "Our responsibility to nature": "environment",
+  "Machines and us": "ai-and-humans",
+  "Is life fair?": "fairness",
+  "What makes a hero?": "heroes",
+  "What is success?": "success",
+  "Tradition or progress?": "tradition-vs-change",
+  "The end of childhood": "childhood",
+  "Things we take for granted": "gratitude",
+  "Your goal and your first step": "goal-first-step",
+  "Language and who we are": "language-identity",
+  "Is kindness a strength?": "kindness-strength",
+};
+
+/**
+ * Resolves a stored promptText JSON string to the current (translated) prompt.
+ * Handles three cases:
+ *  1. JSON has `id` → look up live prompt directly
+ *  2. JSON has an old English `title` → map to ID via legacy table
+ *  3. No match → return the raw stored fields as-is
+ */
+export function resolveStoredPrompt(promptText: string | null): EssayPrompt | null {
+  if (!promptText) return null;
+  try {
+    const p = JSON.parse(promptText) as { id?: string; title?: string; instruction?: string; body?: string };
+    // Case 1: ID is present (new attempts)
+    if (p.id) {
+      const live = ESSAY_PROMPTS.find((ep) => ep.id === p.id);
+      if (live) return live;
+    }
+    // Case 2: Old English title stored before translation
+    if (p.title && LEGACY_TITLE_TO_ID[p.title]) {
+      const live = ESSAY_PROMPTS.find((ep) => ep.id === LEGACY_TITLE_TO_ID[p.title!]);
+      if (live) return live;
+    }
+    // Case 3: Fall back to whatever is stored
+    return {
+      id: "",
+      title: p.title ?? "Есе",
+      instruction: p.instruction ?? "",
+      body: p.body ?? "",
+    };
+  } catch {
+    return { id: "", title: "Есе", instruction: promptText, body: "" };
+  }
 }

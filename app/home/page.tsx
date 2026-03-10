@@ -29,45 +29,47 @@ export default async function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-[#F0F2F5]">
       {/* Top nav */}
-      <header className="bg-white border-b border-neutral-100 px-5 h-14 flex items-center justify-between sticky top-0 z-20">
+      <header className="bg-white border-b border-[#E5E7EB] px-5 h-14 flex items-center justify-between sticky top-0 z-20">
         <div className="flex items-center gap-2.5">
-          <span className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white font-bold text-sm select-none">AC</span>
-          <span className="font-semibold text-neutral-900 tracking-tight">American College Prep</span>
+          <span className="w-8 h-8 rounded-lg bg-[#0B1F3A] flex items-center justify-center text-white font-bold text-sm select-none">AC</span>
+          <span className="font-semibold text-[#111827] tracking-tight">American College Prep</span>
         </div>
         <LogoutButton />
       </header>
 
       <main className="max-w-xl mx-auto px-4 py-10">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">Твоята практика</h1>
-          <p className="text-neutral-500 text-sm">Напиши есе, получи обратна връзка и се подобри.</p>
+          <h1 className="text-[26px] font-semibold text-[#111827] mb-1 tracking-tight">Твоята практика</h1>
+          <p className="text-[#6B7280] text-[15px]">Напиши есе, получи обратна връзка и се подобри.</p>
         </div>
 
         {/* Essay card */}
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm overflow-hidden">
-          <div className="px-6 py-5 border-b border-neutral-100 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center text-violet-600 text-base shrink-0">✍️</div>
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
+          <div className="px-6 py-5 border-b border-[#F3F4F6] flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
+              <ArrowRight size={18} className="text-indigo-600 rotate-[-45deg]" />
+            </div>
             <div>
-              <h2 className="font-semibold text-neutral-900 text-base">Есе</h2>
-              <p className="text-neutral-500 text-xs">Част 1 от приемния изпит</p>
+              <h2 className="font-semibold text-[#111827] text-[15px]">Есе</h2>
+              <p className="text-[#9CA3AF] text-[13px]">Част 1 от приемния изпит</p>
             </div>
             <div className="ml-auto">
               {hasActive && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                   В процес
                 </span>
               )}
               {!hasActive && hasCompleted && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                   Завършено
                 </span>
               )}
               {!hasActive && !hasCompleted && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500 bg-neutral-100 rounded-full px-2.5 py-1">
+                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#9CA3AF] bg-[#F3F4F6] rounded-full px-2.5 py-1">
                   Не е започнато
                 </span>
               )}
@@ -80,25 +82,25 @@ export default async function HomePage() {
                 {activeMode === "v2" ? (
                   <>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-violet-500 bg-violet-50 border border-violet-200 rounded-full px-2.5 py-1">🧭 Насочено обучение</span>
+                      <span className="text-[12px] font-semibold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-full px-2.5 py-1">Насочено обучение</span>
                       {activePhase && PHASE_LABELS[activePhase] && (
-                        <span className="text-xs text-neutral-400">{PHASE_LABELS[activePhase]}</span>
+                        <span className="text-[13px] text-[#9CA3AF]">{PHASE_LABELS[activePhase]}</span>
                       )}
                     </div>
-                    <p className="text-sm text-neutral-600">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
+                    <p className="text-[15px] text-[#6B7280]">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
                   </>
                 ) : (
-                  <p className="text-sm text-neutral-600">Имаш есе в процес. Продължи откъдето спря.</p>
+                  <p className="text-[15px] text-[#6B7280]">Имаш есе в процес. Продължи откъдето спря.</p>
                 )}
                 <Link
                   href={activeHref}
-                  className="flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition cursor-pointer"
+                  className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
                 >
                   {activeMode === "v2" ? <>Продължи сесията <ArrowRight size={16} /></> : <>Продължи писането <ArrowRight size={16} /></>}
                 </Link>
                 <Link
                   href="/practice/part1/examples"
-                  className="flex items-center justify-center w-full h-11 rounded-xl bg-neutral-100 text-neutral-500 text-sm font-medium hover:bg-neutral-200 transition cursor-pointer"
+                  className="flex items-center justify-center w-full h-[50px] rounded-2xl bg-[#F3F4F6] text-[#6B7280] text-[15px] font-normal hover:bg-[#E5E7EB] transition cursor-pointer"
                 >
                   Виж предишни опити
                 </Link>
@@ -106,21 +108,21 @@ export default async function HomePage() {
             ) : (
               <>
                 {hasCompleted && (
-                  <p className="text-sm text-neutral-600">Браво, завърши есе! Напиши ново, за да продължиш да тренираш.</p>
+                  <p className="text-[15px] text-[#6B7280]">Браво, завърши есе! Напиши ново, за да продължиш да тренираш.</p>
                 )}
                 {!hasCompleted && (
-                  <p className="text-sm text-neutral-600">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
+                  <p className="text-[15px] text-[#6B7280]">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
                 )}
                 <Link
                   href="/practice/part1/new"
-                  className="flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition cursor-pointer"
+                  className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
                 >
                   Напиши ново есе <ArrowRight size={16} />
                 </Link>
                 {hasCompleted && (
                   <Link
                     href="/practice/part1/examples"
-                    className="flex items-center justify-center w-full h-11 rounded-xl bg-neutral-100 text-neutral-500 text-sm font-medium hover:bg-neutral-200 transition cursor-pointer"
+                    className="flex items-center justify-center w-full h-[50px] rounded-2xl bg-[#F3F4F6] text-[#6B7280] text-[15px] font-normal hover:bg-[#E5E7EB] transition cursor-pointer"
                   >
                     Виж предишни опити
                   </Link>

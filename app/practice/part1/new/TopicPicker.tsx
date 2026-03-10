@@ -5,13 +5,13 @@ import type { EssayPrompt } from "@/lib/essay-prompts";
 import { ChevronRight } from "@/components/icons";
 
 function formatPromptForStorage(p: EssayPrompt): string {
-  return JSON.stringify({ title: p.title, instruction: p.instruction, body: p.body });
+  return JSON.stringify({ id: p.id, title: p.title, instruction: p.instruction, body: p.body });
 }
 
 const TOPIC_COLORS = [
-  { border: "border-violet-200", badge: "bg-violet-100 text-violet-700", dot: "bg-violet-400" },
-  { border: "border-indigo-200", badge: "bg-indigo-100 text-indigo-700", dot: "bg-indigo-400" },
-  { border: "border-sky-200",    badge: "bg-sky-100 text-sky-700",       dot: "bg-sky-400" },
+  { border: "border-indigo-200", badge: "bg-indigo-50 text-indigo-700", dot: "bg-indigo-400" },
+  { border: "border-sky-200",    badge: "bg-sky-50 text-sky-700",       dot: "bg-sky-400" },
+  { border: "border-emerald-200",badge: "bg-emerald-50 text-emerald-700",dot: "bg-emerald-400" },
 ];
 
 type Props = { options: EssayPrompt[]; coachingMode?: "v1" | "v2" };
@@ -69,29 +69,29 @@ export function TopicPicker({ options, coachingMode = "v1" }: Props) {
                 type="button"
                 onClick={() => handleSelect(prompt)}
                 disabled={isDisabled}
-                className={`w-full text-left bg-white rounded-2xl border-2 ${color.border} p-5 hover:shadow-md active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer group`}
+                className={`w-full text-left bg-white rounded-3xl border-2 ${color.border} p-5 hover:shadow-md active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer group`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-2.5 py-0.5 ${color.badge}`}>
+                      <span className={`inline-flex items-center gap-1.5 text-[12px] font-semibold rounded-full px-2.5 py-0.5 ${color.badge}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${color.dot}`} />
                         Тема {idx + 1}
                       </span>
                     </div>
-                    <h3 className="font-semibold text-neutral-900 text-base mb-1.5 leading-snug">{prompt.title}</h3>
-                    <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed">{prompt.body}</p>
+                    <h3 className="font-semibold text-[#111827] text-[18px] mb-1.5 leading-snug">{prompt.title}</h3>
+                    <p className="text-[15px] text-[#6B7280] line-clamp-2 leading-relaxed">{prompt.body}</p>
                   </div>
                   <div className="shrink-0 mt-1">
                     {isLoading ? (
-                      <div className="w-5 h-5 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
                     ) : (
-                      <ChevronRight size={20} className="text-neutral-300 group-hover:text-violet-500 transition" />
+                      <ChevronRight size={20} className="text-[#E5E7EB] group-hover:text-indigo-500 transition" />
                     )}
                   </div>
                 </div>
                 {isLoading && (
-                  <p className="text-xs text-violet-600 mt-3 font-medium">
+                  <p className="text-[13px] text-indigo-600 mt-3 font-medium">
                     {coachingMode === "v2" ? "Отваря обучителна сесия…" : "Отваря есето…"}
                   </p>
                 )}

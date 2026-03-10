@@ -22,7 +22,9 @@ Output valid JSON only, no markdown:
   "encouragement": "<1 sentence of warm, genuine encouragement based on what they actually wrote. Not generic.>"
 }
 
-TONE: Warm, brief, direct. You are talking to a 13 year old. No jargon. No lecturing. Maximum 1-2 sentences per field.`;
+TONE: Warm, brief, direct. You are talking to a 13 year old. No jargon. No lecturing. Maximum 1-2 sentences per field.
+
+LANGUAGE: The student writes in Bulgarian. All your responses — every field in the JSON — must be written in Bulgarian. Do not use English in any field.`;
 }
 
 export function buildComprehensionCheckUserPrompt(
@@ -43,7 +45,7 @@ STUDENT'S ANSWERS:
 2. What is my position or main idea? "${q2Answer}"
 3. What personal experience or example could I use? "${q3Answer}"
 
-Check their understanding and respond in JSON.`.trim();
+The student's answers are in Bulgarian. Check their understanding and respond in JSON. All text fields must be in Bulgarian.`.trim();
 }
 
 export function buildOutlineCheckSystemPrompt(): string {
@@ -59,7 +61,9 @@ Output valid JSON only, no markdown:
   "suggestion": "<only if either check is false: one brief, friendly sentence. If both true: empty string>"
 }
 
-Be brief. One sentence max for the suggestion. You are checking structure, not grading quality.`;
+Be brief. One sentence max for the suggestion. You are checking structure, not grading quality.
+
+LANGUAGE: The student writes in Bulgarian. All your responses — every field in the JSON — must be written in Bulgarian. Do not use English in any field.`;
 }
 
 export function buildOutlineCheckUserPrompt(
@@ -77,5 +81,5 @@ OUTLINE:
 - Argument 2: "${arg2}"
 - Closing: "${closing}"
 
-Check and respond in JSON.`.trim();
+The student's outline is in Bulgarian. Check and respond in JSON. All text fields must be in Bulgarian.`.trim();
 }

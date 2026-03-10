@@ -23,7 +23,7 @@ export default async function Part1NewPage() {
   const options = pickRandomPrompts(3);
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-[#F0F2F5]">
       <NavHeader backHref="/home" backLabel="Начало" title="Ново есе" />
       <main className="max-w-2xl mx-auto px-4 py-10">
         <NewEssayFlow options={options} />

@@ -54,9 +54,9 @@ function safeFeedback(raw: string): string {
 
 function SubScoreBars({ e1, e2 }: { e1: ExaminerScore; e2: ExaminerScore }) {
   const bars = [
-    { label: "Идея и съдържание", avg: (e1.ideaContent + e2.ideaContent) / 2, max: 10, fill: "bg-violet-500" },
-    { label: "Структура",         avg: (e1.structure   + e2.structure)   / 2, max: 4,  fill: "bg-indigo-400" },
-    { label: "Език",              avg: (e1.language    + e2.language)    / 2, max: 6,  fill: "bg-sky-400" },
+    { label: "Идея и съдържание", avg: (e1.ideaContent + e2.ideaContent) / 2, max: 10, fill: "bg-indigo-500" },
+    { label: "Структура",         avg: (e1.structure   + e2.structure)   / 2, max: 4,  fill: "bg-sky-400" },
+    { label: "Език",              avg: (e1.language    + e2.language)    / 2, max: 6,  fill: "bg-emerald-400" },
   ];
   const fmt = (v: number) => Number.isInteger(v) ? String(v) : v.toFixed(1);
   return (
@@ -112,27 +112,27 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
     } catch { /* empty */ }
   }
 
-  const sc = scoreColor(finalScore, 40);
+  const sc = scoreColor(finalScore, 20);
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-[#F0F2F5]">
       <NavHeader backHref="/home" backLabel="Начало" title="Обратна връзка" />
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-4">
 
         {/* ── Score overview card ── */}
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm overflow-hidden">
-          <div className="px-6 pt-5 pb-4 border-b border-neutral-100">
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Твоят резултат</p>
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
+          <div className="px-6 pt-5 pb-4 border-b border-[#F3F4F6]">
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоят резултат</p>
             <div className="flex items-center gap-4">
               <div className={`rounded-2xl px-5 py-3 flex flex-col items-center shrink-0 ${sc.chip}`}>
-              <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
-              <span className={`text-xs font-semibold mt-1 ${sc.text} opacity-60`}>/ 20</span>
+                <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
+                <span className={`text-[13px] font-semibold mt-1 ${sc.text} opacity-60`}>/ 20</span>
               </div>
               <div>
-                <p className="text-base font-bold text-neutral-900 leading-snug">{finalScoreLabel(finalScore)}</p>
-                <p className="text-sm text-neutral-500 mt-0.5">Средна оценка на двама независими проверяващи (по 20 т.).</p>
+                <p className="text-[18px] font-semibold text-[#111827] leading-snug">{finalScoreLabel(finalScore)}</p>
+                <p className="text-[15px] text-[#6B7280] mt-0.5">Средна оценка на двама независими проверяващи (по 20 т.).</p>
                 {arbitrated && (
-                  <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
+                  <span className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
                     <AlertCircle size={12} /> Приложен арбитраж
                   </span>
                 )}
@@ -143,7 +143,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
           {/* Sub-score bars */}
           {e1 && e2 && (
             <div className="px-6 py-4">
-              <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Частични оценки (средно)</p>
+              <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Частични оценки (средно)</p>
               <SubScoreBars e1={e1} e2={e2} />
             </div>
           )}
@@ -151,9 +151,9 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
 
         {/* ── Arbitration notice ── */}
         {arbitrated && (
-          <div className="bg-amber-50 rounded-2xl border border-amber-200 px-5 py-4">
-            <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-1">Какво е арбитраж?</p>
-            <p className="text-sm text-amber-800 leading-relaxed">
+          <div className="bg-amber-50 rounded-3xl border border-amber-200 px-5 py-4">
+            <p className="text-[12px] font-bold text-amber-700 uppercase tracking-widest mb-1">Какво е арбитраж?</p>
+            <p className="text-[15px] text-amber-800 leading-relaxed">
               Двамата проверяващи се различават с 4+ точки. На изпита това задейства трети проверяващ, чиято оценка
               се удвоява за крайния резултат. Постоянното представяне и по трите критерия е ключово за стабилен резултат.
             </p>
@@ -166,8 +166,8 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
             {([{ label: "Examiner 1", e: e1 }, { label: "Examiner 2", e: e2 }] as const).map(({ label, e }) => {
               const c = scoreColor(e.total, 20);
               return (
-                <div key={label} className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-5">
-                  <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">{label}</p>
+                <div key={label} className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5">
+                  <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">{label}</p>
                   <div className="space-y-2 mb-4">
                     {[
                       { name: "Идея и съдържание", val: e.ideaContent, max: 10 },
@@ -175,17 +175,17 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                       { name: "Език",              val: e.language,    max: 6  },
                     ].map((row) => (
                       <div key={row.name} className="flex justify-between items-center">
-                        <span className="text-sm text-neutral-600">{row.name}</span>
-                        <span className="text-sm font-semibold text-neutral-800">{row.val}<span className="text-neutral-400 font-normal">/{row.max}</span></span>
+                        <span className="text-[15px] text-[#6B7280]">{row.name}</span>
+                        <span className="text-[15px] font-semibold text-[#111827]">{row.val}<span className="text-[#9CA3AF] font-normal">/{row.max}</span></span>
                       </div>
                     ))}
                   </div>
-                  <div className="border-t border-neutral-100 pt-3 flex justify-between items-center">
-                    <span className="text-xs text-neutral-400 font-medium">Общо</span>
-                    <span className={`text-xl font-bold ${c.text}`}>{e.total}<span className="text-sm font-normal text-neutral-400"> / 20</span></span>
+                  <div className="border-t border-[#F3F4F6] pt-3 flex justify-between items-center">
+                    <span className="text-[13px] text-[#9CA3AF] font-medium">Общо</span>
+                    <span className={`text-xl font-bold ${c.text}`}>{e.total}<span className="text-[13px] font-normal text-[#9CA3AF]"> / 20</span></span>
                   </div>
                   {e.notes && (
-                    <p className="mt-2.5 text-xs text-neutral-500 italic leading-relaxed border-t border-neutral-50 pt-2.5">{e.notes}</p>
+                    <p className="mt-2.5 text-[13px] text-[#9CA3AF] italic leading-relaxed border-t border-[#F3F4F6] pt-2.5">{e.notes}</p>
                   )}
                 </div>
               );
@@ -195,37 +195,37 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
 
         {/* ── Key takeaway ── */}
         {keyTakeaway && (
-          <div className="bg-violet-50 rounded-2xl border border-violet-200 px-5 py-4 flex gap-3 items-start">
-            <div className="shrink-0 w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center mt-0.5">
-              <span className="text-white text-xs font-bold">!</span>
+          <div className="bg-indigo-50 rounded-3xl border border-indigo-100 px-5 py-4 flex gap-3 items-start">
+            <div className="shrink-0 w-7 h-7 rounded-full bg-[#0B1F3A] flex items-center justify-center mt-0.5">
+              <span className="text-white text-[12px] font-bold">!</span>
             </div>
             <div>
-              <p className="text-[10px] font-bold text-violet-600 uppercase tracking-widest mb-1">Най-важното за подобряване</p>
-              <p className="text-sm font-semibold text-violet-900 leading-snug">{keyTakeaway}</p>
+              <p className="text-[12px] font-bold text-indigo-600 uppercase tracking-widest mb-1">Най-важното за подобряване</p>
+              <p className="text-[15px] font-semibold text-[#111827] leading-snug">{keyTakeaway}</p>
             </div>
           </div>
         )}
 
         {/* ── Feedback text ── */}
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-6 py-5">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Обратна връзка</p>
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-5">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Обратна връзка</p>
           <div className="space-y-4">
             {feedback.split(/\n\n+/).map((para, i) => (
-              <p key={i} className="text-neutral-700 text-[15px] leading-relaxed">{para.trim()}</p>
+              <p key={i} className="text-[#6B7280] text-[15px] leading-relaxed">{para.trim()}</p>
             ))}
           </div>
         </div>
 
         {/* ── Language errors ── */}
         {languageErrors.length > 0 && (
-          <div className="bg-white rounded-2xl border border-amber-100 shadow-sm px-6 py-5">
+          <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-5">
             <div className="flex items-center gap-2 mb-1">
               <AlertCircle size={14} className="text-amber-500 shrink-0" />
-              <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">
+              <p className="text-[12px] font-bold text-amber-600 uppercase tracking-widest">
                 Езикови и правописни грешки ({languageErrors.length})
               </p>
             </div>
-            <p className="text-sm text-neutral-500 mb-5">
+            <p className="text-[15px] text-[#6B7280] mb-5">
               Поправи ги в следващия черновик — всяка от тях влияе директно на оценката ти.
             </p>
             <ul className="space-y-3">
@@ -234,35 +234,35 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                   spelling:    { badge: "bg-red-100 text-red-700",    border: "border-red-100" },
                   grammar:     { badge: "bg-orange-100 text-orange-700", border: "border-orange-100" },
                   punctuation: { badge: "bg-blue-100 text-blue-700",  border: "border-blue-100" },
-                  word_choice: { badge: "bg-violet-100 text-violet-700", border: "border-violet-100" },
-                  style:       { badge: "bg-neutral-100 text-neutral-600", border: "border-neutral-100" },
+                  word_choice: { badge: "bg-indigo-50 text-indigo-700", border: "border-indigo-100" },
+                  style:       { badge: "bg-[#F3F4F6] text-[#6B7280]", border: "border-[#E5E7EB]" },
                 };
                 const ts = typeStyles[err.type] ?? typeStyles.style;
                 return (
-                  <li key={i} className={`rounded-xl border ${ts.border} overflow-hidden`}>
+                  <li key={i} className={`rounded-2xl border ${ts.border} overflow-hidden`}>
                     {/* Header row */}
-                    <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 border-b border-neutral-100">
-                      <span className={`text-[11px] font-bold uppercase tracking-widest rounded-full px-2.5 py-0.5 ${ts.badge}`}>
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-[#F9FAFB] border-b border-[#F3F4F6]">
+                      <span className={`text-[12px] font-bold uppercase tracking-widest rounded-full px-2.5 py-0.5 ${ts.badge}`}>
                         {err.type.replace(/_/g, " ")}
                       </span>
-                      <span className="text-xs text-neutral-400">Грешка {i + 1}</span>
+                      <span className="text-[13px] text-[#9CA3AF]">Грешка {i + 1}</span>
                     </div>
                     {/* Before / After */}
-                    <div className="grid grid-cols-2 divide-x divide-neutral-100">
+                    <div className="grid grid-cols-2 divide-x divide-[#F3F4F6]">
                       <div className="px-4 py-3">
-                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Написал/а си</p>
-                        <p className="text-sm font-medium text-red-600 line-through">{err.original}</p>
+                        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Написал/а си</p>
+                        <p className="text-[15px] font-medium text-red-600 line-through">{err.original}</p>
                       </div>
                       <div className="px-4 py-3">
-                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Трябва да бъде</p>
-                        <p className="text-sm font-semibold text-emerald-700">{err.correction}</p>
+                        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Трябва да бъде</p>
+                        <p className="text-[15px] font-semibold text-emerald-700">{err.correction}</p>
                       </div>
                     </div>
                     {/* Explanation */}
                     {err.note && (
-                      <div className="px-4 py-2.5 bg-neutral-50 border-t border-neutral-100 flex items-start gap-2">
-                        <span className="text-neutral-400 text-xs mt-px shrink-0">💡</span>
-                        <p className="text-xs text-neutral-600 leading-relaxed">{err.note}</p>
+                      <div className="px-4 py-2.5 bg-[#F9FAFB] border-t border-[#F3F4F6] flex items-start gap-2">
+                        <span className="text-[#9CA3AF] text-[13px] mt-px shrink-0">💡</span>
+                        <p className="text-[13px] text-[#6B7280] leading-relaxed">{err.note}</p>
                       </div>
                     )}
                   </li>
@@ -275,7 +275,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
         {/* ── Actions ── */}
         <FeedbackActions attemptId={attemptId} />
 
-        <p className="text-center text-sm text-neutral-400 pb-4">
+        <p className="text-center text-[15px] text-[#9CA3AF] pb-4">
           <MarkCompleteLink attemptId={attemptId} />
         </p>
 

@@ -49,7 +49,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
   return (
     <div className="space-y-4">
       {/* Sticky timer bar */}
-      <div className="sticky top-14 z-10 bg-[#f7f8fa] pb-2 pt-0">
+      <div className="sticky top-14 z-10 bg-[#F0F2F5] pb-2 pt-0">
         <div className="flex items-center justify-between gap-3">
           <CountdownTimer
             durationSeconds={1200}
@@ -61,7 +61,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
             <button
               type="button"
               onClick={() => setOutlineOpen(o => !o)}
-              className="text-xs font-semibold text-neutral-500 bg-white border border-neutral-200 rounded-xl px-3 py-2 hover:bg-neutral-50 transition cursor-pointer"
+              className="text-[13px] font-semibold text-[#6B7280] bg-white border border-[#E5E7EB] rounded-xl px-3 py-2 hover:bg-[#F3F4F6] transition cursor-pointer"
             >
               {outlineOpen ? "Скрий плана" : "Покажи плана"}
             </button>
@@ -71,12 +71,12 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
 
       {/* Time's up notification */}
       {timeUp && (
-        <div className="bg-amber-50 rounded-2xl border border-amber-200 px-5 py-4">
-          <p className="text-sm font-semibold text-amber-800 mb-1">⏰ Времето изтече!</p>
-          <p className="text-sm text-amber-700">На реалния изпит сега ще преминеш към самопроверка. Нека го направим.</p>
+        <div className="bg-amber-50 rounded-3xl border border-amber-200 px-5 py-4">
+          <p className="text-[15px] font-semibold text-amber-800 mb-1">⏰ Времето изтече!</p>
+          <p className="text-[15px] text-amber-700">На реалния изпит сега ще преминеш към самопроверка. Нека го направим.</p>
           <button
             type="button" onClick={handleDone} disabled={advancing}
-            className="mt-3 h-10 px-5 rounded-xl bg-amber-600 text-white text-sm font-semibold hover:bg-amber-700 transition cursor-pointer disabled:opacity-50"
+            className="mt-3 h-[52px] px-6 rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] shadow-md transition cursor-pointer disabled:opacity-50"
           >
             Към самопроверката →
           </button>
@@ -85,9 +85,9 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
 
       {/* Outline reference */}
       {outlineOpen && outline && (
-        <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-4">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Твоят план (само за четене)</p>
-          <div className="space-y-2 text-sm">
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-4">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоят план (само за четене)</p>
+          <div className="space-y-2">
             {[
               { l: "Начало",      v: outline.opening },
               { l: "Аргумент 1",  v: outline.arg1 },
@@ -95,8 +95,8 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
               { l: "Заключение",  v: outline.closing },
             ].map(({ l, v }) => v ? (
               <div key={l} className="flex gap-2">
-                <span className="shrink-0 text-[10px] font-bold text-violet-400 uppercase tracking-widest mt-0.5 w-20">{l}</span>
-                <span className="text-neutral-700 leading-relaxed">{v}</span>
+                <span className="shrink-0 text-[12px] font-bold text-indigo-400 uppercase tracking-widest mt-0.5 w-20">{l}</span>
+                <span className="text-[15px] text-[#6B7280] leading-relaxed">{v}</span>
               </div>
             ) : null)}
           </div>
@@ -105,9 +105,8 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
 
       {/* Phase header */}
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 3 · Писане</p>
-        <h2 className="text-xl font-bold text-neutral-900 mb-1">Напиши есето си</h2>
-        <p className="text-sm text-neutral-500">Концентрирай се. Без AI помощ тук — това е твоето писане, с твоите сили.</p>
+                <h2 className="text-[22px] font-semibold text-[#111827] mb-1 tracking-tight">Напиши есето си</h2>
+        <p className="text-[15px] text-[#6B7280]">Концентрирай се. Без AI помощ тук — това е твоето писане, с твоите сили.</p>
       </div>
 
       <EssayEditor
@@ -120,7 +119,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
         <div className="flex justify-end">
           <button
             type="button" onClick={handleDone} disabled={advancing}
-            className="text-sm text-neutral-400 hover:text-neutral-700 transition cursor-pointer disabled:opacity-50 underline underline-offset-2"
+            className="text-[15px] text-[#9CA3AF] hover:text-[#6B7280] transition cursor-pointer disabled:opacity-50 underline underline-offset-2"
           >
             Приключих с писането →
           </button>

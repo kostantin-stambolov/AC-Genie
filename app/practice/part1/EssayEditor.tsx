@@ -94,15 +94,15 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
   const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
       {/* Toolbar row — always visible at the top */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-100 bg-neutral-50/60">
-        <div className="flex items-center gap-2 text-xs text-neutral-400">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#F3F4F6] bg-[#F9FAFB]">
+        <div className="flex items-center gap-2 text-[13px] text-[#9CA3AF]">
           <span>{wordCount} {wordCount === 1 ? "дума" : "думи"}</span>
           {saving && <span className="animate-pulse">· Записва…</span>}
           {uploading && (
-            <span className="flex items-center gap-1 text-violet-500">
-              <span className="w-3 h-3 border border-violet-400 border-t-transparent rounded-full animate-spin inline-block" />
+            <span className="flex items-center gap-1 text-indigo-500">
+              <span className="w-3 h-3 border border-indigo-400 border-t-transparent rounded-full animate-spin inline-block" />
               Транскрибира…
             </span>
           )}
@@ -115,7 +115,7 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
             onClick={startDictation}
             disabled={uploading}
             title="Диктувай — говори и текстът ще се добави автоматично"
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-600 text-xs font-medium hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50 transition disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl border border-[#E5E7EB] bg-white text-[#6B7280] text-[13px] font-medium hover:border-indigo-300 hover:text-indigo-600 hover:bg-indigo-50 transition disabled:opacity-50 cursor-pointer"
           >
             <Mic size={14} />
             <span className="hidden sm:inline">Диктувай</span>

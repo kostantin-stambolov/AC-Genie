@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         thesisSuggestion: result.thesisSuggestion ?? "",
         exampleRelevant: result.exampleRelevant ?? true,
         exampleNote: result.exampleNote ?? "",
-        encouragement: result.encouragement ?? "Keep going — you're on the right track!",
+        encouragement: result.encouragement ?? "Продължавай — на прав път си!",
       });
     } catch {
       return NextResponse.json({ error: "Could not parse AI response" }, { status: 502 });

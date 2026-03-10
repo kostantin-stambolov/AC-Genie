@@ -85,20 +85,20 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
       aria-labelledby="rewrite-modal-title"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col sm:max-h-[85vh]">
+      <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col sm:max-h-[85vh]">
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-100 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#F3F4F6] shrink-0">
           <div className="flex items-center gap-2">
-            <Sparkles size={16} className="text-violet-500" />
-            <h2 id="rewrite-modal-title" className="text-base font-bold text-neutral-900">
+            <Sparkles size={16} className="text-indigo-500" />
+            <h2 id="rewrite-modal-title" className="text-[18px] font-semibold text-[#111827]">
               Примерно есе
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700 transition text-sm cursor-pointer"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#9CA3AF] hover:bg-[#F3F4F6] hover:text-[#111827] transition text-[15px] cursor-pointer"
             aria-label="Close"
           >
             ✕
@@ -111,20 +111,20 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
           {/* Loading state */}
           {loading && (
             <div className="flex flex-col items-center justify-center py-16 gap-4">
-              <div className="w-12 h-12 border-[3px] border-violet-200 border-t-violet-600 rounded-full animate-spin" />
-              <p className="text-neutral-500 text-sm font-medium">Генерира примерно есе…</p>
-              <p className="text-neutral-400 text-xs">Обикновено отнема няколко секунди</p>
+              <div className="w-12 h-12 border-[3px] border-indigo-100 border-t-[#0B1F3A] rounded-full animate-spin" />
+              <p className="text-[#6B7280] text-[15px] font-medium">Генерира примерно есе…</p>
+              <p className="text-[#9CA3AF] text-[13px]">Обикновено отнема няколко секунди</p>
             </div>
           )}
 
           {/* Error state */}
           {error && !loading && (
-            <div className="rounded-xl bg-red-50 border border-red-200 p-4">
-              <p className="text-red-700 text-sm">{error}</p>
+            <div className="rounded-2xl bg-red-50 border border-red-200 p-4">
+              <p className="text-red-700 text-[15px]">{error}</p>
               <button
                 type="button"
                 onClick={fetchRewrite}
-                className="mt-3 text-sm text-red-600 font-medium underline"
+                className="mt-3 text-[15px] text-red-600 font-medium underline"
               >
                 Опитай отново
               </button>
@@ -134,35 +134,27 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
           {/* Result */}
           {result && !loading && (
             <div className="space-y-6">
-              <p className="text-sm text-neutral-500 leading-relaxed">
+              <p className="text-[15px] text-[#6B7280] leading-relaxed">
                 Добре структурирано примерно есе по твоята тема. Етикетите показват структурата на есето.
               </p>
 
               {/* Essay parts */}
               {result.parts.map((part, i) => (
                 <div key={i}>
-                  <span
-                    className="inline-block text-xs font-bold uppercase tracking-widest text-violet-700 bg-violet-50 border border-violet-200 rounded-lg py-1.5 px-3 mb-2"
-                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                  >
+                  <span className="inline-block text-[12px] font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1.5 px-3 mb-2">
                     {part.label}
                   </span>
-                  <p className="text-neutral-800 text-[15px] leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[#111827] text-[15px] leading-relaxed whitespace-pre-wrap">
                     {part.text}
                   </p>
                 </div>
               ))}
 
               {/* Score section */}
-              <div className="border-t border-neutral-100 pt-5 mt-2">
-                <div className={`inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 mb-4 ${totalScoreStyle(result.score.total)}`}>
-                  <span
-                    className="text-2xl font-bold"
-                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                  >
-                    {result.score.total}
-                  </span>
-                  <span className="text-sm font-medium opacity-70">/ 20</span>
+              <div className="border-t border-[#F3F4F6] pt-5 mt-2">
+                <div className={`inline-flex items-center gap-2.5 rounded-2xl px-4 py-2.5 mb-4 ${totalScoreStyle(result.score.total)}`}>
+                  <span className="text-2xl font-bold">{result.score.total}</span>
+                  <span className="text-[15px] font-medium opacity-70">/ 20</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 mb-4">
                   {[
@@ -170,25 +162,25 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                     { label: "Структура",         value: result.score.structure,   max: 4  },
                     { label: "Език",              value: result.score.language,    max: 6  },
                   ].map((sub) => (
-                    <div key={sub.label} className="bg-neutral-50 rounded-xl p-3 text-center">
-                      <p className="text-[11px] text-neutral-400 font-medium mb-1 leading-tight">{sub.label}</p>
-                      <p className="text-base font-bold text-neutral-800">{sub.value}<span className="text-xs font-normal text-neutral-400">/{sub.max}</span></p>
+                    <div key={sub.label} className="bg-[#F9FAFB] rounded-2xl p-3 text-center">
+                      <p className="text-[12px] text-[#9CA3AF] font-medium mb-1 leading-tight">{sub.label}</p>
+                      <p className="text-[18px] font-semibold text-[#111827]">{sub.value}<span className="text-[13px] font-normal text-[#9CA3AF]">/{sub.max}</span></p>
                     </div>
                   ))}
                 </div>
-                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1">Защо тази оценка</p>
-                <p className="text-neutral-700 text-[15px] leading-relaxed">{result.scoreReason}</p>
+                <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Защо тази оценка</p>
+                <p className="text-[#6B7280] text-[15px] leading-relaxed">{result.scoreReason}</p>
               </div>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-neutral-100 shrink-0">
+        <div className="px-6 py-4 border-t border-[#F3F4F6] shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="w-full h-11 rounded-xl border border-neutral-200 text-neutral-700 text-sm font-semibold hover:bg-neutral-50 transition cursor-pointer"
+            className="w-full h-[50px] rounded-2xl bg-[#F3F4F6] text-[#6B7280] text-[15px] font-normal hover:bg-[#E5E7EB] transition cursor-pointer"
           >
             Затвори
           </button>

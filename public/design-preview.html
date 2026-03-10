@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AC-Genie — Design System Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── SHARED RESET ── */
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, 'Inter', BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    textarea { font-family: inherit; }
+
+    /* ── OPTION VISIBILITY ── */
+    .option-panel { display: none; }
+    .option-panel.active { display: block; }
+
+    /* ── TAB BAR ── */
+    .tab-btn { transition: all 0.15s ease; }
+    .tab-btn.active { background: #0F1C3F; color: #fff; }
+    .tab-btn:not(.active):hover { background: #F1F5F9; }
+
+    /* ══════════════════════════════════════════════
+       OPTION A — "Slate Pro"
+       Linear / Vercel aesthetic
+       Primary: #0F1C3F | Accent: #2563EB
+    ══════════════════════════════════════════════ */
+    .a-bg        { background: #F8FAFC; }
+    .a-nav       { background: #fff; border-bottom: 1px solid #E2E8F0; }
+    .a-logo      { background: #0F1C3F; color: #fff; }
+    .a-card      { background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; }
+    .a-card-hi   { background: #fff; border: 1.5px solid #BFDBFE; border-radius: 16px; }
+    .a-label     { color: #2563EB; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .a-h1        { font-size: 22px; font-weight: 800; color: #0F172A; line-height: 1.25; letter-spacing: -0.02em; }
+    .a-h2        { font-size: 17px; font-weight: 700; color: #0F172A; }
+    .a-h3        { font-size: 14px; font-weight: 600; color: #0F172A; }
+    .a-body      { font-size: 14px; color: #475569; line-height: 1.65; }
+    .a-meta      { font-size: 12px; color: #94A3B8; }
+    .a-btn-pri   { background: #0F1C3F; color: #fff; border-radius: 10px; height: 46px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .a-btn-pri:hover { background: #1a2f5e; }
+    .a-btn-sec   { background: #F8FAFC; color: #475569; border-radius: 10px; height: 46px; font-size: 14px; font-weight: 500; border: 1px solid #E2E8F0; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .a-btn-sec:hover { background: #F1F5F9; }
+    .a-badge-ok  { background: #F0FDF4; border: 1px solid #BBF7D0; color: #15803D; font-size: 11px; font-weight: 600; border-radius: 999px; padding: 3px 10px; display: inline-flex; align-items: center; gap: 4px; }
+    .a-badge-warn { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; border-radius: 10px; padding: 10px 12px; }
+    .a-textarea  { border: 1px solid #E2E8F0; border-radius: 10px; padding: 10px 12px; font-size: 14px; color: #0F172A; resize: none; width: 100%; outline: none; transition: border-color 0.15s; }
+    .a-textarea:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .a-textarea::placeholder { color: #CBD5E1; }
+    .a-step-active { background: #0F1C3F; color: #fff; }
+    .a-step-done { background: #DBEAFE; color: #1D4ED8; }
+    .a-step-future { background: #F1F5F9; color: #94A3B8; }
+    .a-mode-hi { border: 2px solid #2563EB; }
+    .a-mode-normal { border: 2px solid #E2E8F0; }
+    .a-mode-normal:hover { border-color: #BFDBFE; }
+    .a-chip { background: #EFF6FF; border: 1px solid #DBEAFE; color: #1D4ED8; border-radius: 999px; font-size: 11px; font-weight: 500; padding: 3px 9px; }
+
+    /* ══════════════════════════════════════════════
+       OPTION B — "Deep Structure"
+       IBM Carbon / structured academic aesthetic
+       Primary: #1C3561 | Accent: #0284C7
+    ══════════════════════════════════════════════ */
+    .b-bg        { background: #EEF2F7; }
+    .b-nav       { background: #1C3561; }
+    .b-logo      { background: #0EA5E9; color: #fff; }
+    .b-card      { background: #fff; border-radius: 12px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); }
+    .b-card-accent { background: #fff; border-radius: 12px; border-left: 4px solid #0284C7; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .b-label     { color: #0284C7; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .b-h1        { font-size: 21px; font-weight: 700; color: #1E293B; line-height: 1.3; }
+    .b-h2        { font-size: 16px; font-weight: 700; color: #1E293B; }
+    .b-h3        { font-size: 14px; font-weight: 600; color: #1E293B; }
+    .b-body      { font-size: 14px; color: #64748B; line-height: 1.65; }
+    .b-meta      { font-size: 12px; color: #94A3B8; }
+    .b-btn-pri   { background: #1C3561; color: #fff; border-radius: 8px; height: 46px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: 0.01em; }
+    .b-btn-pri:hover { background: #152B4C; }
+    .b-btn-sec   { background: #fff; color: #334155; border-radius: 8px; height: 46px; font-size: 14px; font-weight: 500; border: 1px solid #CBD5E1; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .b-btn-sec:hover { background: #F8FAFC; }
+    .b-badge-ok  { background: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 3px 8px; display: inline-flex; align-items: center; gap: 4px; }
+    .b-badge-warn { background: #FFF7ED; border-left: 3px solid #FB923C; color: #7C2D12; border-radius: 0 8px 8px 0; padding: 10px 12px; }
+    .b-textarea  { border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #1E293B; resize: none; width: 100%; outline: none; background: #F8FAFC; transition: border-color 0.15s; }
+    .b-textarea:focus { border-color: #0284C7; background: #fff; box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
+    .b-textarea::placeholder { color: #CBD5E1; }
+    .b-progress-track { background: #E2E8F0; border-radius: 999px; height: 6px; overflow: hidden; }
+    .b-progress-fill { background: #1C3561; border-radius: 999px; height: 6px; }
+    .b-mode-hi { border: 2px solid #0284C7; background: #F0F9FF; }
+    .b-mode-normal { border: 2px solid #E2E8F0; }
+    .b-chip { background: #F0F9FF; border: 1px solid #BAE6FD; color: #0369A1; border-radius: 4px; font-size: 11px; font-weight: 500; padding: 3px 7px; }
+    .b-nav-text { color: #E2E8F0; font-size: 14px; font-weight: 600; }
+    .b-nav-back { color: #7DD3FC; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+    /* ══════════════════════════════════════════════
+       OPTION C — "Open Academy"
+       Stripe / premium consumer aesthetic
+       Primary: #0A2342 | Accent: #3B82F6
+    ══════════════════════════════════════════════ */
+    .c-bg        { background: #fff; }
+    .c-nav       { background: #fff; border-bottom: 1px solid #F1F5F9; }
+    .c-logo      { background: linear-gradient(135deg, #0A2342 0%, #1D4ED8 100%); color: #fff; }
+    .c-card      { background: #fff; border-radius: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04); border: 1px solid #F8FAFC; }
+    .c-card-tinted { background: #F0F7FF; border-radius: 20px; border: none; }
+    .c-label     { color: #3B82F6; font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+    .c-h1        { font-size: 24px; font-weight: 800; color: #0A2342; line-height: 1.2; letter-spacing: -0.025em; }
+    .c-h2        { font-size: 18px; font-weight: 700; color: #0A2342; }
+    .c-h3        { font-size: 15px; font-weight: 600; color: #0F172A; }
+    .c-body      { font-size: 14px; color: #64748B; line-height: 1.7; }
+    .c-meta      { font-size: 12px; color: #94A3B8; }
+    .c-btn-pri   { background: #0A2342; color: #fff; border-radius: 12px; height: 50px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: -0.01em; }
+    .c-btn-pri:hover { background: #0f3060; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,35,66,0.25); }
+    .c-btn-sec   { background: #F8FAFC; color: #475569; border-radius: 12px; height: 50px; font-size: 15px; font-weight: 500; border: 1.5px solid #E2E8F0; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .c-btn-sec:hover { background: #F1F5F9; }
+    .c-badge-ok  { background: #F0FDF4; border: 1px solid #BBF7D0; color: #15803D; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 4px 12px; display: inline-flex; align-items: center; gap: 5px; }
+    .c-badge-warn { background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; border-radius: 14px; padding: 12px 14px; }
+    .c-textarea  { border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #0F172A; resize: none; width: 100%; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+    .c-textarea:focus { border-color: #3B82F6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+    .c-textarea::placeholder { color: #CBD5E1; }
+    .c-step-dot-active { background: #0A2342; box-shadow: 0 0 0 4px rgba(10,35,66,0.15); }
+    .c-step-dot-done { background: #3B82F6; }
+    .c-step-dot-future { background: #E2E8F0; }
+    .c-mode-hi { border: 2px solid #3B82F6; background: linear-gradient(to bottom right, #EFF6FF, #fff); }
+    .c-mode-normal { border: 1.5px solid #E2E8F0; }
+    .c-chip { background: #EFF6FF; border: none; color: #2563EB; border-radius: 999px; font-size: 11px; font-weight: 600; padding: 4px 10px; }
+    .c-rec-badge { background: linear-gradient(135deg, #0A2342, #1D4ED8); color: #fff; }
+
+    /* ══════════════════════════════════════════════
+       OPTION D — "Social Flow"
+       Duolingo · Instagram · Engaging mobile-first
+       Primary: #0B1F3A | Accent: #22C55E streak / #3B82F6 blue
+    ══════════════════════════════════════════════ */
+    .d-bg          { background: #F0F2F5; }
+    .d-nav         { background: #fff; border-bottom: 1px solid #F0F2F5; }
+    .d-logo        { background: linear-gradient(135deg,#0B1F3A,#1D4ED8); color:#fff; }
+    .d-card        { background: #fff; border-radius: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: none; }
+    .d-card-green  { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-radius: 24px; border: 1.5px solid #BBF7D0; }
+    .d-label       { color: #6366F1; font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+    .d-h1          { font-size: 30px; font-weight: 600; color: #0B1F3A; line-height: 1.22; letter-spacing: -0.02em; font-family: 'DM Sans', sans-serif; }
+    .d-h2          { font-size: 22px; font-weight: 600; color: #0B1F3A; letter-spacing: -0.015em; font-family: 'DM Sans', sans-serif; }
+    .d-h3          { font-size: 18px; font-weight: 600; color: #111827; font-family: 'DM Sans', sans-serif; }
+    .d-body        { font-size: 15px; color: #6B7280; line-height: 1.65; font-family: 'DM Sans', sans-serif; }
+    .d-meta        { font-size: 13px; color: #9CA3AF; font-weight: 500; font-family: 'DM Sans', sans-serif; }
+    .d-btn-pri     { background: #0B1F3A; color: #fff; border-radius: 16px; height: 52px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: -0.01em; box-shadow: 0 4px 14px rgba(11,31,58,0.25); font-family: 'DM Sans', sans-serif; }
+    .d-btn-pri:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(11,31,58,0.32); background: #122a50; }
+    .d-btn-sec     { background: #F3F4F6; color: #6B7280; border-radius: 16px; height: 50px; font-size: 15px; font-weight: 400; border: none; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
+    .d-btn-sec:hover { background: #E5E7EB; color: #374151; }
+    .d-badge-ok    { background: #DCFCE7; color: #166534; font-size: 13px; font-weight: 600; border-radius: 999px; padding: 5px 12px; display: inline-flex; align-items: center; gap: 5px; }
+    .d-badge-warn  { background: #FFF7ED; border-radius: 16px; padding: 12px 14px; border: 1.5px solid #FED7AA; }
+    .d-textarea    { border: 2px solid #E5E7EB; border-radius: 14px; padding: 12px 14px; font-size: 15px; color: #111827; resize: none; width: 100%; outline: none; transition: border-color 0.15s, box-shadow 0.15s; background: #FAFAFA; font-family: 'DM Sans', sans-serif; }
+    .d-textarea:focus { border-color: #6366F1; background: #fff; box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
+    .d-textarea::placeholder { color: #D1D5DB; }
+    .d-streak      { background: linear-gradient(135deg,#FEF3C7,#FDE68A); border-radius: 14px; padding: 10px 14px; display:flex; align-items:center; gap:10px; }
+    .d-story-ring-active { width:48px; height:48px; border-radius:999px; background: conic-gradient(#0B1F3A 60deg, #E5E7EB 60deg); display:flex; align-items:center; justify-content:center; }
+    .d-story-inner { width:38px; height:38px; border-radius:999px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#0B1F3A; }
+    .d-mode-hi     { border: 2.5px solid #6366F1; background: #FAFAFA; }
+    .d-mode-normal { border: 2px solid #E5E7EB; background: #fff; }
+    .d-chip        { background: #EEF2FF; color: #4F46E5; border-radius: 999px; font-size: 12px; font-weight: 600; padding: 4px 11px; }
+    .d-phase-ring  { width:44px; height:44px; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; }
+
+    /* ══════════════════════════════════════════════
+       OPTION E — "Editorial"
+       NYT · Guardian · Newspaper authority
+       Primary: #0A0A0A | Accent: #0C2D6B
+    ══════════════════════════════════════════════ */
+    .e-bg          { background: #FAFAF8; }
+    .e-nav         { background: #0C2D6B; }
+    .e-card        { background: #fff; border: 1px solid #E7E7E4; border-radius: 4px; }
+    .e-card-ruled  { background: #fff; border-top: 3px solid #0C2D6B; border-left: none; border-right: none; border-bottom: 1px solid #E7E7E4; padding-top: 16px; }
+    .e-label       { color: #0C2D6B; font-size: 10px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+    .e-kicker      { font-size: 11px; font-weight: 700; color: #B45309; letter-spacing: 0.1em; text-transform: uppercase; }
+    .e-h1          { font-size: 28px; font-weight: 900; color: #0A0A0A; line-height: 1.1; letter-spacing: -0.02em; font-family: Georgia, 'Times New Roman', serif; }
+    .e-h2          { font-size: 18px; font-weight: 700; color: #0A0A0A; font-family: Georgia, 'Times New Roman', serif; line-height: 1.3; }
+    .e-h3          { font-size: 14px; font-weight: 700; color: #0A0A0A; letter-spacing: -0.01em; }
+    .e-body        { font-size: 15px; color: #333; line-height: 1.75; font-family: Georgia, 'Times New Roman', serif; }
+    .e-meta        { font-size: 11px; color: #888; font-family: -apple-system, sans-serif; letter-spacing: 0.02em; }
+    .e-rule        { border: none; border-top: 1px solid #E7E7E4; margin: 16px 0; }
+    .e-rule-thick  { border: none; border-top: 3px solid #0A0A0A; margin: 12px 0; }
+    .e-btn-pri     { background: #0C2D6B; color: #fff; border-radius: 2px; height: 46px; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: -apple-system, sans-serif; }
+    .e-btn-pri:hover { background: #092058; }
+    .e-btn-sec     { background: #fff; color: #333; border-radius: 2px; height: 46px; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid #D1D1CC; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: -apple-system, sans-serif; }
+    .e-btn-sec:hover { background: #F5F5F3; }
+    .e-badge-ok    { background: #F0FDF4; border: 1px solid #A7F3D0; color: #065F46; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; display: inline-flex; align-items: center; gap: 4px; font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+    .e-badge-warn  { background: #FFFBEB; border-left: 4px solid #F59E0B; padding: 10px 12px; }
+    .e-textarea    { border: 1px solid #D1D1CC; border-radius: 2px; padding: 10px 12px; font-size: 14px; color: #0A0A0A; resize: none; width: 100%; outline: none; transition: border-color 0.15s; background: #fff; font-family: -apple-system, sans-serif; }
+    .e-textarea:focus { border-color: #0C2D6B; box-shadow: 0 0 0 2px rgba(12,45,107,0.12); }
+    .e-textarea::placeholder { color: #C8C8C4; }
+    .e-section-num { font-size: 11px; font-weight: 900; color: #0C2D6B; font-family: -apple-system, sans-serif; letter-spacing: 0.1em; }
+    .e-pull-quote  { border-left: 4px solid #0C2D6B; padding: 12px 16px; background: #F5F5F3; }
+    .e-mode-hi     { border: 1px solid #0C2D6B; border-top: 3px solid #0C2D6B; }
+    .e-mode-normal { border: 1px solid #E7E7E4; }
+    .e-chip        { background: #EFF3FF; color: #0C2D6B; border-radius: 2px; font-size: 10px; font-weight: 800; padding: 3px 8px; text-transform: uppercase; letter-spacing: 0.06em; font-family: -apple-system, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER / TAB NAVIGATION
+  ═══════════════════════════════════════════════ -->
+  <div class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+      <div>
+        <p class="text-xs text-slate-400 font-medium">AC-Genie</p>
+        <h1 class="text-base font-bold text-slate-900 leading-tight">Design System Preview</h1>
+      </div>
+      <div class="flex items-center gap-1 bg-slate-100 rounded-xl p-1 flex-wrap">
+        <button class="tab-btn active text-sm font-semibold px-4 py-2 rounded-lg" onclick="showOption('a')">
+          A — Slate Pro
+        </button>
+        <button class="tab-btn text-sm font-semibold text-slate-500 px-4 py-2 rounded-lg" onclick="showOption('b')">
+          B — Deep Structure
+        </button>
+        <button class="tab-btn text-sm font-semibold text-slate-500 px-4 py-2 rounded-lg" onclick="showOption('c')">
+          C — Open Academy
+        </button>
+        <button class="tab-btn text-sm font-semibold text-slate-500 px-4 py-2 rounded-lg" onclick="showOption('d')">
+          D — Social Flow ✦
+        </button>
+        <button class="tab-btn text-sm font-semibold text-slate-500 px-4 py-2 rounded-lg" onclick="showOption('e')">
+          E — Editorial ✦
+        </button>
+      </div>
+      <div class="text-right hidden lg:block">
+        <p class="text-xs text-slate-400">Icons: Lucide</p>
+        <p class="text-xs text-slate-400">Font: Inter / System</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       OPTION A — "SLATE PRO"
+       Linear · Vercel · Clean SaaS
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-a" class="option-panel active">
+
+    <!-- Token Reference -->
+    <div class="max-w-screen-xl mx-auto px-6 pt-6 pb-2">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Option A — "Slate Pro" — Design Tokens</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#0F1C3F"></div><span class="text-xs text-slate-600"><strong>CTA</strong> #0F1C3F</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#2563EB"></div><span class="text-xs text-slate-600"><strong>Accent</strong> #2563EB</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#F8FAFC; border:1px solid #e2e8f0"></div><span class="text-xs text-slate-600"><strong>Page BG</strong> #F8FAFC</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#0F172A"></div><span class="text-xs text-slate-600"><strong>Text Primary</strong> #0F172A</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#475569"></div><span class="text-xs text-slate-600"><strong>Text Secondary</strong> #475569</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded border border-slate-200" style="background:#E2E8F0"></div><span class="text-xs text-slate-600"><strong>Border</strong> #E2E8F0</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Radius:</strong> 16px cards · 10px inputs · 999px pills</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Icons:</strong> Lucide (stroke-width: 1.75)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Left column: Home + Mode Selector -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Screen + Mode Selection</p>
+
+        <!-- Nav -->
+        <nav class="a-nav rounded-2xl overflow-hidden" style="box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <div class="px-5 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="a-logo w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black">AC</div>
+              <span style="font-size:15px;font-weight:700;color:#0F172A;letter-spacing:-0.01em">American College Prep</span>
+            </div>
+            <button class="a-meta flex items-center gap-1.5 hover:text-slate-700 transition" style="background:none;border:none;cursor:pointer">
+              <i data-lucide="log-out" style="width:16px;height:16px;color:#94A3B8"></i>
+              <span style="font-size:13px;color:#94A3B8">Изход</span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Section heading -->
+        <div class="px-1">
+          <p class="a-label mb-1">Твоята практика</p>
+          <p class="a-h1">Подготовка за изпит</p>
+          <p class="a-body mt-1">Напиши есе, получи AI оценка и се подобри.</p>
+        </div>
+
+        <!-- Home card -->
+        <div class="a-card overflow-hidden" style="box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <div class="px-5 py-4 flex items-center gap-3" style="border-bottom:1px solid #F1F5F9">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#EFF6FF">
+              <i data-lucide="pen-line" style="width:18px;height:18px;color:#2563EB"></i>
+            </div>
+            <div>
+              <p class="a-h3">Есе</p>
+              <p class="a-meta">Част 1 от приемния изпит</p>
+            </div>
+            <span class="ml-auto a-badge-ok">
+              <i data-lucide="circle" style="width:7px;height:7px;fill:#16A34A;color:#16A34A"></i>
+              В процес
+            </span>
+          </div>
+          <div class="px-5 py-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="a-chip flex items-center gap-1.5">
+                <i data-lucide="map" style="width:11px;height:11px"></i>
+                Насочено обучение
+              </span>
+              <span class="a-meta">Фаза 2 от 6: Планирай</span>
+            </div>
+            <p class="a-body">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
+            <button class="a-btn-pri w-full">
+              Продължи сесията
+              <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+            </button>
+            <button class="a-btn-sec w-full">
+              <i data-lucide="clock" style="width:15px;height:15px"></i>
+              Виж предишни опити
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="space-y-3">
+          <p class="a-label">Избери режим на практика</p>
+          <!-- v1 -->
+          <div class="a-card a-mode-normal p-5 cursor-pointer transition-all" style="transition: border-color 0.15s">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:#F8FAFC">
+                <i data-lucide="zap" style="width:20px;height:20px;color:#64748B"></i>
+              </div>
+              <div>
+                <p class="a-h3 mb-0.5">Бързо упражнение</p>
+                <p class="a-label mb-1.5" style="color:#94A3B8">Пиши свободно</p>
+                <p class="a-body">Започни директно, изпрати есето и получи незабавна AI оценка с обратна връзка.</p>
+              </div>
+            </div>
+          </div>
+          <!-- v2 -->
+          <div class="a-card a-mode-hi p-5 cursor-pointer relative" style="box-shadow:0 0 0 4px rgba(37,99,235,0.08)">
+            <span class="absolute top-3.5 right-3.5 text-xs font-bold px-2.5 py-1 rounded-full" style="background:#0F1C3F;color:#fff;font-size:10px;letter-spacing:0.05em;text-transform:uppercase">Препоръчано</span>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background:#EFF6FF">
+                <i data-lucide="compass" style="width:20px;height:20px;color:#2563EB"></i>
+              </div>
+              <div class="pr-20">
+                <p class="a-h3 mb-0.5">Насочено обучение</p>
+                <p class="a-label mb-1.5">Стъпка по стъпка · 6 фази</p>
+                <p class="a-body">Коуч те води през разбирането, планирането, писането с таймер и самопроверката — точно като на реалния изпит.</p>
+                <div class="flex flex-wrap gap-1.5 mt-2.5">
+                  <span class="a-chip">Разбери</span>
+                  <span class="a-chip">Планирай</span>
+                  <span class="a-chip">Пиши</span>
+                  <span class="a-chip">Провери</span>
+                  <span class="a-chip">Оценка</span>
+                  <span class="a-chip">Размисли</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: Coaching Phase UI -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Coaching Phase — Comprehension</p>
+
+        <!-- Phase stepper -->
+        <div class="a-card px-5 py-4" style="box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <div class="flex items-center gap-0">
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-active flex items-center justify-center" style="font-size:12px;font-weight:700">1</div>
+              <span style="font-size:10px;font-weight:600;color:#0F1C3F">Разбери</span>
+            </div>
+            <div style="height:2px;flex:1;background:#DBEAFE;margin-bottom:16px"></div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-future flex items-center justify-center" style="font-size:12px;font-weight:600">2</div>
+              <span style="font-size:10px;color:#94A3B8">Планирай</span>
+            </div>
+            <div style="height:2px;flex:1;background:#F1F5F9;margin-bottom:16px"></div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-future flex items-center justify-center" style="font-size:12px;font-weight:600">3</div>
+              <span style="font-size:10px;color:#94A3B8">Пиши</span>
+            </div>
+            <div style="height:2px;flex:1;background:#F1F5F9;margin-bottom:16px"></div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-future flex items-center justify-center" style="font-size:12px;font-weight:600">4</div>
+              <span style="font-size:10px;color:#94A3B8">Провери</span>
+            </div>
+            <div style="height:2px;flex:1;background:#F1F5F9;margin-bottom:16px"></div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-future flex items-center justify-center" style="font-size:12px;font-weight:600">5</div>
+              <span style="font-size:10px;color:#94A3B8">Оценка</span>
+            </div>
+            <div style="height:2px;flex:1;background:#F1F5F9;margin-bottom:16px"></div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-7 h-7 rounded-full a-step-future flex items-center justify-center" style="font-size:12px;font-weight:600">6</div>
+              <span style="font-size:10px;color:#94A3B8">Размисли</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic card -->
+        <div class="a-card-hi px-5 py-4">
+          <p class="a-label mb-2">Твоята тема</p>
+          <p class="a-h3 mb-1.5">Въздушни кули</p>
+          <p class="a-body" style="font-style:italic">„Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат. Сега сложи основите под тях." — Хенри Дейвид Торо</p>
+        </div>
+
+        <!-- Phase header -->
+        <div>
+          <p class="a-label mb-1">Фаза 1 · Разбери темата</p>
+          <p class="a-h1" style="font-size:20px">Прочети и отговори на три въпроса</p>
+          <p class="a-body mt-1">Преди да напишеш и дума, увери се, че разбираш точно какво се иска от теб.</p>
+        </div>
+
+        <!-- Questions form -->
+        <div class="a-card px-5 py-5 space-y-4" style="box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <p class="a-label">Твоите отговори</p>
+          <div>
+            <label class="block a-h3 mb-1.5" style="font-size:13px">1. Какво се иска от теб в тази тема?</label>
+            <textarea class="a-textarea" rows="2" placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"></textarea>
+            <div class="mt-1.5">
+              <span class="a-badge-ok">
+                <i data-lucide="check" style="width:12px;height:12px"></i>
+                Добре
+              </span>
+            </div>
+          </div>
+          <div>
+            <label class="block a-h3 mb-1.5" style="font-size:13px">2. Каква е твоята позиция или основна идея?</label>
+            <textarea class="a-textarea" rows="2" placeholder="напр. Вярвам, че мечтите трябва да се следват с действие…"></textarea>
+            <div class="a-badge-warn mt-1.5">
+              <p class="a-meta" style="font-weight:700;font-size:11px;margin-bottom:3px">Предложение</p>
+              <p style="font-size:13px;color:#92400E">Тезата ти може да е по-конкретна — опитай да добавиш „защото..."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="space-y-2.5">
+          <button class="a-btn-pri w-full">
+            <i data-lucide="sparkles" style="width:16px;height:16px"></i>
+            Провери разбирането ми
+          </button>
+          <button class="a-btn-sec w-full">
+            Продължи въпреки това
+            <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       OPTION B — "DEEP STRUCTURE"
+       IBM Carbon · Academic · Structured
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-b" class="option-panel">
+
+    <!-- Token Reference -->
+    <div class="max-w-screen-xl mx-auto px-6 pt-6 pb-2">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Option B — "Deep Structure" — Design Tokens</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#1C3561"></div><span class="text-xs text-slate-600"><strong>CTA</strong> #1C3561</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#0284C7"></div><span class="text-xs text-slate-600"><strong>Accent</strong> #0284C7</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded border border-slate-200" style="background:#EEF2F7"></div><span class="text-xs text-slate-600"><strong>Page BG</strong> #EEF2F7</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#1E293B"></div><span class="text-xs text-slate-600"><strong>Text Primary</strong> #1E293B</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#64748B"></div><span class="text-xs text-slate-600"><strong>Text Secondary</strong> #64748B</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Radius:</strong> 12px cards · 8px inputs · 4px chips</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Nav:</strong> Dark navy bar · white icon/text</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Left: Home + Mode Selector -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Screen + Mode Selection</p>
+
+        <!-- Nav (dark) -->
+        <nav class="b-nav rounded-2xl overflow-hidden" style="box-shadow:0 2px 8px rgba(28,53,97,0.2)">
+          <div class="px-5 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="b-logo w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black">AC</div>
+              <span class="b-nav-text">American College Prep</span>
+            </div>
+            <button class="b-nav-back" style="background:none;border:none;cursor:pointer">
+              <i data-lucide="log-out" style="width:15px;height:15px;color:#7DD3FC"></i>
+              <span>Изход</span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Page title -->
+        <div style="border-left: 4px solid #1C3561; padding-left:14px">
+          <p class="b-label mb-0.5">Твоята практика</p>
+          <p class="b-h1">Подготовка за изпит</p>
+          <p class="b-body mt-1">Напиши есе, получи AI оценка и се подобри.</p>
+        </div>
+
+        <!-- Home card -->
+        <div class="b-card overflow-hidden">
+          <div class="px-5 py-4 flex items-center gap-3" style="border-bottom:1px solid #F1F5F9">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background:#F0F9FF">
+              <i data-lucide="file-pen" style="width:18px;height:18px;color:#0284C7"></i>
+            </div>
+            <div>
+              <p class="b-h3">Есе — Част 1</p>
+              <p class="b-meta">Приемен изпит ACS</p>
+            </div>
+            <span class="ml-auto b-badge-ok">
+              <i data-lucide="circle-dot" style="width:12px;height:12px"></i>
+              В процес
+            </span>
+          </div>
+          <div class="px-5 py-4 space-y-3">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="b-chip flex items-center gap-1">
+                <i data-lucide="layout-list" style="width:11px;height:11px"></i>
+                Насочено обучение
+              </span>
+              <span class="b-meta">· Фаза 2 от 6: Планирай</span>
+            </div>
+            <p class="b-body">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
+            <button class="b-btn-pri w-full">
+              <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+              Продължи сесията
+            </button>
+            <button class="b-btn-sec w-full">
+              <i data-lucide="history" style="width:15px;height:15px"></i>
+              Виж предишни опити
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="space-y-3">
+          <p class="b-label">Избери режим</p>
+          <div class="b-card b-mode-normal p-5 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background:#F8FAFC">
+                <i data-lucide="bolt" style="width:20px;height:20px;color:#64748B"></i>
+              </div>
+              <div>
+                <p class="b-h3 mb-0.5">Бързо упражнение</p>
+                <p class="b-label mb-2" style="color:#94A3B8">Свободно писане</p>
+                <p class="b-body">Пиши директно, изпрати и получи AI оценка.</p>
+              </div>
+            </div>
+          </div>
+          <div class="b-card b-mode-hi p-5 cursor-pointer relative" style="box-shadow:0 0 0 3px rgba(2,132,199,0.1)">
+            <span class="absolute top-3.5 right-3.5 text-xs font-bold px-2.5 py-1 rounded" style="background:#1C3561;color:#fff;font-size:10px;letter-spacing:0.05em">ПРЕПОРЪЧАНО</span>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style="background:#E0F2FE">
+                <i data-lucide="route" style="width:20px;height:20px;color:#0284C7"></i>
+              </div>
+              <div class="pr-20">
+                <p class="b-h3 mb-0.5">Насочено обучение</p>
+                <p class="b-label mb-2">6 структурирани фази</p>
+                <p class="b-body">Коуч те води стъпка по стъпка — точно като на реалния изпит.</p>
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                  <span class="b-chip">Разбери</span>
+                  <span class="b-chip">Планирай</span>
+                  <span class="b-chip">Пиши</span>
+                  <span class="b-chip">Провери</span>
+                  <span class="b-chip">Оценка</span>
+                  <span class="b-chip">Размисли</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Phase UI -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Coaching Phase — Comprehension</p>
+
+        <!-- Progress bar stepper -->
+        <div class="b-card p-4">
+          <div class="flex justify-between items-center mb-2">
+            <p class="b-label">Прогрес</p>
+            <p class="b-meta">Фаза 1 от 6</p>
+          </div>
+          <div class="b-progress-track">
+            <div class="b-progress-fill" style="width:16.7%"></div>
+          </div>
+          <div class="flex justify-between mt-2.5">
+            <span style="font-size:10px;font-weight:700;color:#1C3561">① Разбери</span>
+            <span style="font-size:10px;color:#CBD5E1">② Планирай</span>
+            <span style="font-size:10px;color:#CBD5E1">③ Пиши</span>
+            <span style="font-size:10px;color:#CBD5E1">④ Провери</span>
+            <span style="font-size:10px;color:#CBD5E1">⑤ Оценка</span>
+            <span style="font-size:10px;color:#CBD5E1">⑥ Размисли</span>
+          </div>
+        </div>
+
+        <!-- Topic card with left accent border -->
+        <div class="b-card-accent px-5 py-4">
+          <p class="b-label mb-2">Твоята тема</p>
+          <p class="b-h3 mb-1.5">Въздушни кули</p>
+          <p class="b-body" style="font-style:italic">„Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат." — Хенри Дейвид Торо</p>
+        </div>
+
+        <!-- Phase section label with left border -->
+        <div style="border-left:4px solid #1C3561;padding-left:14px">
+          <p class="b-label mb-0.5">Фаза 1 · Разбери темата</p>
+          <p class="b-h1" style="font-size:19px">Прочети и отговори на три въпроса</p>
+          <p class="b-body mt-0.5">Увери се, че разбираш точно какво се иска от теб.</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="b-card px-5 py-5 space-y-4">
+          <p class="b-label">Твоите отговори</p>
+          <div>
+            <label class="block b-h3 mb-1.5" style="font-size:13px">1. Какво се иска от теб в тази тема?</label>
+            <textarea class="b-textarea" rows="2" placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"></textarea>
+            <div class="mt-1.5">
+              <span class="b-badge-ok">
+                <i data-lucide="check" style="width:12px;height:12px"></i>
+                Добре
+              </span>
+            </div>
+          </div>
+          <div>
+            <label class="block b-h3 mb-1.5" style="font-size:13px">2. Каква е твоята позиция или основна идея?</label>
+            <textarea class="b-textarea" rows="2" placeholder="напр. Вярвам, че мечтите трябва да се следват с действие…"></textarea>
+            <div class="b-badge-warn mt-1.5">
+              <p style="font-size:11px;font-weight:700;color:#9A3412;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.05em">Предложение</p>
+              <p style="font-size:13px;color:#7C2D12">Тезата ти може да е по-конкретна — опитай да добавиш „защото..."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="space-y-2.5">
+          <button class="b-btn-pri w-full">
+            <i data-lucide="cpu" style="width:16px;height:16px"></i>
+            Провери разбирането ми
+          </button>
+          <button class="b-btn-sec w-full">
+            Продължи въпреки това
+            <i data-lucide="chevron-right" style="width:15px;height:15px"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       OPTION C — "OPEN ACADEMY"
+       Stripe · Premium Consumer · Airy
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-c" class="option-panel">
+
+    <!-- Token Reference -->
+    <div class="max-w-screen-xl mx-auto px-6 pt-6 pb-2">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Option C — "Open Academy" — Design Tokens</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#0A2342"></div><span class="text-xs text-slate-600"><strong>CTA</strong> #0A2342</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#3B82F6"></div><span class="text-xs text-slate-600"><strong>Accent</strong> #3B82F6</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded border border-slate-200" style="background:#ffffff"></div><span class="text-xs text-slate-600"><strong>Page BG</strong> #FFFFFF</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#0A2342"></div><span class="text-xs text-slate-600"><strong>Text Primary</strong> #0A2342</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded" style="background:#64748B"></div><span class="text-xs text-slate-600"><strong>Text Secondary</strong> #64748B</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Radius:</strong> 20px cards · 12px inputs · 999px pills</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Button:</strong> 50px height · larger CTA with lift hover</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Left: Home + Mode selector -->
+      <div class="space-y-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Screen + Mode Selection</p>
+
+        <!-- Nav -->
+        <nav class="c-nav rounded-2xl overflow-hidden" style="box-shadow:0 1px 4px rgba(0,0,0,0.05)">
+          <div class="px-5 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="c-logo w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black">AC</div>
+              <span style="font-size:15px;font-weight:800;color:#0A2342;letter-spacing:-0.025em">American College Prep</span>
+            </div>
+            <button class="c-meta flex items-center gap-1.5 hover:text-slate-700 transition" style="background:none;border:none;cursor:pointer">
+              <i data-lucide="log-out" style="width:16px;height:16px;color:#94A3B8"></i>
+              <span style="font-size:13px;color:#94A3B8">Изход</span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Section heading — generous spacing -->
+        <div class="px-1 pt-2">
+          <p class="c-label mb-1.5">Твоята практика</p>
+          <p class="c-h1">Подготовка<br>за изпит</p>
+          <p class="c-body mt-2">Напиши есе, получи AI оценка и се подобри с всяка следваща версия.</p>
+        </div>
+
+        <!-- Home card -->
+        <div class="c-card overflow-hidden">
+          <div class="px-6 py-5 flex items-center gap-3" style="border-bottom:1px solid #F8FAFC">
+            <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background:#EFF6FF">
+              <i data-lucide="notebook-pen" style="width:20px;height:20px;color:#2563EB"></i>
+            </div>
+            <div>
+              <p class="c-h3">Есе</p>
+              <p class="c-meta">Част 1 · Приемен изпит ACS</p>
+            </div>
+            <span class="ml-auto" style="background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46;font-size:11px;font-weight:700;border-radius:999px;padding:4px 12px;display:inline-flex;align-items:center;gap:5px">
+              <i data-lucide="circle" style="width:7px;height:7px;fill:#16A34A;color:#16A34A"></i>
+              В процес
+            </span>
+          </div>
+          <div class="px-6 py-5 space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="c-chip flex items-center gap-1.5">
+                <i data-lucide="compass" style="width:11px;height:11px"></i>
+                Насочено обучение
+              </span>
+              <span class="c-meta">Фаза 2 от 6 · Планирай</span>
+            </div>
+            <p class="c-body">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
+            <button class="c-btn-pri w-full">
+              Продължи сесията
+              <i data-lucide="arrow-right" style="width:17px;height:17px"></i>
+            </button>
+            <button class="c-btn-sec w-full">
+              <i data-lucide="clock" style="width:15px;height:15px"></i>
+              Виж предишни опити
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="space-y-3">
+          <p class="c-label">Избери режим на практика</p>
+          <div class="c-card c-mode-normal p-5 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style="background:#F8FAFC">
+                <i data-lucide="zap" style="width:22px;height:22px;color:#94A3B8"></i>
+              </div>
+              <div>
+                <p class="c-h3 mb-0.5">Бързо упражнение</p>
+                <p class="c-label mb-2" style="color:#94A3B8">Свободно писане</p>
+                <p class="c-body">Пиши директно, изпрати и получи незабавна AI оценка с обратна връзка.</p>
+              </div>
+            </div>
+          </div>
+          <div class="c-card c-mode-hi p-5 cursor-pointer relative" style="box-shadow:0 0 0 5px rgba(59,130,246,0.08)">
+            <span class="c-rec-badge absolute top-4 right-4 text-xs font-bold px-3 py-1 rounded-full" style="font-size:10px;letter-spacing:0.05em;text-transform:uppercase">Препоръчано</span>
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style="background:#EFF6FF">
+                <i data-lucide="graduation-cap" style="width:22px;height:22px;color:#2563EB"></i>
+              </div>
+              <div class="pr-24">
+                <p class="c-h3 mb-0.5">Насочено обучение</p>
+                <p class="c-label mb-2">Стъпка по стъпка · 6 фази</p>
+                <p class="c-body">Коуч те води от разбирането до отражението — точно като на реалния изпит.</p>
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  <span class="c-chip">Разбери</span>
+                  <span class="c-chip">Планирай</span>
+                  <span class="c-chip">Пиши</span>
+                  <span class="c-chip">Провери</span>
+                  <span class="c-chip">Оценка</span>
+                  <span class="c-chip">Размисли</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Phase UI -->
+      <div class="space-y-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Coaching Phase — Comprehension</p>
+
+        <!-- Dot stepper -->
+        <div class="c-card px-6 py-4" style="box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+          <div class="flex items-center gap-0">
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-active flex items-center justify-center" style="font-size:13px;font-weight:800;color:#fff">1</div>
+              <span style="font-size:9px;font-weight:700;color:#0A2342;letter-spacing:0.03em">РАЗБЕРИ</span>
+            </div>
+            <div style="height:3px;flex:1;background:linear-gradient(to right,#0A2342,#E2E8F0);margin-bottom:17px;border-radius:2px"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-future flex items-center justify-center" style="font-size:13px;font-weight:700;color:#94A3B8">2</div>
+              <span style="font-size:9px;color:#CBD5E1;letter-spacing:0.03em">ПЛАНИРАЙ</span>
+            </div>
+            <div style="height:3px;flex:1;background:#F1F5F9;margin-bottom:17px;border-radius:2px"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-future flex items-center justify-center" style="font-size:13px;font-weight:700;color:#94A3B8">3</div>
+              <span style="font-size:9px;color:#CBD5E1;letter-spacing:0.03em">ПИШИ</span>
+            </div>
+            <div style="height:3px;flex:1;background:#F1F5F9;margin-bottom:17px;border-radius:2px"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-future flex items-center justify-center" style="font-size:13px;font-weight:700;color:#94A3B8">4</div>
+              <span style="font-size:9px;color:#CBD5E1;letter-spacing:0.03em">ПРОВЕРИ</span>
+            </div>
+            <div style="height:3px;flex:1;background:#F1F5F9;margin-bottom:17px;border-radius:2px"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-future flex items-center justify-center" style="font-size:13px;font-weight:700;color:#94A3B8">5</div>
+              <span style="font-size:9px;color:#CBD5E1;letter-spacing:0.03em">ОЦЕНКА</span>
+            </div>
+            <div style="height:3px;flex:1;background:#F1F5F9;margin-bottom:17px;border-radius:2px"></div>
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-8 h-8 rounded-full c-step-dot-future flex items-center justify-center" style="font-size:13px;font-weight:700;color:#94A3B8">6</div>
+              <span style="font-size:9px;color:#CBD5E1;letter-spacing:0.03em">РАЗМИСЛИ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic card (tinted) -->
+        <div class="c-card-tinted px-6 py-5">
+          <p class="c-label mb-2">Твоята тема</p>
+          <p class="c-h3 mb-2">Въздушни кули</p>
+          <p class="c-body" style="font-style:italic">"Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат. Сега сложи основите под тях." — Хенри Дейвид Торо</p>
+        </div>
+
+        <!-- Phase header — generous -->
+        <div class="px-1">
+          <p class="c-label mb-2">Фаза 1 · Разбери темата</p>
+          <p class="c-h1" style="font-size:22px">Прочети и отговори на три въпроса</p>
+          <p class="c-body mt-2">Преди да напишеш и дума, увери се, че разбираш точно какво се иска от теб.</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="c-card px-6 py-6 space-y-5">
+          <p class="c-label">Твоите отговори</p>
+          <div>
+            <label class="block c-h3 mb-2" style="font-size:13px;color:#0A2342">1. Какво се иска от теб в тази тема?</label>
+            <textarea class="c-textarea" rows="2" placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"></textarea>
+            <div class="mt-2">
+              <span class="c-badge-ok">
+                <i data-lucide="check-circle-2" style="width:13px;height:13px"></i>
+                Добре
+              </span>
+            </div>
+          </div>
+          <div>
+            <label class="block c-h3 mb-2" style="font-size:13px;color:#0A2342">2. Каква е твоята позиция или основна идея?</label>
+            <textarea class="c-textarea" rows="2" placeholder="напр. Вярвам, че мечтите трябва да се следват с действие…"></textarea>
+            <div class="c-badge-warn mt-2">
+              <p style="font-size:11px;font-weight:700;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+                <i data-lucide="lightbulb" style="width:12px;height:12px"></i>
+                Предложение
+              </p>
+              <p style="font-size:13px;color:#92400E">Тезата ти може да е по-конкретна — опитай да добавиш „защото..."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons (taller, more premium) -->
+        <div class="space-y-3">
+          <button class="c-btn-pri w-full">
+            <i data-lucide="sparkles" style="width:17px;height:17px"></i>
+            Провери разбирането ми
+          </button>
+          <button class="c-btn-sec w-full">
+            Продължи въпреки това
+            <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       OPTION D — "SOCIAL FLOW"
+       Duolingo · Instagram · Engaging mobile-first
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-d" class="option-panel">
+
+    <div class="max-w-screen-xl mx-auto px-6 pt-6 pb-2">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Option D — "Social Flow" — Design Tokens</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-lg" style="background:#0B1F3A"></div><span class="text-xs text-slate-600"><strong>CTA</strong> #0B1F3A + lift shadow</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-lg" style="background:#6366F1"></div><span class="text-xs text-slate-600"><strong>Accent</strong> #6366F1 Indigo</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-lg" style="background:#22C55E"></div><span class="text-xs text-slate-600"><strong>Success</strong> #22C55E Green</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-lg border border-slate-200" style="background:#F0F2F5"></div><span class="text-xs text-slate-600"><strong>Page BG</strong> #F0F2F5</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Radius:</strong> 24px cards · 16px buttons · 999px pills</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>CTA height:</strong> 54px · font-weight: 800 · lift on hover</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Left: Home + Mode Selector -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Screen + Mode Selection</p>
+
+        <!-- Nav -->
+        <nav class="d-nav rounded-3xl overflow-hidden" style="box-shadow:0 2px 8px rgba(0,0,0,0.06)">
+          <div class="px-5 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="d-logo w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black">AC</div>
+              <span style="font-size:17px;font-weight:700;color:#0B1F3A;letter-spacing:-0.02em;font-family:'DM Sans',sans-serif">AC Prep</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <!-- Streak badge -->
+              <div class="d-streak">
+                <i data-lucide="flame" style="width:16px;height:16px;color:#D97706"></i>
+                <span style="font-size:14px;font-weight:700;color:#92400E;font-family:'DM Sans',sans-serif">3 поред</span>
+              </div>
+              <button style="background:none;border:none;cursor:pointer">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center" style="background:#F3F4F6">
+                  <i data-lucide="user" style="width:18px;height:18px;color:#6B7280"></i>
+                </div>
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Greeting + heading -->
+        <div class="px-1 pt-1">
+          <p class="d-meta mb-0.5">Добро утро, Константин 👋</p>
+          <p class="d-h1">Готов ли си<br>да тренираш?</p>
+          <p class="d-body mt-2">Всяка сесия те доближава до приемния изпит.</p>
+        </div>
+
+        <!-- Stat pills row -->
+        <div class="flex gap-3">
+          <div class="d-card flex-1 px-4 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#EEF2FF">
+              <i data-lucide="trending-up" style="width:18px;height:18px;color:#6366F1"></i>
+            </div>
+            <div>
+              <p style="font-size:22px;font-weight:700;color:#0B1F3A;letter-spacing:-0.02em;font-family:'DM Sans',sans-serif">14/20</p>
+              <p class="d-meta">последна оценка</p>
+            </div>
+          </div>
+          <div class="d-card flex-1 px-4 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#F0FDF4">
+              <i data-lucide="check-circle-2" style="width:18px;height:18px;color:#22C55E"></i>
+            </div>
+            <div>
+              <p style="font-size:22px;font-weight:700;color:#0B1F3A;letter-spacing:-0.02em;font-family:'DM Sans',sans-serif">7</p>
+              <p class="d-meta">завършени есета</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home card -->
+        <div class="d-card overflow-hidden">
+          <div class="px-5 pt-5 pb-4">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:#EEF2FF">
+                <i data-lucide="notebook-pen" style="width:22px;height:22px;color:#6366F1"></i>
+              </div>
+              <div>
+                <p class="d-h3">Есе — Насочено обучение</p>
+                <p class="d-meta">В процес · Фаза 2 от 6</p>
+              </div>
+              <span class="ml-auto d-badge-ok">
+                <i data-lucide="circle" style="width:7px;height:7px;fill:#16A34A;color:#16A34A"></i>
+                Активно
+              </span>
+            </div>
+            <!-- Phase story rings -->
+            <div class="flex items-center gap-2 mb-4">
+              <div class="d-story-ring-active">
+                <div class="d-story-inner">
+                  <i data-lucide="check" style="width:14px;height:14px;color:#16A34A"></i>
+                </div>
+              </div>
+              <div class="d-story-ring-active" style="background: conic-gradient(#6366F1 360deg, #E5E7EB 0deg)">
+                <div class="d-story-inner" style="font-size:15px;font-weight:700;color:#4F46E5">2</div>
+              </div>
+              <div style="width:40px;height:40px;border-radius:999px;background:#E5E7EB;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#9CA3AF;font-family:'DM Sans',sans-serif">3</div>
+              <div style="width:40px;height:40px;border-radius:999px;background:#E5E7EB;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#9CA3AF;font-family:'DM Sans',sans-serif">4</div>
+              <div style="width:40px;height:40px;border-radius:999px;background:#E5E7EB;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#9CA3AF;font-family:'DM Sans',sans-serif">5</div>
+              <div style="width:40px;height:40px;border-radius:999px;background:#E5E7EB;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#9CA3AF;font-family:'DM Sans',sans-serif">6</div>
+            </div>
+            <button class="d-btn-pri w-full">
+              Продължи сесията
+              <i data-lucide="arrow-right" style="width:18px;height:18px"></i>
+            </button>
+          </div>
+          <div class="px-5 pb-5">
+            <button class="d-btn-sec w-full">
+              <i data-lucide="clock" style="width:16px;height:16px;color:#6B7280"></i>
+              Виж предишни опити
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="space-y-3">
+          <p class="d-label">Избери режим</p>
+          <div class="d-card d-mode-normal p-5 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style="background:#F9FAFB">
+                <i data-lucide="zap" style="width:24px;height:24px;color:#9CA3AF"></i>
+              </div>
+              <div>
+                <p class="d-h3">Бързо упражнение</p>
+                <p class="d-label mb-2" style="color:#9CA3AF">Свободно писане</p>
+                <p class="d-body">Пиши директно, изпрати и получи AI оценка.</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-card d-mode-hi p-5 cursor-pointer relative" style="box-shadow:0 0 0 6px rgba(99,102,241,0.1)">
+            <span class="absolute top-4 right-4 px-3 py-1.5 rounded-full" style="background:#0B1F3A;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.03em;font-family:'DM Sans',sans-serif">★ Препоръчано</span>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style="background:#EEF2FF">
+                <i data-lucide="graduation-cap" style="width:24px;height:24px;color:#6366F1"></i>
+              </div>
+              <div class="pr-28">
+                <p class="d-h3">Насочено обучение</p>
+                <p class="d-label mb-2">6 фази · Коуч режим</p>
+                <p class="d-body">Стъпка по стъпка точно като на реалния изпит.</p>
+                <div class="flex flex-wrap gap-1.5 mt-2.5">
+                  <span class="d-chip">Разбери</span>
+                  <span class="d-chip">Планирай</span>
+                  <span class="d-chip">Пиши</span>
+                  <span class="d-chip">Провери</span>
+                  <span class="d-chip">Оценка</span>
+                  <span class="d-chip">Размисли</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Coaching Phase -->
+      <div class="space-y-4">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Coaching Phase — Comprehension</p>
+
+        <!-- Story ring stepper (large) -->
+        <div class="d-card px-5 py-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div style="width:48px;height:48px;border-radius:999px;background:conic-gradient(#0B1F3A 60deg,#E5E7EB 60deg);display:flex;align-items:center;justify-content:center">
+                <div style="width:36px;height:36px;border-radius:999px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#0B1F3A;font-family:'DM Sans',sans-serif">1</div>
+              </div>
+              <div>
+                <p class="d-h3">Разбери темата</p>
+                <p class="d-meta">Фаза 1 от 6</p>
+              </div>
+            </div>
+            <div class="flex gap-1.5">
+              <div style="width:8px;height:8px;border-radius:999px;background:#0B1F3A"></div>
+              <div style="width:8px;height:8px;border-radius:999px;background:#E5E7EB"></div>
+              <div style="width:8px;height:8px;border-radius:999px;background:#E5E7EB"></div>
+              <div style="width:8px;height:8px;border-radius:999px;background:#E5E7EB"></div>
+              <div style="width:8px;height:8px;border-radius:999px;background:#E5E7EB"></div>
+              <div style="width:8px;height:8px;border-radius:999px;background:#E5E7EB"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Topic card -->
+        <div class="d-card-green px-5 py-5">
+          <p class="d-label mb-2" style="color:#166534">Твоята тема</p>
+          <p class="d-h3 mb-2">Въздушни кули</p>
+          <p class="d-body" style="font-style:italic;color:#374151">"Ако си изградил въздушни кули, трудът ти не е пропаднал." — Хенри Дейвид Торо</p>
+        </div>
+
+        <!-- Phase header -->
+        <div class="px-1">
+          <p class="d-label mb-1.5">Фаза 1 · Разбери</p>
+          <p class="d-h1" style="font-size:26px">Отговори на три въпроса</p>
+          <p class="d-body mt-2">Преди да напишеш и дума — разбери точно какво се иска.</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="d-card px-5 py-5 space-y-5">
+          <p class="d-label">Твоите отговори</p>
+          <div>
+            <label class="block d-h3 mb-2">1. Какво се иска от теб в тази тема?</label>
+            <textarea class="d-textarea" rows="2" placeholder="напр. Да изразя позиция..."></textarea>
+            <div class="mt-2">
+              <span class="d-badge-ok">
+                <i data-lucide="check-circle-2" style="width:13px;height:13px"></i>
+                Добре — продължи
+              </span>
+            </div>
+          </div>
+          <div>
+            <label class="block d-h3 mb-2">2. Каква е твоята позиция?</label>
+            <textarea class="d-textarea" rows="2" placeholder="напр. Вярвам, че..."></textarea>
+            <div class="d-badge-warn mt-2">
+              <p style="font-size:13px;font-weight:600;color:#C2410C;margin-bottom:4px;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif">
+                <i data-lucide="lightbulb" style="width:14px;height:14px"></i>
+                Подобри тезата
+              </p>
+              <p style="font-size:14px;color:#9A3412;font-family:'DM Sans',sans-serif">Добави „защото..." за да я направиш по-конкретна.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="space-y-3">
+          <button class="d-btn-pri w-full">
+            <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+            Провери разбирането ми
+          </button>
+          <button class="d-btn-sec w-full">
+            Продължи въпреки това
+            <i data-lucide="chevron-right" style="width:16px;height:16px;color:#9CA3AF"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       OPTION E — "EDITORIAL"
+       NYT · Guardian · Newspaper authority
+  ═══════════════════════════════════════════════ -->
+  <div id="panel-e" class="option-panel">
+
+    <div class="max-w-screen-xl mx-auto px-6 pt-6 pb-2">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Option E — "Editorial" — Design Tokens</p>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex items-center gap-2"><div class="w-6 h-6" style="background:#0C2D6B;border-radius:2px"></div><span class="text-xs text-slate-600"><strong>CTA</strong> #0C2D6B</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6" style="background:#0A0A0A;border-radius:2px"></div><span class="text-xs text-slate-600"><strong>Text</strong> #0A0A0A</span></div>
+          <div class="flex items-center gap-2"><div class="w-6 h-6" style="background:#FAFAF8;border:1px solid #E7E7E4;border-radius:2px"></div><span class="text-xs text-slate-600"><strong>Page BG</strong> #FAFAF8</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Headings:</strong> Georgia (serif) — body and titles</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Radius:</strong> 4px cards · 2px buttons — near-square</span></div>
+          <div class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-1.5"><span class="text-xs text-slate-600"><strong>Nav:</strong> Deep navy bar · uppercase tracking</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Left: Home + Mode Selector -->
+      <div class="space-y-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Screen + Mode Selection</p>
+
+        <!-- Masthead nav -->
+        <nav class="e-nav rounded overflow-hidden" style="box-shadow:0 2px 6px rgba(12,45,107,0.2)">
+          <div class="px-5 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded flex items-center justify-center text-sm font-black" style="background:#fff;color:#0C2D6B">AC</div>
+              <div>
+                <p style="font-size:13px;font-weight:900;color:#fff;letter-spacing:0.05em;text-transform:uppercase">American College Prep</p>
+                <p style="font-size:10px;color:#93C5FD;letter-spacing:0.08em;text-transform:uppercase">Sofia Admissions</p>
+              </div>
+            </div>
+            <button style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px">
+              <i data-lucide="log-out" style="width:15px;height:15px;color:#93C5FD"></i>
+              <span style="font-size:12px;color:#93C5FD;font-weight:700;text-transform:uppercase;letter-spacing:0.07em">Изход</span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Page heading with thick rule -->
+        <div>
+          <hr class="e-rule-thick">
+          <p class="e-kicker mb-2">Твоята практика</p>
+          <p class="e-h1">Подготовка<br>за приемен изпит</p>
+          <hr class="e-rule" style="margin-top:16px">
+          <p class="e-body" style="font-size:14px">Напиши есе, получи AI оценка и се подобри с всяка версия.</p>
+        </div>
+
+        <!-- Home card -->
+        <div class="e-card overflow-hidden">
+          <div class="px-5 py-4 flex items-center gap-3" style="border-bottom:1px solid #E7E7E4">
+            <div class="w-9 h-9 rounded flex items-center justify-center shrink-0" style="background:#EFF3FF">
+              <i data-lucide="file-pen" style="width:18px;height:18px;color:#0C2D6B"></i>
+            </div>
+            <div>
+              <p class="e-h3">Есе — Част 1</p>
+              <p class="e-meta">Приемен изпит ACS</p>
+            </div>
+            <span class="ml-auto e-badge-ok">
+              <i data-lucide="circle-dot" style="width:11px;height:11px"></i>
+              В процес
+            </span>
+          </div>
+          <div class="px-5 py-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="e-chip flex items-center gap-1">
+                <i data-lucide="layout-list" style="width:10px;height:10px"></i>
+                Насочено обучение
+              </span>
+              <span class="e-meta">· Фаза 2 от 6: Планирай</span>
+            </div>
+            <p class="e-body" style="font-family:-apple-system,sans-serif;font-size:14px">Обучителната ти сесия е в ход. Продължи откъдето спря.</p>
+            <button class="e-btn-pri w-full">
+              <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+              Продължи сесията
+            </button>
+            <button class="e-btn-sec w-full">
+              <i data-lucide="history" style="width:14px;height:14px"></i>
+              Виж предишни опити
+            </button>
+          </div>
+        </div>
+
+        <!-- Mode selector -->
+        <div class="space-y-3">
+          <p class="e-label">Избери режим</p>
+          <hr class="e-rule" style="margin:6px 0">
+          <div class="e-card e-mode-normal p-5 cursor-pointer">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded flex items-center justify-center shrink-0" style="background:#F5F5F3">
+                <i data-lucide="zap" style="width:20px;height:20px;color:#888"></i>
+              </div>
+              <div>
+                <p class="e-h3">Бързо упражнение</p>
+                <p class="e-kicker mb-1.5" style="color:#888">Свободно писане</p>
+                <p class="e-body" style="font-family:-apple-system,sans-serif;font-size:13px">Пиши директно, изпрати есето, получи AI оценка.</p>
+              </div>
+            </div>
+          </div>
+          <div class="e-card e-mode-hi p-5 cursor-pointer" style="box-shadow:0 0 0 3px rgba(12,45,107,0.08)">
+            <div class="flex items-start justify-between mb-3">
+              <span class="e-chip">★ Препоръчано</span>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded flex items-center justify-center shrink-0" style="background:#EFF3FF">
+                <i data-lucide="route" style="width:20px;height:20px;color:#0C2D6B"></i>
+              </div>
+              <div>
+                <p class="e-h3">Насочено обучение</p>
+                <p class="e-kicker mb-1.5">6 структурирани фази</p>
+                <p class="e-body" style="font-family:-apple-system,sans-serif;font-size:13px">Коуч те води от разбирането до отражението.</p>
+                <div class="flex flex-wrap gap-1.5 mt-2.5">
+                  <span class="e-chip">I. Разбери</span>
+                  <span class="e-chip">II. Планирай</span>
+                  <span class="e-chip">III. Пиши</span>
+                  <span class="e-chip">IV. Провери</span>
+                  <span class="e-chip">V. Оценка</span>
+                  <span class="e-chip">VI. Размисли</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Coaching Phase -->
+      <div class="space-y-5">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Coaching Phase — Comprehension</p>
+
+        <!-- Editorial section number stepper -->
+        <div class="e-card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <p class="e-label">Прогрес по фази</p>
+            <p class="e-meta">§1 от 6</p>
+          </div>
+          <div class="flex gap-0">
+            <div class="flex-1 h-2" style="background:#0C2D6B;border-radius:2px 0 0 2px"></div>
+            <div class="flex-1 h-2" style="background:#E7E7E4"></div>
+            <div class="flex-1 h-2" style="background:#E7E7E4"></div>
+            <div class="flex-1 h-2" style="background:#E7E7E4"></div>
+            <div class="flex-1 h-2" style="background:#E7E7E4"></div>
+            <div class="flex-1 h-2" style="background:#E7E7E4;border-radius:0 2px 2px 0"></div>
+          </div>
+          <div class="flex justify-between mt-2">
+            <span class="e-section-num" style="color:#0C2D6B">§I Разбери</span>
+            <span class="e-section-num" style="color:#C8C8C4">§II</span>
+            <span class="e-section-num" style="color:#C8C8C4">§III</span>
+            <span class="e-section-num" style="color:#C8C8C4">§IV</span>
+            <span class="e-section-num" style="color:#C8C8C4">§V</span>
+            <span class="e-section-num" style="color:#C8C8C4">§VI</span>
+          </div>
+        </div>
+
+        <!-- Topic as pull quote -->
+        <div class="e-pull-quote">
+          <p class="e-kicker mb-2">Твоята тема</p>
+          <p class="e-h2" style="font-size:16px;margin-bottom:8px">Въздушни кули</p>
+          <p class="e-body" style="font-size:14px">"Ако си изградил въздушни кули, трудът ти не е пропаднал — именно там трябва да бъдат. Сега сложи основите под тях."</p>
+          <p class="e-meta" style="margin-top:6px">— Хенри Дейвид Торо</p>
+        </div>
+
+        <!-- Phase header editorial style -->
+        <div>
+          <hr class="e-rule-thick" style="border-top-color:#0C2D6B">
+          <p class="e-kicker mb-1">§I — Разбери темата</p>
+          <p class="e-h1" style="font-size:24px">Прочети и отговори на три въпроса</p>
+          <hr class="e-rule">
+          <p class="e-body" style="font-size:14px">Преди да напишеш и дума, увери се, че разбираш точно какво се иска от теб.</p>
+        </div>
+
+        <!-- Questions form -->
+        <div class="e-card p-5 space-y-4">
+          <p class="e-label">Твоите отговори</p>
+          <hr class="e-rule" style="margin:8px 0">
+          <div>
+            <label class="block e-h3 mb-1.5" style="font-size:13px">1. Какво се иска от теб в тази тема?</label>
+            <textarea class="e-textarea" rows="2" placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"></textarea>
+            <div class="mt-1.5">
+              <span class="e-badge-ok">
+                <i data-lucide="check" style="width:11px;height:11px"></i>
+                Правилно
+              </span>
+            </div>
+          </div>
+          <hr class="e-rule">
+          <div>
+            <label class="block e-h3 mb-1.5" style="font-size:13px">2. Каква е твоята позиция или основна идея?</label>
+            <textarea class="e-textarea" rows="2" placeholder="напр. Вярвам, че мечтите трябва да се следват с действие…"></textarea>
+            <div class="e-badge-warn mt-1.5">
+              <p style="font-size:10px;font-weight:900;color:#92400E;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.08em;font-family:-apple-system,sans-serif">Редакторска бележка</p>
+              <p style="font-size:13px;color:#78350F;font-family:-apple-system,sans-serif">Тезата ти може да е по-конкретна — опитай да добавиш „защото..."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="space-y-2.5">
+          <button class="e-btn-pri w-full">
+            <i data-lucide="cpu" style="width:15px;height:15px"></i>
+            Провери разбирането ми
+          </button>
+          <button class="e-btn-sec w-full">
+            Продължи въпреки това
+            <i data-lucide="arrow-right" style="width:14px;height:14px"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       COMPARISON FOOTER
+  ═══════════════════════════════════════════════ -->
+  <div class="max-w-screen-xl mx-auto px-6 py-8">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+      <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Design System Comparison</p>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-5">
+        <div>
+          <div class="w-8 h-1.5 rounded-full mb-3" style="background:#0F1C3F"></div>
+          <p class="font-bold text-slate-900 mb-1 text-sm">A — Slate Pro</p>
+          <p class="text-xs text-slate-500 leading-relaxed">Modern SaaS. Circle steppers, subtle borders, clean type.</p>
+          <div class="mt-2 space-y-0.5">
+            <p class="text-xs text-slate-400">✓ Legible, professional</p>
+            <p class="text-xs text-slate-400">✓ Closest to current</p>
+          </div>
+        </div>
+        <div>
+          <div class="w-8 h-1.5 rounded-full mb-3" style="background:#1C3561"></div>
+          <p class="font-bold text-slate-900 mb-1 text-sm">B — Deep Structure</p>
+          <p class="text-xs text-slate-500 leading-relaxed">Dark nav bar, left-border accents, progress bar.</p>
+          <div class="mt-2 space-y-0.5">
+            <p class="text-xs text-slate-400">✓ Authoritative / trustworthy</p>
+            <p class="text-xs text-slate-400">✓ Highest info density</p>
+          </div>
+        </div>
+        <div>
+          <div class="w-8 h-1.5 rounded-full mb-3" style="background:#0A2342"></div>
+          <p class="font-bold text-slate-900 mb-1 text-sm">C — Open Academy</p>
+          <p class="text-xs text-slate-500 leading-relaxed">Stripe-inspired. Float cards, lift-hover CTAs.</p>
+          <div class="mt-2 space-y-0.5">
+            <p class="text-xs text-slate-400">✓ Premium feel</p>
+            <p class="text-xs text-slate-400">✓ Very approachable</p>
+          </div>
+        </div>
+        <div>
+          <div class="w-8 h-1.5 rounded-full mb-3" style="background:#0B1F3A"></div>
+          <p class="font-bold text-slate-900 mb-1 text-sm">D — Social Flow ✦</p>
+          <p class="text-xs text-slate-500 leading-relaxed">Duolingo-like. Story rings, streak, stat cards, engaging.</p>
+          <div class="mt-2 space-y-0.5">
+            <p class="text-xs text-slate-400">✓ Highest engagement</p>
+            <p class="text-xs text-slate-400">✓ Gamified progress</p>
+          </div>
+        </div>
+        <div>
+          <div class="w-8 h-1.5 rounded-full mb-3" style="background:#0C2D6B;border-radius:2px"></div>
+          <p class="font-bold text-slate-900 mb-1 text-sm">E — Editorial ✦</p>
+          <p class="text-xs text-slate-500 leading-relaxed">NYT-inspired. Serif headings, rules, §section numbers.</p>
+          <div class="mt-2 space-y-0.5">
+            <p class="text-xs text-slate-400">✓ Maximum authority</p>
+            <p class="text-xs text-slate-400">✓ Very distinctive</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 pt-5 border-t border-slate-100">
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Icon Set Recommendation</p>
+        <p class="text-sm text-slate-600">All three options use <strong>Lucide Icons</strong> (already available as <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">lucide-react</code> in your Next.js project). Stroke weight: <strong>1.75px</strong>. Key icons used: <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">pen-line</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">compass</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">zap</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">sparkles</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">graduation-cap</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">arrow-right</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">check-circle-2</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">lightbulb</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">history</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">route</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialise Lucide icons
+    lucide.createIcons();
+
+    function showOption(opt) {
+      // Update panels
+      document.querySelectorAll('.option-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + opt).classList.add('active');
+      // Update tabs
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      // Re-render icons in newly visible panel
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

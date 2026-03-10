@@ -33,7 +33,7 @@ export function MarkCompleteLink({ attemptId }: { attemptId: string }) {
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center gap-1 text-violet-600 hover:underline font-semibold disabled:opacity-50 cursor-pointer"
+        className="inline-flex items-center gap-1 text-indigo-600 hover:underline font-semibold disabled:opacity-50 cursor-pointer"
       >
         <CheckCircle size={14} />
         {loading ? "Записва…" : "Отбележи като завършено"}

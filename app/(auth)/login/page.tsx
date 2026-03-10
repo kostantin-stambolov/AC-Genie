@@ -38,7 +38,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex bg-white">
       {/* Left accent panel – hidden on mobile */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-violet-600 to-indigo-700 flex-col justify-between p-12">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0B1F3A] to-[#1e3a5f] flex-col justify-between p-12">
         <div className="flex items-center gap-2">
           <span className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white font-bold text-sm">AC</span>
           <span className="text-white font-semibold tracking-wide">American College Prep</span>
@@ -57,16 +57,16 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
           {/* Logo mark – mobile only */}
           <div className="flex lg:hidden items-center gap-2 mb-10">
-            <span className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white font-bold text-sm">AC</span>
+            <span className="w-8 h-8 rounded-lg bg-[#0B1F3A] flex items-center justify-center text-white font-bold text-sm">AC</span>
             <span className="text-neutral-900 font-semibold">American College Prep</span>
           </div>
 
-          <h1 className="text-2xl font-bold text-neutral-900 mb-1">Welcome back</h1>
-          <p className="text-neutral-500 text-sm mb-8">Sign in to continue practising</p>
+          <h1 className="text-[26px] font-semibold text-[#111827] mb-1 tracking-tight">Welcome back</h1>
+          <p className="text-[#6B7280] text-[15px] mb-8">Sign in to continue practising</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-1.5">
+              <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
                 Email
               </label>
               <input
@@ -75,13 +75,13 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-11 px-4 rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-900 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent focus:bg-white transition"
+                className="w-full h-[52px] px-4 rounded-2xl border border-[#E5E7EB] bg-[#F9FAFB] text-[#111827] text-[15px] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent focus:bg-white transition"
                 placeholder="you@example.com"
                 required
               />
             </div>
             <div>
-              <label htmlFor="pin" className="block text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-1.5">
+              <label htmlFor="pin" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
                 PIN
               </label>
               <input
@@ -91,7 +91,7 @@ export default function LoginPage() {
                 autoComplete="off"
                 value={pin}
                 onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 8))}
-                className="w-full h-11 px-4 rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-900 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent focus:bg-white transition"
+                className="w-full h-[52px] px-4 rounded-2xl border border-[#E5E7EB] bg-[#F9FAFB] text-[#111827] text-[15px] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent focus:bg-white transition"
                 placeholder="4–8 digits"
                 required
                 minLength={4}
@@ -113,15 +113,15 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 cursor-pointer"
+              className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer"
             >
               {loading ? "Signing in…" : "Sign in"}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-neutral-500">
+          <p className="mt-6 text-center text-[15px] text-[#9CA3AF]">
             No account?{" "}
-            <a href="/register" className="text-violet-600 font-medium hover:underline">
+            <a href="/register" className="text-indigo-600 font-medium hover:underline">
               Create one
             </a>
           </p>

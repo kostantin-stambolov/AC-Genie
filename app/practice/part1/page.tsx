@@ -3,24 +3,9 @@ import { getSessionUserId } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { NavHeader } from "@/components/NavHeader";
 import { EssayFeedbackSection } from "./EssayFeedbackSection";
+import { resolveStoredPrompt } from "@/lib/essay-prompts";
 
 type Props = { searchParams: Promise<{ attemptId?: string }> };
-
-type ParsedPrompt = { title: string; instruction: string; body: string };
-
-function parsePrompt(promptText: string | null): ParsedPrompt | null {
-  if (!promptText) return null;
-  try {
-    const p = JSON.parse(promptText) as { title?: string; instruction?: string; body?: string };
-    return {
-      title: p.title ?? "Есе",
-      instruction: p.instruction ?? "",
-      body: p.body ?? "",
-    };
-  } catch {
-    return { title: "Есе", instruction: promptText, body: "" };
-  }
-}
 
 function isQuote(body: string) {
   return body.includes("—") || body.startsWith('"') || body.startsWith("\u201C");
@@ -74,23 +59,23 @@ function InstructionBlock({ instruction }: { instruction: string }) {
   const seg = parseInstruction(instruction);
 
   return (
-    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">
+    <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
+      <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">
         Твоята задача
       </p>
 
       {seg.kind === "numbered" && (
         <div className="space-y-3">
           {seg.lead && (
-            <p className="text-neutral-700 text-[15px] leading-relaxed">{seg.lead}</p>
+            <p className="text-[#6B7280] text-[15px] leading-relaxed">{seg.lead}</p>
           )}
           <ol className="space-y-2.5">
             {seg.items.map((item, i) => (
               <li key={i} className="flex gap-3">
-                <span className="shrink-0 w-6 h-6 rounded-full bg-violet-100 text-violet-700 text-xs font-bold flex items-center justify-center mt-0.5">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 text-[12px] font-bold flex items-center justify-center mt-0.5">
                   {i + 1}
                 </span>
-                <p className="text-neutral-700 text-[15px] leading-relaxed">{item}</p>
+                <p className="text-[#6B7280] text-[15px] leading-relaxed">{item}</p>
               </li>
             ))}
           </ol>
@@ -101,15 +86,15 @@ function InstructionBlock({ instruction }: { instruction: string }) {
         <ul className="space-y-2.5">
           {seg.items.map((item, i) => (
             <li key={i} className="flex gap-3">
-              <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-violet-400 mt-2.5" />
-              <p className="text-neutral-700 text-[15px] leading-relaxed">{item}</p>
+              <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2.5" />
+              <p className="text-[#6B7280] text-[15px] leading-relaxed">{item}</p>
             </li>
           ))}
         </ul>
       )}
 
       {seg.kind === "prose" && (
-        <p className="text-neutral-700 text-[15px] leading-relaxed">{seg.text}</p>
+        <p className="text-[#6B7280] text-[15px] leading-relaxed">{seg.text}</p>
       )}
     </div>
   );
@@ -127,30 +112,30 @@ export default async function Part1Page({ searchParams }: Props) {
   });
   if (!attempt) redirect("/home");
 
-  const prompt = parsePrompt(attempt.promptText);
+  const prompt = resolveStoredPrompt(attempt.promptText);
 
   return (
-    <div className="min-h-screen bg-[#f7f8fa]">
+    <div className="min-h-screen bg-[#F0F2F5]">
       <NavHeader backHref="/home" backLabel="Начало" title="Есе" />
       <main className="max-w-2xl mx-auto px-4 py-8">
 
         {prompt ? (
           <div className="mb-6 space-y-3">
             {/* Title */}
-            <h1 className="text-2xl font-bold text-neutral-900 leading-tight">{prompt.title}</h1>
+            <h1 className="text-[26px] font-semibold text-[#111827] leading-tight tracking-tight">{prompt.title}</h1>
 
             {/* Body — styled quote or plain prompt */}
             {prompt.body && (
               isQuote(prompt.body) ? (
-                <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-5">
-                  <span className="block text-4xl text-violet-200 font-serif leading-none mb-2 select-none">&ldquo;</span>
-                  <p className="text-neutral-800 text-base leading-relaxed italic whitespace-pre-wrap px-1">
+                <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
+                  <span className="block text-4xl text-indigo-200 font-serif leading-none mb-2 select-none">&ldquo;</span>
+                  <p className="text-[#6B7280] text-[15px] leading-relaxed italic whitespace-pre-wrap px-1">
                     {prompt.body}
                   </p>
                 </div>
               ) : (
-                <div className="bg-violet-50 border border-violet-100 rounded-2xl px-5 py-4">
-                  <p className="text-neutral-700 text-[15px] leading-relaxed whitespace-pre-wrap">
+                <div className="bg-indigo-50 border border-indigo-100 rounded-3xl px-5 py-4">
+                  <p className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">
                     {prompt.body}
                   </p>
                 </div>
@@ -163,7 +148,7 @@ export default async function Part1Page({ searchParams }: Props) {
             )}
           </div>
         ) : (
-          <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5 mb-6 text-sm text-amber-800">
+          <div className="rounded-3xl bg-amber-50 border border-amber-200 p-5 mb-6 text-[15px] text-amber-800">
             Не е заредена тема. Върни се на началото и започни ново есе.
           </div>
         )}

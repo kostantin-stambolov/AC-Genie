@@ -42,7 +42,7 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Твоето есе</p>
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоето есе</p>
         <EssayEditor
           attemptId={attemptId}
           initialBody={initialBody}
@@ -55,7 +55,7 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
           type="button"
           onClick={handleSubmitFeedback}
           disabled={loading || isEmpty}
-          className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+          className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
         >
           {loading ? (
             <>

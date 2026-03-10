@@ -14,7 +14,7 @@ export function LogoutButton() {
     <button
       type="button"
       onClick={handleLogout}
-      className="flex items-center gap-1.5 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition cursor-pointer px-2 py-2 rounded-lg hover:bg-neutral-100 -mr-2"
+      className="flex items-center gap-1.5 text-[14px] font-medium text-[#9CA3AF] hover:text-[#111827] transition cursor-pointer px-2 py-2 rounded-xl hover:bg-[#F3F4F6] -mr-2"
       aria-label="Sign out"
     >
       <LogOut size={16} />

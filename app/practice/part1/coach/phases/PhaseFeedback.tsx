@@ -37,19 +37,19 @@ function SubBar({
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <span className={`text-xs font-semibold ${isWeakest ? "text-red-600" : "text-neutral-600"}`}>
+        <span className={`text-[13px] font-semibold ${isWeakest ? "text-red-600" : "text-[#6B7280]"}`}>
           {label}
           {isWeakest && (
-            <span className="ml-1.5 text-[10px] font-bold text-red-500 bg-red-50 border border-red-200 rounded-full px-1.5 py-0.5">
+            <span className="ml-1.5 text-[12px] font-bold text-red-500 bg-red-50 border border-red-200 rounded-full px-1.5 py-0.5">
               ← най-слаб
             </span>
           )}
         </span>
-        <span className="text-xs font-bold text-neutral-700">{value}/{max}</span>
+        <span className="text-[13px] font-bold text-[#111827]">{value}/{max}</span>
       </div>
-      <div className="h-2 rounded-full bg-neutral-200 overflow-hidden">
+      <div className="h-2 rounded-full bg-[#F3F4F6] overflow-hidden">
         <div
-          className={`h-full rounded-full transition-all ${isWeakest ? "bg-red-400" : "bg-violet-400"}`}
+          className={`h-full rounded-full transition-all ${isWeakest ? "bg-red-400" : "bg-indigo-500"}`}
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -61,10 +61,10 @@ function ExaminerCard({
   n, score, weakest,
 }: { n: number; score: ExaminerScore; weakest: WeakestDimension }) {
   return (
-    <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm p-4 flex-1">
+    <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-4 flex-1">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Проверяващ {n}</p>
-        <span className="text-lg font-black text-neutral-800">{score.total}<span className="text-sm font-semibold text-neutral-300">/20</span></span>
+        <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF]">Проверяващ {n}</p>
+        <span className="text-lg font-bold text-[#111827]">{score.total}<span className="text-[13px] font-semibold text-[#9CA3AF]">/20</span></span>
       </div>
       <div className="space-y-2.5">
         <SubBar label="Идея и съдържание" value={score.ideaContent} max={10} isWeakest={weakest === "ideaContent"} />
@@ -72,7 +72,7 @@ function ExaminerCard({
         <SubBar label="Език"               value={score.language}    max={6}  isWeakest={weakest === "language"} />
       </div>
       {score.notes && (
-        <p className="mt-3 text-xs text-neutral-500 leading-relaxed italic">"{score.notes}"</p>
+        <p className="mt-3 text-[13px] text-[#9CA3AF] leading-relaxed italic">"{score.notes}"</p>
       )}
     </div>
   );
@@ -85,25 +85,25 @@ function LangErrorCard({ err }: { err: { type: string; original: string; correct
     spelling:     "bg-red-100 text-red-700 border-red-200",
     grammar:      "bg-orange-100 text-orange-700 border-orange-200",
     punctuation:  "bg-blue-100 text-blue-700 border-blue-200",
-    word_choice:  "bg-violet-100 text-violet-700 border-violet-200",
+    word_choice:  "bg-indigo-50 text-indigo-700 border-indigo-100",
   };
-  const cls = typeColors[err.type?.toLowerCase()] ?? "bg-neutral-100 text-neutral-700 border-neutral-200";
+  const cls = typeColors[err.type?.toLowerCase()] ?? "bg-[#F3F4F6] text-[#6B7280] border-[#E5E7EB]";
   return (
-    <div className="bg-white rounded-xl border border-neutral-100 shadow-sm overflow-hidden">
-      <div className="px-4 py-2 border-b border-neutral-100 flex items-center gap-2">
-        <span className={`text-[10px] font-bold uppercase tracking-widest border rounded-full px-2.5 py-0.5 ${cls}`}>{err.type?.replace("_", " ")}</span>
+    <div className="bg-white rounded-2xl border border-[#F3F4F6] overflow-hidden">
+      <div className="px-4 py-2 border-b border-[#F3F4F6] flex items-center gap-2">
+        <span className={`text-[12px] font-bold uppercase tracking-widest border rounded-full px-2.5 py-0.5 ${cls}`}>{err.type?.replace("_", " ")}</span>
       </div>
       <div className="px-4 py-3 grid grid-cols-2 gap-3">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-red-400 mb-1">Написал/а си</p>
-          <p className="text-sm font-medium text-red-700 line-through">{err.original}</p>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-red-400 mb-1">Написал/а си</p>
+          <p className="text-[15px] font-medium text-red-700 line-through">{err.original}</p>
         </div>
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Трябва да бъде</p>
-          <p className="text-sm font-bold text-emerald-700">{err.correction}</p>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Трябва да бъде</p>
+          <p className="text-[15px] font-bold text-emerald-700">{err.correction}</p>
         </div>
       </div>
-      {err.note && <div className="px-4 pb-3"><p className="text-xs text-neutral-500 leading-relaxed">💡 {err.note}</p></div>}
+      {err.note && <div className="px-4 pb-3"><p className="text-[13px] text-[#9CA3AF] leading-relaxed">💡 {err.note}</p></div>}
     </div>
   );
 }
@@ -112,9 +112,9 @@ function LangErrorCard({ err }: { err: { type: string; original: string; correct
 
 function AnnotationNote({ text }: { text: string }) {
   return (
-    <div className="my-3 rounded-xl bg-violet-50 border border-violet-200 px-4 py-3 flex gap-2">
-      <span className="text-violet-500 shrink-0 mt-0.5">✦</span>
-      <p className="text-xs font-medium text-violet-800 leading-relaxed">{text.replace(/^✦\s*/, "")}</p>
+    <div className="my-3 rounded-2xl bg-indigo-50 border border-indigo-100 px-4 py-3 flex gap-2">
+      <span className="text-indigo-500 shrink-0 mt-0.5">✦</span>
+      <p className="text-[13px] font-medium text-indigo-800 leading-relaxed">{text.replace(/^✦\s*/, "")}</p>
     </div>
   );
 }
@@ -134,10 +134,10 @@ function ModelEssaySection({
   const gap = studentFinalScore - score.total;
 
   return (
-    <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-5">
+    <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
       <div className="mb-4">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">📝 Примерно есе</p>
-        <p className="text-sm text-neutral-500 leading-snug">
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Примерно есе</p>
+        <p className="text-[15px] text-[#6B7280] leading-snug">
           Виж как добре структуриран отговор обработва тази тема. Обърни внимание на маркираните наблюдения — те касаят твоята най-слаба област.
         </p>
       </div>
@@ -151,10 +151,10 @@ function ModelEssaySection({
             <div key={i}>
               {isBody && beforeBody.map((a, j) => <AnnotationNote key={`before-${j}`} text={a.text} />)}
               <div>
-                <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-violet-700 bg-violet-50 border border-violet-200 rounded-lg py-1 px-3 mb-2">
+                <span className="inline-block text-[12px] font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1 px-3 mb-2">
                   {part.label}
                 </span>
-                <p className="text-neutral-700 text-[15px] leading-relaxed whitespace-pre-wrap">{part.text}</p>
+                <p className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">{part.text}</p>
               </div>
               {isBody && afterBody.map((a, j) => <AnnotationNote key={`after-${j}`} text={a.text} />)}
             </div>
@@ -163,11 +163,11 @@ function ModelEssaySection({
       </div>
 
       {/* Model essay score */}
-      <div className="mt-6 pt-4 border-t border-violet-100">
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Оценка на примерното есе (един проверяващ)</p>
+      <div className="mt-6 pt-4 border-t border-[#F3F4F6]">
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Оценка на примерното есе (един проверяващ)</p>
         <div className="flex items-end gap-1.5 mb-3">
-          <span className="text-3xl font-black text-emerald-600">{score.total}</span>
-          <span className="text-lg font-semibold text-neutral-300 mb-0.5">/20</span>
+          <span className="text-3xl font-bold text-emerald-600">{score.total}</span>
+          <span className="text-lg font-semibold text-[#D1D5DB] mb-0.5">/20</span>
         </div>
         <div className="space-y-2 mb-3">
           {[
@@ -177,16 +177,16 @@ function ModelEssaySection({
           ].map(({ l, v, m }) => (
             <div key={l}>
               <div className="flex justify-between mb-0.5">
-                <span className="text-xs text-neutral-500">{l}</span>
-                <span className="text-xs font-semibold text-neutral-600">{v}/{m}</span>
+                <span className="text-[13px] text-[#9CA3AF]">{l}</span>
+                <span className="text-[13px] font-semibold text-[#6B7280]">{v}/{m}</span>
               </div>
-              <div className="h-1.5 rounded-full bg-neutral-100 overflow-hidden">
+              <div className="h-1.5 rounded-full bg-[#F3F4F6] overflow-hidden">
                 <div className="h-full rounded-full bg-emerald-400" style={{ width: `${(v / m) * 100}%` }} />
               </div>
             </div>
           ))}
         </div>
-        <p className="text-xs text-neutral-500 leading-relaxed">
+        <p className="text-[13px] text-[#9CA3AF] leading-relaxed">
           Примерното есе получава приблизително <strong>{score.total}/20</strong> от един проверяващ. Твоето есе средно получи <strong>{studentFinalScore}/20</strong>.
           {gap > 0 && ` Разлика от ${gap} точки — именно това се затваря с редовна практика.`}
         </p>
@@ -228,8 +228,8 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
   if (!feedbackData?.breakdown) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <p className="text-neutral-500">Данните за обратна връзка не са налични.</p>
-        <button type="button" onClick={onAdvance} disabled={advancing} className="h-12 px-6 rounded-xl bg-violet-600 text-white text-sm font-semibold cursor-pointer disabled:opacity-50">
+        <p className="text-[#6B7280] text-[15px]">Данните за обратна връзка не са налични.</p>
+        <button type="button" onClick={onAdvance} disabled={advancing} className="h-[52px] px-6 rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] shadow-md cursor-pointer disabled:opacity-50">
           Продължи →
         </button>
       </div>
@@ -248,8 +248,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Фаза 5 · Оценка</p>
-        <h2 className="text-xl font-bold text-neutral-900">Твоята оценка</h2>
+                <h2 className="text-[22px] font-semibold text-[#111827] tracking-tight">Твоята оценка</h2>
       </div>
 
       {/* ── Section A: Examiner Cards ───────────────────────────────────────── */}
@@ -262,25 +261,25 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {/* Combined / Arbitrated result */}
       {arbitrated ? (
-        <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
+        <div className={`rounded-3xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Арбитраж</p>
-            <span className={`text-3xl font-black ${col.text}`}>{finalScore}<span className="text-base font-semibold text-neutral-300 ml-0.5">/20</span></span>
+            <p className="text-[12px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Арбитраж</p>
+            <span className={`text-3xl font-bold ${col.text}`}>{finalScore}<span className="text-[15px] font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
           </div>
-          <p className={`text-sm ${col.text} leading-relaxed mb-1`}>Проверяващите се различиха с 4+ точки. На реалния изпит арбитратор би преоценил есето ти.</p>
-          <p className={`text-sm font-semibold ${col.text}`}>Арбитражна средна: {finalScore} / 20</p>
+          <p className={`text-[15px] ${col.text} leading-relaxed mb-1`}>Проверяващите се различиха с 4+ точки. На реалния изпит арбитратор би преоценил есето ти.</p>
+          <p className={`text-[15px] font-semibold ${col.text}`}>Арбитражна средна: {finalScore} / 20</p>
         </div>
       ) : (
-        <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
+        <div className={`rounded-3xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-0.5">Краен резултат</p>
-              <p className={`text-xs font-semibold ${col.text}`}>{col.label}</p>
+              <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF] mb-0.5">Краен резултат</p>
+              <p className={`text-[13px] font-semibold ${col.text}`}>{col.label}</p>
             </div>
-            <span className={`text-4xl font-black ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-neutral-300 ml-0.5">/20</span></span>
+            <span className={`text-4xl font-bold ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
           </div>
-          <p className={`text-xs ${col.text} mb-2`}>Проверяващ 1: {e1.total}/20 · Проверяващ 2: {e2.total}/20 · Средно: {finalScore}/20</p>
-          <div className="h-2.5 rounded-full bg-neutral-200 overflow-hidden">
+          <p className={`text-[13px] ${col.text} mb-2`}>Проверяващ 1: {e1.total}/20 · Проверяващ 2: {e2.total}/20 · Средно: {finalScore}/20</p>
+          <div className="h-2.5 rounded-full bg-white/50 overflow-hidden">
             <div className={`h-full rounded-full ${finalScore >= 16 ? "bg-emerald-500" : finalScore >= 12 ? "bg-amber-500" : finalScore >= 8 ? "bg-orange-500" : "bg-red-500"}`} style={{ width: `${pct20}%` }} />
           </div>
         </div>
@@ -288,11 +287,11 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {/* Key takeaway */}
       {keyTakeaway && (
-        <div className="bg-violet-50 rounded-2xl border border-violet-200 px-5 py-4 flex gap-3 items-start">
-          <span className="text-violet-500 text-xl shrink-0">🎯</span>
+        <div className="bg-indigo-50 rounded-3xl border border-indigo-100 px-5 py-4 flex gap-3 items-start">
+          <span className="text-indigo-500 text-xl shrink-0">🎯</span>
           <div>
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Основен извод</p>
-            <p className="text-sm font-semibold text-violet-900 leading-relaxed">{keyTakeaway}</p>
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Основен извод</p>
+            <p className="text-[15px] font-semibold text-[#111827] leading-relaxed">{keyTakeaway}</p>
           </div>
         </div>
       )}
@@ -300,17 +299,17 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {/* ── Section B: Feedback + Language errors ──────────────────────────── */}
 
       {paragraphs.length > 0 && (
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">Обратна връзка</p>
-          <div className="space-y-4 text-sm text-neutral-700 leading-relaxed">
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Обратна връзка</p>
+          <div className="space-y-4 text-[15px] text-[#6B7280] leading-relaxed">
             {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
           </div>
         </div>
       )}
 
       {feedbackData.languageErrors.length > 0 && (
-        <div className="bg-white rounded-2xl border border-neutral-100 shadow-sm px-5 py-5">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">
             Езикови грешки и правопис ({feedbackData.languageErrors.length})
           </p>
           <div className="space-y-3">
@@ -322,22 +321,22 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {/* ── Section C: Model Essay ─────────────────────────────────────────── */}
 
       {rewriteLoading && (
-        <div className="bg-white rounded-2xl border border-violet-100 shadow-sm px-5 py-8">
-          <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-4">📝 Model essay</p>
+        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-8">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Примерно есе</p>
           <div className="space-y-3 animate-pulse">
-            <div className="h-3 bg-neutral-100 rounded-full w-3/4" />
-            <div className="h-3 bg-neutral-100 rounded-full w-full" />
-            <div className="h-3 bg-neutral-100 rounded-full w-5/6" />
-            <div className="h-3 bg-neutral-100 rounded-full w-full" />
-            <div className="h-3 bg-neutral-100 rounded-full w-2/3" />
+            <div className="h-3 bg-[#F3F4F6] rounded-full w-3/4" />
+            <div className="h-3 bg-[#F3F4F6] rounded-full w-full" />
+            <div className="h-3 bg-[#F3F4F6] rounded-full w-5/6" />
+            <div className="h-3 bg-[#F3F4F6] rounded-full w-full" />
+            <div className="h-3 bg-[#F3F4F6] rounded-full w-2/3" />
           </div>
-          <p className="mt-4 text-xs text-neutral-400 text-center">Генерира примерно есе…</p>
+          <p className="mt-4 text-[13px] text-[#9CA3AF] text-center">Генерира примерно есе…</p>
         </div>
       )}
 
       {!rewriteLoading && rewriteError && (
-        <div className="bg-neutral-50 rounded-2xl border border-neutral-200 px-5 py-5 text-center">
-          <p className="text-sm text-neutral-500">{rewriteError}</p>
+        <div className="bg-[#F9FAFB] rounded-3xl border border-[#E5E7EB] px-5 py-5 text-center">
+          <p className="text-[15px] text-[#9CA3AF]">{rewriteError}</p>
         </div>
       )}
 
@@ -354,7 +353,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       <button
         type="button" onClick={onAdvance} disabled={advancing}
-        className="w-full h-12 rounded-xl bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 active:scale-[0.98] transition disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+        className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
       >
         {advancing
           ? <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Записва…</>

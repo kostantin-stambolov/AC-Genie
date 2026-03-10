@@ -29,6 +29,8 @@ export async function POST(request: NextRequest) {
     const form = new FormData();
     form.append("file", file, file.name || "audio.webm");
     form.append("model", "whisper-1");
+    form.append("language", "bg");
+    form.append("prompt", "Текстът е предимно на български език. Може да съдържа английски думи и изрази. The text is mostly in Bulgarian but may include English words.");
 
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       method: "POST",

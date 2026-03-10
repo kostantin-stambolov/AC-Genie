@@ -70,13 +70,13 @@ export function CountdownTimer({
           <circle
             cx="18" cy="18" r="15" fill="none" stroke="currentColor" strokeWidth="3"
             strokeDasharray={`${pct * 94.25} 94.25`}
-            className={remaining <= 120 ? "text-red-500" : remaining <= 300 ? "text-amber-500" : "text-violet-500"}
+            className={remaining <= 120 ? "text-red-500" : remaining <= 300 ? "text-amber-500" : "text-indigo-500"}
           />
         </svg>
       </div>
       <div>
         <p className={`text-xl font-bold leading-none tabular-nums ${colorClass}`}>{display}</p>
-        <p className={`text-[10px] font-semibold uppercase tracking-widest mt-0.5 ${colorClass} opacity-60`}>оставащо</p>
+        <p className={`text-[12px] font-semibold uppercase tracking-widest mt-0.5 ${colorClass} opacity-60`}>оставащо</p>
       </div>
     </div>
   );
