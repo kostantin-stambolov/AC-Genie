@@ -23,11 +23,11 @@ type Props = {
 
 // ── Score helpers ──────────────────────────────────────────────────────────────
 
-function score40Color(s40: number) {
-  if (s40 >= 32) return { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-800", label: "Competitive score" };
-  if (s40 >= 24) return { bg: "bg-amber-50",   border: "border-amber-200",   text: "text-amber-800",   label: "Solid foundation, room to grow" };
-  if (s40 >= 16) return { bg: "bg-orange-50",  border: "border-orange-200",  text: "text-orange-800",  label: "Keep practising" };
-  return          { bg: "bg-red-50",    border: "border-red-200",    text: "text-red-800",    label: "Focus on the basics first" };
+function scoreColor(s: number) {
+  if (s >= 16) return { bg: "bg-emerald-50", border: "border-emerald-200", text: "text-emerald-800", label: "Competitive score" };
+  if (s >= 12) return { bg: "bg-amber-50",   border: "border-amber-200",   text: "text-amber-800",   label: "Solid foundation, room to grow" };
+  if (s >= 8)  return { bg: "bg-orange-50",  border: "border-orange-200",  text: "text-orange-800",  label: "Keep practising" };
+  return        { bg: "bg-red-50",    border: "border-red-200",    text: "text-red-800",    label: "Focus on the basics first" };
 }
 
 function SubBar({
@@ -237,10 +237,9 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
   }
 
   const { examiner1: e1, examiner2: e2, finalScore, arbitrated, keyTakeaway } = feedbackData.breakdown;
-  const score40 = e1.total + e2.total;
-  const col = score40Color(score40);
+  const col = scoreColor(finalScore);
   const weakest = getWeakestDimension(e1, e2);
-  const pct40 = Math.round((score40 / 40) * 100);
+  const pct20 = Math.round((finalScore / 20) * 100);
 
   const paragraphs = feedbackData.feedbackText
     ? feedbackData.feedbackText.split(/\n\n/).filter(Boolean)
@@ -266,10 +265,10 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-3">
             <p className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Arbitrated</p>
-            <span className={`text-3xl font-black ${col.text}`}>{score40}<span className="text-base font-semibold text-neutral-300 ml-0.5">/40</span></span>
+            <span className={`text-3xl font-black ${col.text}`}>{finalScore}<span className="text-base font-semibold text-neutral-300 ml-0.5">/20</span></span>
           </div>
-          <p className={`text-sm ${col.text} leading-relaxed mb-1`}>Examiners disagreed by 4+ points. In the real exam, an arbitrator would re-score your essay and their single score is doubled.</p>
-          <p className={`text-sm font-semibold ${col.text}`}>Arbitrator score: {finalScore} × 2 = {score40} / 40</p>
+          <p className={`text-sm ${col.text} leading-relaxed mb-1`}>Examiners disagreed by 4+ points. In the real exam, an arbitrator would re-score your essay.</p>
+          <p className={`text-sm font-semibold ${col.text}`}>Arbitrated average: {finalScore} / 20</p>
         </div>
       ) : (
         <div className={`rounded-2xl border ${col.border} ${col.bg} px-5 py-5`}>
@@ -278,11 +277,11 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
               <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-0.5">Final score</p>
               <p className={`text-xs font-semibold ${col.text}`}>{col.label}</p>
             </div>
-            <span className={`text-4xl font-black ${col.text}`}>{score40}<span className="text-lg font-semibold text-neutral-300 ml-0.5">/40</span></span>
+            <span className={`text-4xl font-black ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-neutral-300 ml-0.5">/20</span></span>
           </div>
-          <p className={`text-xs ${col.text} mb-2`}>Examiner 1: {e1.total} + Examiner 2: {e2.total} = {score40} / 40</p>
+          <p className={`text-xs ${col.text} mb-2`}>Examiner 1: {e1.total}/20 · Examiner 2: {e2.total}/20 · Average: {finalScore}/20</p>
           <div className="h-2.5 rounded-full bg-neutral-200 overflow-hidden">
-            <div className={`h-full rounded-full ${score40 >= 32 ? "bg-emerald-500" : score40 >= 24 ? "bg-amber-500" : score40 >= 16 ? "bg-orange-500" : "bg-red-500"}`} style={{ width: `${pct40}%` }} />
+            <div className={`h-full rounded-full ${finalScore >= 16 ? "bg-emerald-500" : finalScore >= 12 ? "bg-amber-500" : finalScore >= 8 ? "bg-orange-500" : "bg-red-500"}`} style={{ width: `${pct20}%` }} />
           </div>
         </div>
       )}

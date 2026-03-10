@@ -43,7 +43,6 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
   }
 
   const { examiner1: e1, examiner2: e2, finalScore } = bd;
-  const score40  = e1.total + e2.total;
   const weakest  = getWeakestDimension(e1, e2);
   const dimLabel = DIMENSION_LABELS[weakest];
   const avgValue = weakest === "ideaContent"
@@ -80,7 +79,8 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, onAdvance 
 
           <div className="mb-4">
             <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1">Your score</p>
-            <p className="text-3xl font-black text-neutral-900">{score40}<span className="text-lg font-semibold text-neutral-300">/40</span></p>
+            <p className="text-3xl font-black text-neutral-900">{finalScore}<span className="text-lg font-semibold text-neutral-300">/20</span></p>
+            <p className="text-xs text-neutral-400 mt-0.5">Avg of Examiner 1 ({e1.total}) + Examiner 2 ({e2.total})</p>
           </div>
 
           <div className="mb-4">
