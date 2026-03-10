@@ -81,7 +81,7 @@ Output valid JSON only, no markdown or extra text:
     "total": <integer 0-20>,
     "notes": "<1-2 sentences: what this examiner focused on>"
   },
-  "finalScore": <integer 0-40>,
+  "finalScore": <integer 0-20>,
   "arbitrated": <boolean>,
   "keyTakeaway": "<string>",
   "feedback": "<string>",
@@ -93,7 +93,7 @@ Output valid JSON only, no markdown or extra text:
 Scoring rules:
 - Each examiner scores independently with a DIFFERENT perspective. Examiner 1 is an optimist who emphasises argumentation quality and rewards original thinking — they score ideaContent generously. Examiner 2 is a strict grader who emphasises language precision and penalises unclear writing — they score language strictly. Their totals MUST differ by at least 1 point and typically by 1–3 points. NEVER return identical scores for both examiners. If you find yourself writing the same number twice in a row for corresponding sub-scores, stop and adjust one of them.
 - "total" for each examiner = ideaContent + structure + language (must add up correctly).
-- If |examiner1.total - examiner2.total| >= 4, set "arbitrated" to true. In that case, "finalScore" = the average of the two totals, rounded to the nearest integer, then doubled (simulating an arbitrator who scores once and the score is doubled). If the difference is < 4, "finalScore" = examiner1.total + examiner2.total, and "arbitrated" = false.
+- "finalScore" = round((examiner1.total + examiner2.total) / 2), i.e. the average of both examiners, out of 20. Set "arbitrated" to true if |examiner1.total - examiner2.total| >= 4, false otherwise.
 - "keyTakeaway": ONE sentence (max 20 words) — the single most critical thing this student must improve before exam day. Be specific and direct: not "improve your structure" but "end every paragraph with a sentence that ties back to your opening claim." This is the headline the student sees first.
 - "feedback": 3–4 paragraphs in English separated by \n\n. Paragraph 1: Overall impression and the final score in context. Paragraph 2: Specific strengths, citing concrete phrases from the essay. Paragraph 3: The single most important area to improve with a concrete, actionable instruction. Paragraph 4: One next step for revision. When arbitration triggers, explain it briefly. Keep the tone warm, honest, and age-appropriate — speak to a 13-year-old, not a university student.
 - "languageErrors": List every spelling, grammar, and punctuation error. Include word_choice/style only when clearly wrong. If none, use [].

@@ -83,9 +83,9 @@ function parseRewriteParts(json: string | null): RewritePart[] {
 }
 
 function finalScoreStyle(score: number): string {
-  if (score >= 32) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
-  if (score >= 24) return "bg-amber-100 text-amber-800 ring-amber-200";
-  if (score >= 16) return "bg-orange-100 text-orange-800 ring-orange-200";
+  if (score >= 16) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
+  if (score >= 12) return "bg-amber-100 text-amber-800 ring-amber-200";
+  if (score >= 8)  return "bg-orange-100 text-orange-800 ring-orange-200";
   return "bg-red-100 text-red-800 ring-red-200";
 }
 
@@ -183,7 +183,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                   <h2 className="text-sm font-bold text-neutral-700 uppercase tracking-wider">Draft {i + 1}</h2>
                   <div className="flex items-center gap-2">
                     <span className={`inline-flex items-center gap-1 text-xs font-semibold rounded-full px-2.5 py-0.5 ring-1 ${gs}`}>
-                      {v2.finalScore} / 40
+                      {v2.finalScore} / 20
                     </span>
                     <span className="text-xs text-neutral-400">
                       {new Date(v2.submittedAt).toLocaleString(undefined, {

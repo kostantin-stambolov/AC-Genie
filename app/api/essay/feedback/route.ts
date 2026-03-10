@@ -191,15 +191,10 @@ export async function POST(request: NextRequest) {
       examiner1 = normalizeExaminerScore(parsed.examiner1, fallbackExaminer);
       examiner2 = normalizeExaminerScore(parsed.examiner2, fallbackExaminer);
 
-      // Recompute finalScore based on arbitration rule
+      // finalScore = average of both examiners, out of 20
       const diff = Math.abs(examiner1.total - examiner2.total);
-      if (diff >= 4) {
-        arbitrated = true;
-        finalScore = Math.round((examiner1.total + examiner2.total) / 2) * 2;
-      } else {
-        arbitrated = false;
-        finalScore = examiner1.total + examiner2.total;
-      }
+      arbitrated = diff >= 4;
+      finalScore = Math.round((examiner1.total + examiner2.total) / 2);
 
       keyTakeaway = typeof parsed.keyTakeaway === "string" && parsed.keyTakeaway.trim().length > 0
         ? parsed.keyTakeaway.trim()
@@ -219,20 +214,15 @@ export async function POST(request: NextRequest) {
           notes: examiner2.notes,
         };
         examiner2.total = examiner2.ideaContent + examiner2.structure + examiner2.language;
-        // Recompute arbitration after nudge
+        // Recompute after nudge
         const diff2 = Math.abs(examiner1.total - examiner2.total);
-        if (diff2 >= 4) {
-          arbitrated = true;
-          finalScore = Math.round((examiner1.total + examiner2.total) / 2) * 2;
-        } else {
-          arbitrated = false;
-          finalScore = examiner1.total + examiner2.total;
-        }
+        arbitrated = diff2 >= 4;
+        finalScore = Math.round((examiner1.total + examiner2.total) / 2);
       }
     } catch {
       examiner1 = fallbackExaminer;
       examiner2 = { ...fallbackExaminer, ideaContent: 4, total: 9, notes: "" };
-      finalScore = fallbackExaminer.total + 9;
+      finalScore = Math.round((fallbackExaminer.total + 9) / 2);
       arbitrated = false;
       keyTakeaway = "";
       feedback = "Could not parse feedback. Please try again.";

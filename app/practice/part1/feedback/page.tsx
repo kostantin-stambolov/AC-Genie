@@ -26,9 +26,9 @@ function scoreColor(score: number, max: number): { chip: string; text: string; l
 }
 
 function finalScoreLabel(score: number): string {
-  if (score >= 32) return "Strong — competitive for ACS";
-  if (score >= 24) return "Solid — room to improve";
-  if (score >= 16) return "Developing — needs significant work";
+  if (score >= 16) return "Strong — competitive for ACS";
+  if (score >= 12) return "Solid — room to improve";
+  if (score >= 8)  return "Developing — needs significant work";
   return "Below threshold — keep practising";
 }
 
@@ -125,12 +125,12 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
             <p className="text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-3">Your score</p>
             <div className="flex items-center gap-4">
               <div className={`rounded-2xl px-5 py-3 flex flex-col items-center shrink-0 ${sc.chip}`}>
-                <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
-                <span className={`text-xs font-semibold mt-1 ${sc.text} opacity-60`}>/ 40</span>
+              <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
+              <span className={`text-xs font-semibold mt-1 ${sc.text} opacity-60`}>/ 20</span>
               </div>
               <div>
                 <p className="text-base font-bold text-neutral-900 leading-snug">{finalScoreLabel(finalScore)}</p>
-                <p className="text-sm text-neutral-500 mt-0.5">Sum of two independent examiners (20 pts each).</p>
+                <p className="text-sm text-neutral-500 mt-0.5">Average of two independent examiners (20 pts each).</p>
                 {arbitrated && (
                   <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
                     <AlertCircle size={12} /> Arbitration applied
