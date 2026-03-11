@@ -41,7 +41,7 @@ export default async function HomePage() {
       <main className="max-w-xl mx-auto px-4 py-10">
         <div className="mb-8">
           <h1 className="text-[26px] font-semibold text-[#111827] mb-1 tracking-tight">Твоята практика</h1>
-          <p className="text-[#4B5563] text-[15px]">Пиши. Получавай оценка. Виж какво да подобриш.</p>
+          <p className="text-[#4B5563] text-[15px]">Избери модул, за да се подготвиш за приемния изпит.</p>
         </div>
 
         {/* Essay card */}
@@ -95,7 +95,7 @@ export default async function HomePage() {
               </>
             ) : (
               <>
-                <p className="text-[15px] text-[#4B5563]">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
+                <p className="text-[15px] text-[#4B5563]">Пишеш под таймер — точно като на изпита. Получаваш оценка по критериите на АКС и конкретни насоки какво да подобриш.</p>
                 <Link
                   href="/practice/part1/new"
                   className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
