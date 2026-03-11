@@ -95,7 +95,7 @@ export default async function HomePage() {
               </>
             ) : (
               <>
-                <p className="text-[15px] text-[#4B5563]">Пишеш под таймер — точно като на изпита. Получаваш оценка по критериите на АКС и конкретни насоки какво да подобриш.</p>
+                <p className="text-[15px] text-[#4B5563]">Напиши есе и получи честна оценка по критериите на АКС — с конкретни насоки как да се подобриш преди истинския изпит.</p>
                 <Link
                   href="/practice/part1/new"
                   className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
