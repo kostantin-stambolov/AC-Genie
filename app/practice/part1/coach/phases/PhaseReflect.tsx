@@ -74,7 +74,7 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, initialDon
     return (
       <div className="space-y-5">
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-6">
-          <p className="text-3xl mb-3">🎯</p>
+          <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center mb-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6 text-emerald-600"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
           <h2 className="text-[22px] font-semibold text-[#111827] mb-4 tracking-tight">Сесията е завършена!</h2>
 
           <div className="mb-5">
@@ -158,7 +158,7 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, initialDon
           onChange={e => setReflection(e.target.value)}
           rows={3}
           placeholder={DIMENSION_REFLECTION_PLACEHOLDERS[weakest]}
-          className="w-full rounded-2xl border border-[#E5E7EB] px-3 py-2.5 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+          className="w-full rounded-2xl border border-[#E5E7EB] px-4 py-3 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
         />
       </div>
 

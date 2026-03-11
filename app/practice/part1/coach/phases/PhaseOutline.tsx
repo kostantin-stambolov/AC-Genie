@@ -92,8 +92,8 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
               <p className="text-[13px] text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-2xl px-3 py-2 mb-2 leading-relaxed">{TIPS[key]}</p>
             )}
             <textarea
-              value={value} onChange={e => set(e.target.value)} placeholder={placeholder} rows={2}
-              className="w-full rounded-2xl border border-[#E5E7EB] px-3 py-2.5 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+              value={value} onChange={e => set(e.target.value)} placeholder={placeholder} rows={3}
+              className="w-full rounded-2xl border border-[#E5E7EB] px-4 py-3 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
             />
           </div>
         ))}

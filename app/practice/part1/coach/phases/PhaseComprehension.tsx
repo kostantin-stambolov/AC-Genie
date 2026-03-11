@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ArrowRight } from "@/components/icons";
+import { ArrowRight, CheckCircle, AlertCircle, Sparkles } from "@/components/icons";
 import { DictateButton } from "@/components/DictateButton";
 import type { PromptData, ComprehensionData } from "../CoachingFlow";
 
@@ -12,22 +12,63 @@ type CheckResult = {
   encouragement: string;
 };
 
+type QuestionFieldProps = {
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (v: string) => void;
+  onTranscribed: (text: string) => void;
+  check: { ok: boolean; note?: string } | null;
+};
+
+function QuestionField({ label, value, placeholder, onChange, onTranscribed, check }: QuestionFieldProps) {
+  const borderClass = check
+    ? check.ok
+      ? "border-emerald-400 ring-1 ring-emerald-200"
+      : "border-amber-400 ring-1 ring-amber-200"
+    : "border-[#E5E7EB] focus-within:ring-2 focus-within:ring-indigo-400 focus-within:border-indigo-400";
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <label className="text-[15px] font-semibold text-[#111827]">{label}</label>
+        <DictateButton onTranscribed={onTranscribed} />
+      </div>
+
+      <div className={`rounded-2xl border-2 overflow-hidden transition-all ${borderClass}`}>
+        <textarea
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder={placeholder}
+          rows={3}
+          className="w-full px-4 py-3 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none resize-none bg-white block"
+        />
+
+        {check && (
+          <>
+            <div className={`border-t ${check.ok ? "border-emerald-200" : "border-amber-200"}`} />
+            <div className={`px-4 py-3 flex items-start gap-2.5 ${check.ok ? "bg-emerald-50" : "bg-amber-50"}`}>
+              {check.ok
+                ? <CheckCircle size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                : <AlertCircle size={16} className="text-amber-600 shrink-0 mt-0.5" />
+              }
+              <p className={`text-[14px] leading-relaxed ${check.ok ? "text-emerald-800" : "text-amber-800"}`}>
+                {check.ok ? "Добре — отговорът е ясен и конкретен." : check.note}
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 type Props = {
   attemptId: string;
   prompt: PromptData;
   advancing: boolean;
   onAdvance: (data: ComprehensionData, timing: number) => Promise<void>;
 };
-
-function StatusPill({ ok, note }: { ok: boolean; note?: string }) {
-  if (ok) return <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">✓ Добре</span>;
-  return (
-    <div className="mt-2 rounded-2xl bg-amber-50 border border-amber-200 px-3 py-2.5">
-      <p className="text-[12px] font-semibold text-amber-700 mb-1">Предложение</p>
-      <p className="text-[15px] text-amber-800 leading-relaxed">{note}</p>
-    </div>
-  );
-}
 
 export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: Props) {
   const [q1, setQ1] = useState("");
@@ -68,7 +109,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
   return (
     <div className="space-y-5">
       <div>
-                <h2 className="text-[22px] font-semibold text-[#111827] mb-1 tracking-tight">Прочети внимателно и отговори на три въпроса</h2>
+        <h2 className="text-[22px] font-semibold text-[#111827] mb-1 tracking-tight">Прочети внимателно и отговори на три въпроса</h2>
         <p className="text-[15px] text-[#6B7280]">Преди да напишеш и дума, увери се, че разбираш точно какво се иска от теб.</p>
       </div>
 
@@ -84,28 +125,34 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5 space-y-5">
         <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest">Твоите отговори</p>
 
-        {[
-          { label: "1. Какво се иска от теб в тази тема?", value: q1, set: setQ1, placeholder: "напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…", check: checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote } : null },
-          { label: "2. Каква е твоята позиция или основна идея?", value: q2, set: setQ2, placeholder: "напр. Вярвам, че приятелството е най-важно, защото оформя кои ставаме…", check: checkResult ? { ok: checkResult.thesisSpecific, note: checkResult.thesisSuggestion } : null },
-          { label: "3. Какъв личен опит или пример може да подкрепи идеята ти?", value: q3, set: setQ3, placeholder: "напр. Когато приятелят ми ми помогна след като се провалих на изпит…", check: checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote } : null },
-        ].map(({ label, value, set, placeholder, check }) => (
-          <div key={label}>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-[15px] font-semibold text-[#111827]">{label}</label>
-              <DictateButton onTranscribed={(text) => set(v => v ? v + " " + text : text)} />
-            </div>
-            <textarea
-              value={value} onChange={e => set(e.target.value)}
-              placeholder={placeholder} rows={2}
-              className="w-full rounded-2xl border border-[#E5E7EB] px-3 py-2.5 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
-            />
-            {check && <div className="mt-1.5"><StatusPill ok={check.ok} note={check.note || undefined} /></div>}
-          </div>
-        ))}
+        <QuestionField
+          label="1. Какво се иска от теб в тази тема?"
+          value={q1} onChange={setQ1}
+          onTranscribed={(text) => setQ1(v => v ? v + " " + text : text)}
+          placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"
+          check={checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote || undefined } : null}
+        />
+
+        <QuestionField
+          label="2. Каква е твоята позиция или основна идея?"
+          value={q2} onChange={setQ2}
+          onTranscribed={(text) => setQ2(v => v ? v + " " + text : text)}
+          placeholder="напр. Вярвам, че приятелството е най-важно, защото оформя кои ставаме…"
+          check={checkResult ? { ok: checkResult.thesisSpecific, note: checkResult.thesisSuggestion || undefined } : null}
+        />
+
+        <QuestionField
+          label="3. Какъв личен опит или пример може да подкрепи идеята ти?"
+          value={q3} onChange={setQ3}
+          onTranscribed={(text) => setQ3(v => v ? v + " " + text : text)}
+          placeholder="напр. Когато приятелят ми ми помогна след като се провалих на изпит…"
+          check={checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote || undefined } : null}
+        />
 
         {checkResult?.encouragement && (
-          <div className="rounded-2xl bg-indigo-50 border border-indigo-100 px-4 py-3">
-            <p className="text-[15px] text-indigo-800 leading-relaxed">💬 {checkResult.encouragement}</p>
+          <div className="rounded-2xl bg-indigo-50 border border-indigo-100 px-4 py-3 flex items-start gap-2.5">
+            <Sparkles size={16} className="text-indigo-500 shrink-0 mt-0.5" />
+            <p className="text-[14px] text-indigo-800 leading-relaxed">{checkResult.encouragement}</p>
           </div>
         )}
       </div>
