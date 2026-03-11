@@ -42,7 +42,7 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоето есе</p>
+        <p className="text-[12px] font-bold text-indigo-500 mb-3">Твоето есе</p>
         <EssayEditor
           attemptId={attemptId}
           initialBody={initialBody}

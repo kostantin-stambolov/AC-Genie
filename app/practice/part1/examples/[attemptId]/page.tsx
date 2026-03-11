@@ -175,7 +175,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest">История на есето</p>
+            <p className="text-[12px] font-bold text-indigo-500">История на есето</p>
             {isV2Attempt ? (
               <span className="text-[12px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-full px-2 py-0.5">Насочено обучение</span>
             ) : (
@@ -191,7 +191,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
         {/* Time breakdown for v2 */}
         {isV2Attempt && phaseTimings && (
           <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-4 mb-5">
-            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Времеразпределение</p>
+            <p className="text-[12px] font-bold text-indigo-500 mb-3">Времеразпределение</p>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { key: "comprehension", label: "Разбиране на темата" },
@@ -220,7 +220,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
             return (
               <section key={i} className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-6 mb-5">
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <h2 className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest">Черновик {i + 1}</h2>
+                  <h2 className="text-[12px] font-bold text-[#9CA3AF]">Черновик {i + 1}</h2>
                   <div className="flex items-center gap-2">
                     <span className={`inline-flex items-center gap-1 text-[13px] font-semibold rounded-full px-2.5 py-0.5 ring-1 ${gs}`}>
                       {v2.finalScore} / 20
@@ -237,20 +237,20 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                 {/* Sub-score bars */}
                 {v2.scoreBreakdown?.examiner1 && v2.scoreBreakdown?.examiner2 && (
                   <div className="mb-4">
-                    <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-1">Частични оценки (средно)</p>
+                    <p className="text-[12px] font-semibold text-[#9CA3AF] mb-1">Частични оценки (средно)</p>
                     <SubScoreBars examiner1={v2.scoreBreakdown.examiner1} examiner2={v2.scoreBreakdown.examiner2} />
                   </div>
                 )}
 
                 <div className="mb-4">
-                  <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-2">Твоят текст</p>
+                  <p className="text-[12px] font-semibold text-[#9CA3AF] mb-2">Твоят текст</p>
                   <div className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap bg-[#F9FAFB] rounded-2xl p-4">
                     {v2.essayBody || "(Няма текст)"}
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-2">Обратна връзка</p>
+                  <p className="text-[12px] font-semibold text-[#9CA3AF] mb-2">Обратна връзка</p>
                   <div className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">
                     {v2.feedbackText}
                   </div>
@@ -258,7 +258,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
                 {v2.languageErrors && v2.languageErrors.length > 0 && (
                   <div className="border-t border-amber-100 pt-4">
-                    <p className="text-[12px] font-semibold text-amber-700 uppercase tracking-widest mb-2">Езикови корекции</p>
+                    <p className="text-[12px] font-semibold text-amber-700 mb-2">Езикови корекции</p>
                     <ul className="space-y-2">
                       {v2.languageErrors.map((err, j) => (
                         <li key={j} className="text-[15px] flex flex-wrap items-center gap-1.5">
@@ -283,7 +283,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
           return (
             <section key={i} className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-6 mb-5">
               <div className="flex items-center justify-between gap-3 mb-4">
-                <h2 className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest">Черновик {i + 1}</h2>
+                <h2 className="text-[12px] font-bold text-[#9CA3AF]">Черновик {i + 1}</h2>
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1 text-[13px] font-semibold rounded-full px-2.5 py-0.5 ring-1 bg-[#F3F4F6] text-[#6B7280] ring-[#E5E7EB]">
                     Оценка {v1.grade}/6 (стара система)
@@ -298,14 +298,14 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
               </div>
 
               <div className="mb-4">
-                <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-2">Твоят текст</p>
+                <p className="text-[12px] font-semibold text-[#9CA3AF] mb-2">Твоят текст</p>
                 <div className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap bg-[#F9FAFB] rounded-2xl p-4">
                   {v1.essayBody || "(Няма текст)"}
                 </div>
               </div>
 
               <div className="mb-4">
-                <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-2">Обратна връзка</p>
+                <p className="text-[12px] font-semibold text-[#9CA3AF] mb-2">Обратна връзка</p>
                 <div className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">
                   {v1.feedbackText}
                 </div>
@@ -313,7 +313,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
 
               {v1.languageErrors && v1.languageErrors.length > 0 && (
                 <div className="border-t border-amber-100 pt-4">
-                  <p className="text-[12px] font-semibold text-amber-700 uppercase tracking-widest mb-2">Езикови корекции</p>
+                  <p className="text-[12px] font-semibold text-amber-700 mb-2">Езикови корекции</p>
                   <ul className="space-y-2">
                     {v1.languageErrors.map((err, j) => (
                       <li key={j} className="text-[15px] flex flex-wrap items-center gap-1.5">
@@ -337,7 +337,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
           <section className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-6 mb-5">
             <div className="flex items-center gap-2 mb-4">
               <Sparkles size={16} className="text-indigo-500" />
-              <h2 className="text-[12px] font-bold text-indigo-600 uppercase tracking-widest">Примерно есе</h2>
+              <h2 className="text-[12px] font-bold text-indigo-600">Примерно есе</h2>
             </div>
             {attempt.lastRewriteGrade != null && (
               <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold ring-1 mb-5 ${rewriteScoreStyle(attempt.lastRewriteGrade)}`}>
@@ -350,7 +350,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
             <div className="space-y-5">
               {rewriteParts.map((part, i) => (
                 <div key={i}>
-                  <span className="inline-block text-[12px] font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1 px-3 mb-2">
+                  <span className="inline-block text-[12px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1 px-3 mb-2">
                     {part.label}
                   </span>
                   <div className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">

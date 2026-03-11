@@ -47,7 +47,7 @@ export default function RateLimitResetPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
+            <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
               Email
             </label>
             <input
@@ -61,7 +61,7 @@ export default function RateLimitResetPage() {
             />
           </div>
           <div>
-            <label htmlFor="secret" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
+            <label htmlFor="secret" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
               Rescue secret
             </label>
             <input

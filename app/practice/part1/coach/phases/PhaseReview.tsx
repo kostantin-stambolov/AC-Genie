@@ -92,13 +92,13 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
 
       {/* Read-only essay */}
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5 max-h-64 overflow-y-auto">
-        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-3">Твоето есе (само за четене)</p>
+        <p className="text-[12px] font-bold text-[#9CA3AF] mb-3">Твоето есе (само за четене)</p>
         <p className="text-[15px] text-[#6B7280] leading-relaxed whitespace-pre-wrap">{essayBody}</p>
       </div>
 
       {/* Checklist */}
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5 space-y-3">
-        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Контролен списък за самооценка</p>
+        <p className="text-[12px] font-bold text-indigo-500 mb-1">Контролен списък за самооценка</p>
         {CHECKLIST_ITEMS.map(({ key, label, category, tip }) => {
           const val = answers[key] as boolean | undefined;
           return (
@@ -106,7 +106,7 @@ export function PhaseReview({ attemptId, essayBody, advancing, onAdvance }: Prop
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-[12px] font-bold uppercase tracking-widest ${
+                    <span className={`text-[12px] font-bold ${
                       category === "Идея" ? "text-indigo-500" : category === "Структура" ? "text-sky-500" : "text-emerald-500"
                     }`}>{category}</span>
                   </div>

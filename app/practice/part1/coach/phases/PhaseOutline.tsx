@@ -65,7 +65,7 @@ export function PhaseOutline({ attemptId, thesis, advancing, onAdvance }: Props)
       {/* Thesis reminder */}
       {thesis && (
         <div className="bg-indigo-50 rounded-3xl border border-indigo-100 px-4 py-3">
-          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Твоята теза</p>
+          <p className="text-[12px] font-bold text-indigo-500 mb-1">Твоята теза</p>
           <p className="text-[15px] font-semibold text-[#111827] leading-snug">"{thesis}"</p>
         </div>
       )}

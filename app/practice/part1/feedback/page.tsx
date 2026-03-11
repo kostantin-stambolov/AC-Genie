@@ -122,7 +122,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
         {/* ── Score overview card ── */}
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] overflow-hidden">
           <div className="px-6 pt-5 pb-4 border-b border-[#F3F4F6]">
-            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоят резултат</p>
+            <p className="text-[12px] font-bold text-indigo-500 mb-3">Твоят резултат</p>
             <div className="flex items-center gap-4">
               <div className={`rounded-2xl px-5 py-3 flex flex-col items-center shrink-0 ${sc.chip}`}>
                 <span className={`text-4xl font-bold leading-none ${sc.text}`}>{finalScore}</span>
@@ -143,7 +143,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
           {/* Sub-score bars */}
           {e1 && e2 && (
             <div className="px-6 py-4">
-              <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Частични оценки (средно)</p>
+              <p className="text-[12px] font-bold text-indigo-500 mb-3">Частични оценки (средно)</p>
               <SubScoreBars e1={e1} e2={e2} />
             </div>
           )}
@@ -152,7 +152,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
         {/* ── Arbitration notice ── */}
         {arbitrated && (
           <div className="bg-amber-50 rounded-3xl border border-amber-200 px-5 py-4">
-            <p className="text-[12px] font-bold text-amber-700 uppercase tracking-widest mb-1">Какво е арбитраж?</p>
+            <p className="text-[12px] font-bold text-amber-700 mb-1">Какво е арбитраж?</p>
             <p className="text-[15px] text-amber-800 leading-relaxed">
               Двамата проверяващи се различават с 4+ точки. На изпита това задейства трети проверяващ, чиято оценка
               се удвоява за крайния резултат. Постоянното представяне и по трите критерия е ключово за стабилен резултат.
@@ -167,7 +167,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
               const c = scoreColor(e.total, 20);
               return (
                 <div key={label} className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5">
-                  <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">{label}</p>
+                  <p className="text-[12px] font-bold text-indigo-500 mb-3">{label}</p>
                   <div className="space-y-2 mb-4">
                     {[
                       { name: "Идея и съдържание", val: e.ideaContent, max: 10 },
@@ -200,7 +200,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
               <span className="text-white text-[12px] font-bold">!</span>
             </div>
             <div>
-              <p className="text-[12px] font-bold text-indigo-600 uppercase tracking-widest mb-1">Най-важното за подобряване</p>
+              <p className="text-[12px] font-bold text-indigo-600 mb-1">Най-важното за подобряване</p>
               <p className="text-[15px] font-semibold text-[#111827] leading-snug">{keyTakeaway}</p>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
 
         {/* ── Feedback text ── */}
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-5">
-          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Обратна връзка</p>
+          <p className="text-[12px] font-bold text-indigo-500 mb-4">Обратна връзка</p>
           <div className="space-y-4">
             {feedback.split(/\n\n+/).map((para, i) => (
               <p key={i} className="text-[#6B7280] text-[15px] leading-relaxed">{para.trim()}</p>
@@ -221,7 +221,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
           <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-6 py-5">
             <div className="flex items-center gap-2 mb-1">
               <AlertCircle size={14} className="text-amber-500 shrink-0" />
-              <p className="text-[12px] font-bold text-amber-600 uppercase tracking-widest">
+              <p className="text-[12px] font-bold text-amber-600">
                 Езикови и правописни грешки ({languageErrors.length})
               </p>
             </div>
@@ -242,7 +242,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                   <li key={i} className={`rounded-2xl border ${ts.border} overflow-hidden`}>
                     {/* Header row */}
                     <div className="flex items-center justify-between px-4 py-2.5 bg-[#F9FAFB] border-b border-[#F3F4F6]">
-                      <span className={`text-[12px] font-bold uppercase tracking-widest rounded-full px-2.5 py-0.5 ${ts.badge}`}>
+                      <span className={`text-[12px] font-bold rounded-full px-2.5 py-0.5 ${ts.badge}`}>
                         {err.type.replace(/_/g, " ")}
                       </span>
                       <span className="text-[13px] text-[#9CA3AF]">Грешка {i + 1}</span>
@@ -250,11 +250,11 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                     {/* Before / After */}
                     <div className="grid grid-cols-2 divide-x divide-[#F3F4F6]">
                       <div className="px-4 py-3">
-                        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Написал/а си</p>
+                        <p className="text-[12px] font-bold text-[#9CA3AF] mb-1">Написал/а си</p>
                         <p className="text-[15px] font-medium text-red-600 line-through">{err.original}</p>
                       </div>
                       <div className="px-4 py-3">
-                        <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Трябва да бъде</p>
+                        <p className="text-[12px] font-bold text-[#9CA3AF] mb-1">Трябва да бъде</p>
                         <p className="text-[15px] font-semibold text-emerald-700">{err.correction}</p>
                       </div>
                     </div>

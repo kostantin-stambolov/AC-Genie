@@ -1,0 +1,18 @@
+---
+description: UI quality checks before pushing any visual change
+globs: ["**/*.tsx", "**/*.css"]
+alwaysApply: true
+---
+
+# UI Quality Rules
+
+## Text contrast
+- NEVER use `text-[#6B7280]`, `text-[#9CA3AF]`, or any gray lighter than `#6B7280` on the app background `#F0F2F5`. These fall below 3:1 contrast and are invisible in practice.
+- For body/subtitle text on `#F0F2F5` (page bg): use `text-[#4B5563]` minimum.
+- For muted/caption text: use lighter grays ONLY inside `bg-white` cards, never directly on the page background.
+- Rule of thumb: white card → `#9CA3AF` OK | page bg `#F0F2F5` → minimum `#4B5563`.
+
+## Before every push
+1. After changing text, grep the actual file to confirm the new value is present before saying "done".
+2. When changing a color, verify the contrast of that color against its actual background.
+3. Never claim a visual fix is done without confirming the change exists in the saved file.

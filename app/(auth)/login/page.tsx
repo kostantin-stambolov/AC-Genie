@@ -66,7 +66,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
+              <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
                 Email
               </label>
               <input
@@ -81,7 +81,7 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label htmlFor="pin" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
+              <label htmlFor="pin" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
                 PIN
               </label>
               <input
