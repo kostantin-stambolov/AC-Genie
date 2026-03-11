@@ -19,7 +19,6 @@ export function ModeSelector({ onSelect }: Props) {
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-[#111827] text-[18px] mb-1">Бързо упражнение</h3>
-            <p className="text-[12px] font-semibold text-[#9CA3AF] uppercase tracking-widest mb-2">Пиши свободно, получи оценка</p>
             <p className="text-[15px] text-[#6B7280] leading-relaxed">
               Започни да пишеш директно. Изпрати есето и получи оценка с подробна обратна връзка.
             </p>
@@ -47,7 +46,6 @@ export function ModeSelector({ onSelect }: Props) {
           </div>
           <div className="flex-1 min-w-0 pr-20">
             <h3 className="font-semibold text-[#111827] text-[18px] mb-1">Насочено обучение</h3>
-            <p className="text-[12px] font-semibold text-indigo-500 uppercase tracking-widest mb-2">Стъпка по стъпка</p>
             <p className="text-[15px] text-[#6B7280] leading-relaxed">
               Коуч те води през разбирането на темата, планирането, писането с таймер и самопроверката — точно като на реалния изпит.
             </p>
