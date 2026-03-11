@@ -41,7 +41,7 @@ export default async function HomePage() {
       <main className="max-w-xl mx-auto px-4 py-10">
         <div className="mb-8">
           <h1 className="text-[26px] font-semibold text-[#111827] mb-1 tracking-tight">Твоята практика</h1>
-          <p className="text-[#6B7280] text-[15px]">Пиши. Получавай оценка. Виж какво да подобриш.</p>
+          <p className="text-[#4B5563] text-[15px]">Пиши. Получавай оценка. Виж какво да подобриш.</p>
         </div>
 
         {/* Essay card */}
