@@ -12,7 +12,6 @@ export default async function HomePage() {
   const state = await getHomeState(userId);
 
   const hasActive = state.part1.hasActive;
-  const hasCompleted = state.part1.hasCompleted;
   const activeMode = state.part1.activeCoachingMode ?? "v1";
   const activePhase = state.part1.activeCoachingPhase;
   const activeHref = activeMode === "v2"
@@ -55,25 +54,14 @@ export default async function HomePage() {
               <h2 className="font-semibold text-[#111827] text-[15px]">Есе</h2>
               <p className="text-[#9CA3AF] text-[13px]">Част 1 от приемния изпит</p>
             </div>
-            <div className="ml-auto">
-              {hasActive && (
+            {hasActive && (
+              <div className="ml-auto">
                 <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2.5 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                   В процес
                 </span>
-              )}
-              {!hasActive && hasCompleted && (
-                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  Завършено
-                </span>
-              )}
-              {!hasActive && !hasCompleted && (
-                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#9CA3AF] bg-[#F3F4F6] rounded-full px-2.5 py-1">
-                  Не е започнато
-                </span>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           <div className="px-6 py-5 space-y-3">
@@ -107,26 +95,13 @@ export default async function HomePage() {
               </>
             ) : (
               <>
-                {hasCompleted && (
-                  <p className="text-[15px] text-[#6B7280]">Браво, завърши есе! Напиши ново, за да продължиш да тренираш.</p>
-                )}
-                {!hasCompleted && (
-                  <p className="text-[15px] text-[#6B7280]">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
-                )}
+                <p className="text-[15px] text-[#6B7280]">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
                 <Link
                   href="/practice/part1/new"
                   className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
                 >
                   Напиши ново есе <ArrowRight size={16} />
                 </Link>
-                {hasCompleted && (
-                  <Link
-                    href="/practice/part1/examples"
-                    className="flex items-center justify-center w-full h-[50px] rounded-2xl bg-[#F3F4F6] text-[#6B7280] text-[15px] font-normal hover:bg-[#E5E7EB] transition cursor-pointer"
-                  >
-                    Виж предишни опити
-                  </Link>
-                )}
               </>
             )}
           </div>
