@@ -29,9 +29,9 @@ export function StopImpersonatingButton({ disabled = false }: Props) {
       type="button"
       onClick={handleStop}
       disabled={disabled || loading}
-      className="h-7 px-2.5 rounded-md bg-white/15 hover:bg-white/25 text-[12px] font-semibold inline-flex items-center transition disabled:opacity-60 disabled:cursor-not-allowed"
+      className="h-7 px-3 rounded-md bg-white/15 hover:bg-white/25 text-[12px] font-semibold inline-flex items-center transition disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      Stop
+      {loading ? "Stopping…" : "Stop impersonating"}
     </button>
   );
 }

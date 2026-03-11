@@ -14,13 +14,7 @@ export async function AdminBanner() {
             Admin mode
             {session.impersonatedEmail ? ` · Viewing as ${session.impersonatedEmail}` : ""}
           </p>
-          <div className="flex items-center gap-2 shrink-0">
-            <Link
-              href="/admin"
-              className="h-7 px-2.5 rounded-md bg-white/15 hover:bg-white/25 text-[12px] font-semibold inline-flex items-center transition"
-            >
-              Dashboard
-            </Link>
+          <div className="flex items-center shrink-0">
             <StopImpersonatingButton disabled={!session.impersonatedUserId} />
           </div>
         </div>
