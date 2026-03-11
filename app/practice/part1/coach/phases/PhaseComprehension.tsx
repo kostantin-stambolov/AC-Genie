@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { ArrowRight, CheckCircle, AlertCircle, Sparkles } from "@/components/icons";
 import { DictateButton } from "@/components/DictateButton";
 import type { PromptData, ComprehensionData } from "../CoachingFlow";
@@ -22,6 +22,16 @@ type QuestionFieldProps = {
 };
 
 function QuestionField({ label, value, placeholder, onChange, onTranscribed, check }: QuestionFieldProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-grow textarea to fit content
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.max(80, el.scrollHeight) + "px";
+  }, [value]);
+
   const borderClass = check
     ? check.ok
       ? "border-emerald-400 ring-1 ring-emerald-200"
@@ -37,24 +47,45 @@ function QuestionField({ label, value, placeholder, onChange, onTranscribed, che
 
       <div className={`rounded-2xl border-2 overflow-hidden transition-all ${borderClass}`}>
         <textarea
+          ref={textareaRef}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
           rows={3}
-          className="w-full px-4 py-3 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none resize-none bg-white block"
+          className="w-full px-4 py-3 text-[15px] text-[#111827] placeholder:text-[#D1D5DB] focus:outline-none resize-none bg-white block overflow-hidden"
         />
 
         {check && (
           <>
             <div className={`border-t ${check.ok ? "border-emerald-200" : "border-amber-200"}`} />
-            <div className={`px-4 py-3 flex items-start gap-2.5 ${check.ok ? "bg-emerald-50" : "bg-amber-50"}`}>
-              {check.ok
-                ? <CheckCircle size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                : <AlertCircle size={16} className="text-amber-600 shrink-0 mt-0.5" />
-              }
-              <p className={`text-[14px] leading-relaxed ${check.ok ? "text-emerald-800" : "text-amber-800"}`}>
-                {check.ok ? "Добре — отговорът е ясен и конкретен." : check.note}
-              </p>
+            <div className={`px-4 py-3 ${check.ok ? "bg-emerald-50/60" : "bg-amber-50/40"}`}>
+              <div className="flex items-start gap-2.5">
+                {/* Avatar */}
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                  check.ok ? "bg-emerald-100" : "bg-amber-100"
+                }`}>
+                  {check.ok
+                    ? <CheckCircle size={14} className="text-emerald-600" />
+                    : <AlertCircle size={14} className="text-amber-600" />
+                  }
+                </div>
+
+                {/* Bubble */}
+                <div className="flex-1 min-w-0">
+                  <p className={`text-[11px] font-bold uppercase tracking-wider mb-1 ${
+                    check.ok ? "text-emerald-600" : "text-amber-600"
+                  }`}>Наставник</p>
+                  <div className={`rounded-2xl rounded-tl-sm px-3 py-2 inline-block ${
+                    check.ok
+                      ? "bg-emerald-100 text-emerald-800"
+                      : "bg-amber-100 text-amber-800"
+                  }`}>
+                    <p className="text-[14px] leading-relaxed">
+                      {check.ok ? "Добре — отговорът е ясен и конкретен." : check.note}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -83,6 +114,9 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
   const canCheck = q1.trim().length > 5 && q2.trim().length > 5 && q3.trim().length > 5;
   const allPass = checkResult?.promptUnderstood && checkResult.thesisSpecific && checkResult.exampleRelevant;
   const canAdvance = checkResult !== null && (allPass || checkCount >= 2);
+
+  const append = useCallback((set: React.Dispatch<React.SetStateAction<string>>) =>
+    (text: string) => set(v => v ? v + " " + text : text), []);
 
   async function handleCheck() {
     setChecking(true);
@@ -127,32 +161,36 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
 
         <QuestionField
           label="1. Какво се иска от теб в тази тема?"
-          value={q1} onChange={setQ1}
-          onTranscribed={(text) => setQ1(v => v ? v + " " + text : text)}
+          value={q1} onChange={setQ1} onTranscribed={append(setQ1)}
           placeholder="напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…"
           check={checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote || undefined } : null}
         />
 
         <QuestionField
           label="2. Каква е твоята позиция или основна идея?"
-          value={q2} onChange={setQ2}
-          onTranscribed={(text) => setQ2(v => v ? v + " " + text : text)}
+          value={q2} onChange={setQ2} onTranscribed={append(setQ2)}
           placeholder="напр. Вярвам, че приятелството е най-важно, защото оформя кои ставаме…"
           check={checkResult ? { ok: checkResult.thesisSpecific, note: checkResult.thesisSuggestion || undefined } : null}
         />
 
         <QuestionField
           label="3. Какъв личен опит или пример може да подкрепи идеята ти?"
-          value={q3} onChange={setQ3}
-          onTranscribed={(text) => setQ3(v => v ? v + " " + text : text)}
+          value={q3} onChange={setQ3} onTranscribed={append(setQ3)}
           placeholder="напр. Когато приятелят ми ми помогна след като се провалих на изпит…"
           check={checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote || undefined } : null}
         />
 
         {checkResult?.encouragement && (
-          <div className="rounded-2xl bg-indigo-50 border border-indigo-100 px-4 py-3 flex items-start gap-2.5">
-            <Sparkles size={16} className="text-indigo-500 shrink-0 mt-0.5" />
-            <p className="text-[14px] text-indigo-800 leading-relaxed">{checkResult.encouragement}</p>
+          <div className="flex items-start gap-2.5 pt-1">
+            <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 mt-0.5">
+              <Sparkles size={14} className="text-indigo-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-bold uppercase tracking-wider mb-1 text-indigo-500">Наставник</p>
+              <div className="rounded-2xl rounded-tl-sm px-3 py-2 inline-block bg-indigo-100">
+                <p className="text-[14px] text-indigo-800 leading-relaxed">{checkResult.encouragement}</p>
+              </div>
+            </div>
           </div>
         )}
       </div>
