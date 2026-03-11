@@ -95,6 +95,7 @@ export default async function HomePage() {
               </>
             ) : (
               <>
+                <p className="text-[15px] text-[#4B5563]">Избери тема, напиши есе и получи мигновена AI оценка с обратна връзка.</p>
                 <Link
                   href="/practice/part1/new"
                   className="flex items-center justify-center gap-2 w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all cursor-pointer"
