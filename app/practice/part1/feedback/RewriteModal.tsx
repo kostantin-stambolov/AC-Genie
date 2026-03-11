@@ -26,7 +26,7 @@ type Props = {
 
 function totalScoreStyle(total: number): string {
   if (total >= 18) return "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200";
-  if (total >= 15) return "bg-blue-50 text-blue-800 ring-1 ring-blue-200";
+  if (total >= 15) return "bg-indigo-50 text-indigo-800 ring-1 ring-indigo-200";
   if (total >= 12) return "bg-yellow-50 text-yellow-800 ring-1 ring-yellow-200";
   return "bg-orange-50 text-orange-800 ring-1 ring-orange-200";
 }

@@ -64,7 +64,7 @@ function ExaminerCard({
     <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-4 flex-1">
       <div className="flex items-center justify-between mb-3">
         <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF]">Проверяващ {n}</p>
-        <span className="text-lg font-bold text-[#111827]">{score.total}<span className="text-[13px] font-semibold text-[#9CA3AF]">/20</span></span>
+        <span className="text-[18px] font-bold text-[#111827]">{score.total}<span className="text-[13px] font-semibold text-[#9CA3AF]">/20</span></span>
       </div>
       <div className="space-y-2.5">
         <SubBar label="Идея и съдържание" value={score.ideaContent} max={10} isWeakest={weakest === "ideaContent"} />
@@ -84,7 +84,7 @@ function LangErrorCard({ err }: { err: { type: string; original: string; correct
   const typeColors: Record<string, string> = {
     spelling:     "bg-red-100 text-red-700 border-red-200",
     grammar:      "bg-orange-100 text-orange-700 border-orange-200",
-    punctuation:  "bg-blue-100 text-blue-700 border-blue-200",
+    punctuation:  "bg-sky-100 text-sky-700 border-sky-200",
     word_choice:  "bg-indigo-50 text-indigo-700 border-indigo-100",
   };
   const cls = typeColors[err.type?.toLowerCase()] ?? "bg-[#F3F4F6] text-[#6B7280] border-[#E5E7EB]";
@@ -167,7 +167,7 @@ function ModelEssaySection({
         <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Оценка на примерното есе (един проверяващ)</p>
         <div className="flex items-end gap-1.5 mb-3">
           <span className="text-3xl font-bold text-emerald-600">{score.total}</span>
-          <span className="text-lg font-semibold text-[#D1D5DB] mb-0.5">/20</span>
+          <span className="text-[18px] font-semibold text-[#D1D5DB] mb-0.5">/20</span>
         </div>
         <div className="space-y-2 mb-3">
           {[
@@ -276,7 +276,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
               <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF] mb-0.5">Краен резултат</p>
               <p className={`text-[13px] font-semibold ${col.text}`}>{col.label}</p>
             </div>
-            <span className={`text-4xl font-bold ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
+            <span className={`text-4xl font-bold ${col.text}`}>{finalScore}<span className="text-[18px] font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
           </div>
           <p className={`text-[13px] ${col.text} mb-2`}>Проверяващ 1: {e1.total}/20 · Проверяващ 2: {e2.total}/20 · Средно: {finalScore}/20</p>
           <div className="h-2.5 rounded-full bg-white/50 overflow-hidden">
@@ -288,7 +288,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {/* Key takeaway */}
       {keyTakeaway && (
         <div className="bg-indigo-50 rounded-3xl border border-indigo-100 px-5 py-4 flex gap-3 items-start">
-          <span className="text-indigo-500 text-xl shrink-0">🎯</span>
+          <span className="w-5 h-5 text-indigo-500 shrink-0"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5"><circle cx="10" cy="10" r="8"/><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r="1" fill="currentColor" stroke="none"/></svg></span>
           <div>
             <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Основен извод</p>
             <p className="text-[15px] font-semibold text-[#111827] leading-relaxed">{keyTakeaway}</p>

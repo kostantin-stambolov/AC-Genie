@@ -64,10 +64,10 @@ function SubScoreBars({ e1, e2 }: { e1: ExaminerScore; e2: ExaminerScore }) {
       {bars.map((b) => (
         <div key={b.label}>
           <div className="flex justify-between mb-1">
-            <span className="text-xs font-medium text-neutral-500">{b.label}</span>
-            <span className="text-xs font-semibold text-neutral-600">{fmt(b.avg)} / {b.max}</span>
+            <span className="text-[12px] font-medium text-[#6B7280]">{b.label}</span>
+            <span className="text-[12px] font-semibold text-[#4B5563]">{fmt(b.avg)} / {b.max}</span>
           </div>
-          <div className="h-2 rounded-full bg-neutral-100 overflow-hidden">
+          <div className="h-2 rounded-full bg-[#F3F4F6] overflow-hidden">
             <div className={`h-full rounded-full ${b.fill}`} style={{ width: `${(b.avg / b.max) * 100}%` }} />
           </div>
         </div>
@@ -182,7 +182,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                   </div>
                   <div className="border-t border-[#F3F4F6] pt-3 flex justify-between items-center">
                     <span className="text-[13px] text-[#9CA3AF] font-medium">Общо</span>
-                    <span className={`text-xl font-bold ${c.text}`}>{e.total}<span className="text-[13px] font-normal text-[#9CA3AF]"> / 20</span></span>
+                    <span className={`text-[20px] font-bold ${c.text}`}>{e.total}<span className="text-[13px] font-normal text-[#9CA3AF]"> / 20</span></span>
                   </div>
                   {e.notes && (
                     <p className="mt-2.5 text-[13px] text-[#9CA3AF] italic leading-relaxed border-t border-[#F3F4F6] pt-2.5">{e.notes}</p>
@@ -233,7 +233,7 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
                 const typeStyles: Record<string, { badge: string; border: string }> = {
                   spelling:    { badge: "bg-red-100 text-red-700",    border: "border-red-100" },
                   grammar:     { badge: "bg-orange-100 text-orange-700", border: "border-orange-100" },
-                  punctuation: { badge: "bg-blue-100 text-blue-700",  border: "border-blue-100" },
+                  punctuation: { badge: "bg-sky-100 text-sky-700",  border: "border-sky-100" },
                   word_choice: { badge: "bg-indigo-50 text-indigo-700", border: "border-indigo-100" },
                   style:       { badge: "bg-[#F3F4F6] text-[#6B7280]", border: "border-[#E5E7EB]" },
                 };

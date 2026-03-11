@@ -54,7 +54,7 @@ export function TopicPicker({ options, coachingMode = "v1" }: Props) {
   return (
     <div className="space-y-4">
       {error && (
-        <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700" role="alert">
+        <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-[14px] text-red-700" role="alert">
           {error}
         </div>
       )}

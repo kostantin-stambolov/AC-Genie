@@ -67,10 +67,10 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
           )}
         </button>
         {isEmpty && !loading && (
-          <p className="mt-2 text-xs text-neutral-400 text-center">Напиши нещо, преди да изпратиш</p>
+          <p className="mt-2 text-[12px] text-[#9CA3AF] text-center">Напиши нещо, преди да изпратиш</p>
         )}
         {error && (
-          <p className="mt-3 text-sm text-red-600 text-center" role="alert">{error}</p>
+          <p className="mt-3 text-[14px] text-red-600 text-center" role="alert">{error}</p>
         )}
       </div>
     </div>

@@ -44,12 +44,12 @@ export default function LoginPage() {
           <span className="text-white font-semibold tracking-wide">American College Prep</span>
         </div>
         <div>
-          <p className="text-white/80 text-lg leading-relaxed mb-4">
+          <p className="text-white/80 text-[18px] leading-relaxed mb-4">
             "Build your castles in the air, then build the foundations under them."
           </p>
-          <p className="text-white/50 text-sm">— Henry David Thoreau</p>
+          <p className="text-white/50 text-[14px]">— Henry David Thoreau</p>
         </div>
-        <p className="text-white/40 text-xs">Prepare. Practice. Succeed.</p>
+        <p className="text-white/40 text-[12px]">Prepare. Practice. Succeed.</p>
       </div>
 
       {/* Right login panel */}
@@ -58,7 +58,7 @@ export default function LoginPage() {
           {/* Logo mark – mobile only */}
           <div className="flex lg:hidden items-center gap-2 mb-10">
             <span className="w-8 h-8 rounded-lg bg-[#0B1F3A] flex items-center justify-center text-white font-bold text-sm">AC</span>
-            <span className="text-neutral-900 font-semibold">American College Prep</span>
+            <span className="text-[#111827] font-semibold">American College Prep</span>
           </div>
 
           <h1 className="text-[26px] font-semibold text-[#111827] mb-1 tracking-tight">Welcome back</h1>
@@ -101,9 +101,9 @@ export default function LoginPage() {
 
             {error && (
               <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-                <p className="text-sm text-red-700">{error}</p>
+                <p className="text-[14px] text-red-700">{error}</p>
                 {error.includes("Too many attempts") && (
-                  <Link href="/login/reset" className="text-sm text-red-600 underline mt-1 inline-block">
+                  <Link href="/login/reset" className="text-[14px] text-red-600 underline mt-1 inline-block">
                     Unblock this email →
                   </Link>
                 )}

@@ -51,7 +51,7 @@ export default function RegisterPage() {
           <p className="text-3xl font-bold text-white mb-3 leading-tight">Start your journey to<br />American College.</p>
           <p className="text-white/60 text-sm">Practice essays. Get AI feedback. Improve every round.</p>
         </div>
-        <p className="text-white/40 text-xs">Your account is private and secure.</p>
+        <p className="text-white/40 text-[12px]">Your account is private and secure.</p>
       </div>
 
       {/* Right register panel */}

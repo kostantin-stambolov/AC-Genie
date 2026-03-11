@@ -20,7 +20,7 @@ export function NavHeader({ backHref, backLabel = "Назад", title }: Props) 
 
       {title && (
         <>
-          <span className="text-[#E5E7EB] text-lg leading-none select-none">|</span>
+          <span className="text-[#E5E7EB] text-[18px] leading-none select-none">|</span>
           <span className="text-[15px] font-semibold text-[#111827] truncate">{title}</span>
         </>
       )}

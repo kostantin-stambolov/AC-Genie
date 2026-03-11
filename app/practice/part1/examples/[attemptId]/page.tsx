@@ -86,7 +86,7 @@ function finalScoreStyle(score: number): string {
 
 function rewriteScoreStyle(total: number): string {
   if (total >= 18) return "bg-emerald-100 text-emerald-800 ring-emerald-200";
-  if (total >= 15) return "bg-blue-100 text-blue-800 ring-blue-200";
+  if (total >= 15) return "bg-indigo-100 text-indigo-800 ring-indigo-200";
   if (total >= 12) return "bg-yellow-100 text-yellow-800 ring-yellow-200";
   return "bg-orange-100 text-orange-800 ring-orange-200";
 }
@@ -106,10 +106,10 @@ function SubScoreBars({ examiner1, examiner2 }: { examiner1: ExaminerScore; exam
       {bars.map((b) => (
         <div key={b.label}>
           <div className="flex justify-between items-baseline mb-0.5">
-            <span className="text-[11px] font-medium text-neutral-500">{b.label}</span>
-            <span className="text-[11px] text-neutral-400">{avgToDisplay(b.avg)} / {b.max}</span>
+            <span className="text-[11px] font-medium text-[#6B7280]">{b.label}</span>
+            <span className="text-[11px] text-[#9CA3AF]">{avgToDisplay(b.avg)} / {b.max}</span>
           </div>
-          <div className="h-1.5 rounded-full bg-neutral-100 overflow-hidden">
+          <div className="h-1.5 rounded-full bg-[#F3F4F6] overflow-hidden">
             <div className={`h-full rounded-full ${b.color}`} style={{ width: `${(b.avg / b.max) * 100}%` }} />
           </div>
         </div>
@@ -266,7 +266,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                             {err.type.replace(/_/g, " ")}
                           </span>
                           <span className="line-through text-[#9CA3AF]">{err.original}</span>
-                          <span className="text-[#E5E7EB] text-base font-light">›</span>
+                          <span className="text-[#E5E7EB] text-[15px] font-light">›</span>
                           <span className="font-semibold text-[#111827]">{err.correction}</span>
                           {err.note && <span className="text-[#9CA3AF] text-[13px] ml-1">({err.note})</span>}
                         </li>
@@ -321,7 +321,7 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                           {err.type.replace(/_/g, " ")}
                         </span>
                         <span className="line-through text-[#9CA3AF]">{err.original}</span>
-                        <span className="text-[#E5E7EB] text-base font-light">›</span>
+                        <span className="text-[#E5E7EB] text-[15px] font-light">›</span>
                         <span className="font-semibold text-[#111827]">{err.correction}</span>
                         {err.note && <span className="text-[#9CA3AF] text-[13px] ml-1">({err.note})</span>}
                       </li>

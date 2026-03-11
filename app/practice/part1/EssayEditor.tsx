@@ -125,7 +125,7 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
             type="button"
             onClick={stopDictation}
             title="Спри записа"
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold cursor-pointer animate-pulse"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-[12px] font-semibold cursor-pointer animate-pulse"
           >
             <StopCircle size={14} />
             <span className="hidden sm:inline">Спри</span>
@@ -139,13 +139,13 @@ export function EssayEditor({ attemptId, initialBody, onBodyChange }: Props) {
         value={body}
         onChange={handleChange}
         placeholder="Започни да пишеш тук…"
-        className="w-full min-h-[300px] p-5 text-neutral-800 text-[15px] leading-relaxed placeholder:text-neutral-300 focus:outline-none resize-none block"
+        className="w-full min-h-[300px] p-5 text-[#111827] text-[15px] leading-relaxed placeholder:text-[#D1D5DB] focus:outline-none resize-none block"
         aria-label="Текст на есето"
       />
 
       {transcribeError && (
         <div className="px-5 py-3 border-t border-amber-100 bg-amber-50/50">
-          <p className="text-xs text-amber-700">{transcribeError}</p>
+          <p className="text-[12px] text-amber-700">{transcribeError}</p>
         </div>
       )}
     </div>

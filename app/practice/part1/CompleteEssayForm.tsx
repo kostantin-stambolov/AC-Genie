@@ -28,9 +28,9 @@ export function CompleteEssayForm({ attemptId }: { attemptId: string }) {
       type="button"
       onClick={handleComplete}
       disabled={loading}
-      className="w-full h-12 rounded-lg bg-green-600 text-white font-medium disabled:opacity-50"
+      className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
     >
-      {loading ? "Saving…" : "Mark as complete"}
+      {loading ? "Записва…" : "Завърши есето"}
     </button>
   );
 }
