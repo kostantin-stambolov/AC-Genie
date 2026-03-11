@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { EssayEditor } from "./EssayEditor";
 import { ArrowRight } from "@/components/icons";
 
@@ -10,8 +11,10 @@ type Props = {
 };
 
 export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
+  const router = useRouter();
   const [currentBody, setCurrentBody] = useState(initialBody);
   const [loading, setLoading] = useState(false);
+  const [abandoning, setAbandoning] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmitFeedback = useCallback(async () => {
@@ -37,7 +40,21 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
     }
   }, [attemptId, currentBody]);
 
+  const handleAbandon = useCallback(async () => {
+    setAbandoning(true);
+    try {
+      await fetch("/api/attempts/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ attemptId }),
+      });
+    } finally {
+      router.push("/home");
+    }
+  }, [attemptId, router]);
+
   const isEmpty = !currentBody.trim();
+  const busy = loading || abandoning;
 
   return (
     <div className="space-y-4">
@@ -50,11 +67,11 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
         />
       </div>
 
-      <div className="pt-2">
+      <div className="pt-2 space-y-3">
         <button
           type="button"
           onClick={handleSubmitFeedback}
-          disabled={loading || isEmpty}
+          disabled={busy || isEmpty}
           className="w-full h-[52px] rounded-2xl bg-[#0B1F3A] text-white text-[15px] font-semibold hover:bg-[#122a50] hover:-translate-y-0.5 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
         >
           {loading ? (
@@ -66,11 +83,28 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
             <>Изпрати за обратна връзка <ArrowRight size={16} /></>
           )}
         </button>
-        {isEmpty && !loading && (
-          <p className="mt-2 text-[12px] text-[#9CA3AF] text-center">Напиши нещо, преди да изпратиш</p>
+
+        <button
+          type="button"
+          onClick={handleAbandon}
+          disabled={busy}
+          className="w-full h-[44px] rounded-2xl bg-[#F3F4F6] text-[#6B7280] text-[15px] font-normal hover:bg-[#E5E7EB] transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-1.5"
+        >
+          {abandoning ? (
+            <>
+              <span className="w-3.5 h-3.5 border-2 border-[#9CA3AF] border-t-transparent rounded-full animate-spin" />
+              Записва…
+            </>
+          ) : (
+            "Откажи и се върни към началото"
+          )}
+        </button>
+
+        {isEmpty && !busy && (
+          <p className="text-[12px] text-[#9CA3AF] text-center">Напиши нещо, преди да изпратиш</p>
         )}
         {error && (
-          <p className="mt-3 text-[14px] text-red-600 text-center" role="alert">{error}</p>
+          <p className="mt-1 text-[14px] text-red-600 text-center" role="alert">{error}</p>
         )}
       </div>
     </div>

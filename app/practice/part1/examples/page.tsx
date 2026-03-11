@@ -11,7 +11,7 @@ function getTopicTitle(promptText: string | null): string {
   return resolveStoredPrompt(promptText)?.title ?? "Есе";
 }
 
-function formatDate(d: Date | null): string {
+function formatDate(d: Date | null | undefined): string {
   if (!d) return "—";
   return new Date(d).toLocaleString(undefined, {
     month: "short", day: "numeric", year: "numeric",
@@ -24,9 +24,9 @@ export default async function Part1ExamplesPage() {
   if (!userId) redirect("/login");
 
   const attempts = await prisma.attempt.findMany({
-    where: { userId, part: 1, section: null, lastFeedbackAt: { not: null } },
-    orderBy: { lastFeedbackAt: "desc" },
-    take: 20,
+    where: { userId, part: 1, section: null },
+    orderBy: { startedAt: "desc" },
+    take: 30,
   });
 
   return (
@@ -52,36 +52,46 @@ export default async function Part1ExamplesPage() {
           </div>
         ) : (
           <ul className="space-y-3">
-            {attempts.map((a: Attempt) => (
-              <li key={a.id}>
-                <Link
-                  href={`/practice/part1/examples/${a.id}`}
-                  className="flex items-center gap-4 bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] px-5 py-4 hover:shadow-[0_4px_16px_rgba(0,0,0,0.10)] active:scale-[0.99] transition-all cursor-pointer group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
-                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5 text-indigo-500"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-[#111827] text-[15px] truncate">{getTopicTitle(a.promptText)}</p>
-                    <p className="text-[13px] text-[#9CA3AF] mt-0.5">{formatDate(a.lastFeedbackAt)}</p>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {a.status === "in_progress" && (
-                      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                        В процес
-                      </span>
-                    )}
-                    {a.status === "completed" && (
-                      <span className="inline-flex items-center gap-1 text-[12px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
-                        Завършено
-                      </span>
-                    )}
-                    <ChevronRight size={18} className="text-[#E5E7EB] group-hover:text-indigo-500 transition" />
-                  </div>
-                </Link>
-              </li>
-            ))}
+            {attempts.map((a: Attempt) => {
+              const hasfeedback = !!a.lastFeedbackAt;
+              const isInProgress = a.status === "in_progress";
+              const dateToShow = a.lastFeedbackAt ?? a.completedAt ?? a.startedAt;
+              return (
+                <li key={a.id}>
+                  <Link
+                    href={`/practice/part1/examples/${a.id}`}
+                    className="flex items-center gap-4 bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] px-5 py-4 hover:shadow-[0_4px_16px_rgba(0,0,0,0.10)] active:scale-[0.99] transition-all cursor-pointer group"
+                  >
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${isInProgress ? "bg-amber-50" : hasfeedback ? "bg-indigo-50" : "bg-[#F3F4F6]"}`}>
+                      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" className={`w-5 h-5 ${isInProgress ? "text-amber-500" : hasfeedback ? "text-indigo-500" : "text-[#9CA3AF]"}`}><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-[#111827] text-[15px] truncate">{getTopicTitle(a.promptText)}</p>
+                      <p className="text-[13px] text-[#9CA3AF] mt-0.5">{formatDate(dateToShow)}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {isInProgress && (
+                        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                          В процес
+                        </span>
+                      )}
+                      {!isInProgress && hasfeedback && (
+                        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
+                          Оценено
+                        </span>
+                      )}
+                      {!isInProgress && !hasfeedback && (
+                        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-[#6B7280] bg-[#F3F4F6] border border-[#E5E7EB] rounded-full px-2 py-0.5">
+                          Прекратено
+                        </span>
+                      )}
+                      <ChevronRight size={18} className="text-[#E5E7EB] group-hover:text-indigo-500 transition" />
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         )}
       </main>
