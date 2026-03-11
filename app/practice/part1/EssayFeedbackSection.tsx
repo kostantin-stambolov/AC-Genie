@@ -100,9 +100,6 @@ export function EssayFeedbackSection({ attemptId, initialBody }: Props) {
           )}
         </button>
 
-        {isEmpty && !busy && (
-          <p className="text-[12px] text-[#9CA3AF] text-center">Напиши нещо, преди да изпратиш</p>
-        )}
         {error && (
           <p className="mt-1 text-[14px] text-red-600 text-center" role="alert">{error}</p>
         )}
