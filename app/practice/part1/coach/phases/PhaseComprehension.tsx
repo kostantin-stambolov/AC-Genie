@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ArrowRight, CheckCircle, AlertCircle, Sparkles } from "@/components/icons";
+import { ArrowRight, CheckCircle, AlertCircle, GraduationCap } from "@/components/icons";
 import { DictateButton } from "@/components/DictateButton";
 import type { PromptData, ComprehensionData } from "../CoachingFlow";
 
@@ -24,7 +24,6 @@ type QuestionFieldProps = {
 function QuestionField({ label, value, placeholder, onChange, onTranscribed, check }: QuestionFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-grow textarea to fit content
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
@@ -58,34 +57,14 @@ function QuestionField({ label, value, placeholder, onChange, onTranscribed, che
         {check && (
           <>
             <div className={`border-t ${check.ok ? "border-emerald-200" : "border-amber-200"}`} />
-            <div className={`px-4 py-3 ${check.ok ? "bg-emerald-50/60" : "bg-amber-50/40"}`}>
-              <div className="flex items-start gap-2.5">
-                {/* Avatar */}
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                  check.ok ? "bg-emerald-100" : "bg-amber-100"
-                }`}>
-                  {check.ok
-                    ? <CheckCircle size={14} className="text-emerald-600" />
-                    : <AlertCircle size={14} className="text-amber-600" />
-                  }
-                </div>
-
-                {/* Bubble */}
-                <div className="flex-1 min-w-0">
-                  <p className={`text-[11px] font-bold uppercase tracking-wider mb-1 ${
-                    check.ok ? "text-emerald-600" : "text-amber-600"
-                  }`}>Наставник</p>
-                  <div className={`rounded-2xl rounded-tl-sm px-3 py-2 inline-block ${
-                    check.ok
-                      ? "bg-emerald-100 text-emerald-800"
-                      : "bg-amber-100 text-amber-800"
-                  }`}>
-                    <p className="text-[14px] leading-relaxed">
-                      {check.ok ? "Добре — отговорът е ясен и конкретен." : check.note}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className={`px-4 py-3 flex items-start gap-2.5 ${check.ok ? "bg-emerald-50" : "bg-amber-50"}`}>
+              {check.ok
+                ? <CheckCircle size={16} className="text-emerald-600 shrink-0 mt-0.5" />
+                : <AlertCircle size={16} className="text-amber-600 shrink-0 mt-0.5" />
+              }
+              <p className={`text-[14px] leading-relaxed ${check.ok ? "text-emerald-800" : "text-amber-800"}`}>
+                {check.ok ? "Добре — отговорът е ясен и конкретен." : check.note}
+              </p>
             </div>
           </>
         )}
@@ -180,14 +159,15 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
           check={checkResult ? { ok: checkResult.exampleRelevant, note: checkResult.exampleNote || undefined } : null}
         />
 
+        {/* Sofia encouragement message */}
         {checkResult?.encouragement && (
-          <div className="flex items-start gap-2.5 pt-1">
-            <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 mt-0.5">
-              <Sparkles size={14} className="text-indigo-600" />
+          <div className="flex items-start gap-3 pt-1">
+            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
+              <GraduationCap size={22} className="text-indigo-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-wider mb-1 text-indigo-500">Наставник</p>
-              <div className="rounded-2xl rounded-tl-sm px-3 py-2 inline-block bg-indigo-100">
+              <p className="text-[12px] font-bold text-indigo-500 mb-1.5">София</p>
+              <div className="rounded-2xl rounded-tl-sm bg-indigo-50 border border-indigo-100 px-4 py-3">
                 <p className="text-[14px] text-indigo-800 leading-relaxed">{checkResult.encouragement}</p>
               </div>
             </div>
