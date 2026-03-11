@@ -4,7 +4,7 @@ import { StopImpersonatingButton } from "./StopImpersonatingButton";
 
 export async function AdminBanner() {
   const session = await getAuthContext();
-  if (!session.isAdmin) return null;
+  if (!session.isAdmin || !session.impersonatedUserId) return null;
 
   return (
     <>
