@@ -32,13 +32,15 @@ export async function POST(request: NextRequest) {
     const pin = typeof body.pin === "string" ? body.pin : "";
 
     const normalizedEmail = normalizeEmail(email);
+    const adminEmail = (process.env.ADMIN_EMAIL ?? "").trim().toLowerCase();
+    const isAdminEmail = !!adminEmail && normalizedEmail === adminEmail;
     if (!normalizedEmail || normalizedEmail.length > EMAIL_MAX) {
       return NextResponse.json(
         { error: "Invalid email" },
         { status: 400 }
       );
     }
-    if (!validatePin(pin)) {
+    if (!isAdminEmail && !validatePin(pin)) {
       return NextResponse.json(
         { error: "PIN must be 4–8 digits" },
         { status: 400 }

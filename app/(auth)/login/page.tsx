@@ -104,15 +104,15 @@ export default function LoginPage() {
               <input
                 id="pin"
                 type="password"
-                inputMode="numeric"
+                inputMode="text"
                 autoComplete="off"
                 value={pin}
-                onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 8))}
+                onChange={(e) => setPin(e.target.value.slice(0, 64))}
                 className="w-full h-[52px] px-4 rounded-2xl border border-[#E5E7EB] bg-[#F9FAFB] text-[#111827] text-[15px] placeholder:text-[#D1D5DB] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent focus:bg-white transition"
-                placeholder="4–8 digits"
+                placeholder="Student PIN or admin password"
                 required
                 minLength={4}
-                maxLength={8}
+                maxLength={64}
               />
             </div>
 
