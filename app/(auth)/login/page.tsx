@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -10,6 +10,23 @@ export default function LoginPage() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user?.id) {
+          router.replace("/home");
+          router.refresh();
+          return;
+        }
+        if (data?.isAdmin) {
+          router.replace("/admin");
+          router.refresh();
+        }
+      })
+      .catch(() => undefined);
+  }, [router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,7 +43,7 @@ export default function LoginPage() {
         setError(data.error || "Login failed");
         return;
       }
-      router.push("/home");
+      router.push(data.isAdmin ? "/admin" : "/home");
       router.refresh();
     } catch {
       setError("Something went wrong");

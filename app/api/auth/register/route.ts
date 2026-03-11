@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { hashPin, createSession, setSessionCookie } from "@/lib/auth";
+import { hashPin, createSession, setSessionCookie, clearAdminContextCookie } from "@/lib/auth";
 
 const PIN_MIN = 4;
 const PIN_MAX = 8;
@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
 
     const token = await createSession(user.id);
     await setSessionCookie(token);
+    await clearAdminContextCookie();
 
     return NextResponse.json({ ok: true });
   } catch (err) {

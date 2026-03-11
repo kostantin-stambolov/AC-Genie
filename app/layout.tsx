@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { AdminBanner } from "@/components/admin/AdminBanner";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dmSans.variable} antialiased`}>
+        <AdminBanner />
         {children}
       </body>
     </html>

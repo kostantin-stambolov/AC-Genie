@@ -7,6 +7,10 @@ import {
   isRateLimited,
   recordLoginAttempt,
   clearLoginRateLimit,
+  isAdminCredentials,
+  setAdminContextCookie,
+  clearAdminContextCookie,
+  clearCurrentSession,
 } from "@/lib/auth";
 
 const PIN_MIN = 4;
@@ -48,7 +52,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    if (isAdminCredentials(normalizedEmail, pin)) {
+      clearLoginRateLimit(normalizedEmail);
+      await clearCurrentSession();
+      await setAdminContextCookie({
+        isAdmin: true,
+        adminEmail: normalizedEmail,
+        impersonatedUserId: null,
+        impersonatedEmail: null,
+        issuedAt: Date.now(),
+      });
+      return NextResponse.json({ ok: true, isAdmin: true });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
 
     if (!user) {
       recordLoginAttempt(normalizedEmail);
@@ -68,10 +85,11 @@ export async function POST(request: NextRequest) {
     }
 
     clearLoginRateLimit(normalizedEmail);
+    await clearAdminContextCookie();
     const token = await createSession(user.id);
     await setSessionCookie(token);
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, isAdmin: false });
   } catch {
     return NextResponse.json(
       { error: "Something went wrong" },

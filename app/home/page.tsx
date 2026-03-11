@@ -1,14 +1,18 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getSessionUserId } from "@/lib/auth";
+import { getAuthContext } from "@/lib/auth";
 import { getHomeState } from "@/lib/attempts";
 import { LogoutButton } from "./LogoutButton";
 import { ArrowRight, FileText } from "@/components/icons";
 import { ModuleCard } from "@/components/ModuleCard";
 
 export default async function HomePage() {
-  const userId = await getSessionUserId();
-  if (!userId) redirect("/login");
+  const auth = await getAuthContext();
+  const userId = auth.effectiveUserId;
+  if (!userId) {
+    if (auth.isAdmin) redirect("/admin");
+    redirect("/login");
+  }
 
   const state = await getHomeState(userId);
 

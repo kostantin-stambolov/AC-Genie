@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { getSessionUserId } from "@/lib/auth";
+import { getAuthContext } from "@/lib/auth";
 
 export async function GET() {
-  const userId = await getSessionUserId();
-  if (!userId) {
-    return NextResponse.json({ user: null });
-  }
-  return NextResponse.json({ user: { id: userId } });
-  // Do not expose email or PIN to client
+  const context = await getAuthContext();
+  return NextResponse.json({
+    user: context.effectiveUserId ? { id: context.effectiveUserId } : null,
+    isAdmin: context.isAdmin,
+    adminEmail: context.adminEmail,
+    impersonatedUserId: context.impersonatedUserId,
+    impersonatedEmail: context.impersonatedEmail,
+  });
 }
