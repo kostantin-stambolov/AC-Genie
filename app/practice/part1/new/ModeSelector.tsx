@@ -1,5 +1,7 @@
 "use client";
 
+import { Zap, BookOpen } from "@/components/icons";
+
 type Props = { onSelect: (mode: "v1" | "v2") => void };
 
 export function ModeSelector({ onSelect }: Props) {
@@ -12,8 +14,8 @@ export function ModeSelector({ onSelect }: Props) {
         className="w-full text-left bg-white rounded-3xl border-2 border-[#E5E7EB] p-5 hover:border-indigo-200 hover:shadow-md active:scale-[0.99] transition-all cursor-pointer group"
       >
         <div className="flex items-start gap-4">
-          <div className="shrink-0 w-11 h-11 rounded-xl bg-[#F3F4F6] flex items-center justify-center text-xl group-hover:bg-indigo-50 transition">
-            ⚡
+          <div className="shrink-0 w-11 h-11 rounded-xl bg-[#F3F4F6] flex items-center justify-center group-hover:bg-indigo-50 transition">
+            <Zap size={20} className="text-amber-500" />
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-[#111827] text-[18px] mb-1">Бързо упражнение</h3>
@@ -40,8 +42,8 @@ export function ModeSelector({ onSelect }: Props) {
           </span>
         </div>
         <div className="flex items-start gap-4">
-          <div className="shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center text-xl group-hover:bg-indigo-100 transition">
-            🧭
+          <div className="shrink-0 w-11 h-11 rounded-xl bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition">
+            <BookOpen size={20} className="text-indigo-600" />
           </div>
           <div className="flex-1 min-w-0 pr-20">
             <h3 className="font-semibold text-[#111827] text-[18px] mb-1">Насочено обучение</h3>
