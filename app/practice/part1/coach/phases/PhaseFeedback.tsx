@@ -63,7 +63,7 @@ function ExaminerCard({
   return (
     <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-4 flex-1">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[12px] font-bold text-[#9CA3AF]">Проверяващ {n}</p>
+        <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF]">Проверяващ {n}</p>
         <span className="text-lg font-bold text-[#111827]">{score.total}<span className="text-[13px] font-semibold text-[#9CA3AF]">/20</span></span>
       </div>
       <div className="space-y-2.5">
@@ -91,15 +91,15 @@ function LangErrorCard({ err }: { err: { type: string; original: string; correct
   return (
     <div className="bg-white rounded-2xl border border-[#F3F4F6] overflow-hidden">
       <div className="px-4 py-2 border-b border-[#F3F4F6] flex items-center gap-2">
-        <span className={`text-[12px] font-bold border rounded-full px-2.5 py-0.5 ${cls}`}>{err.type?.replace("_", " ")}</span>
+        <span className={`text-[12px] font-bold uppercase tracking-widest border rounded-full px-2.5 py-0.5 ${cls}`}>{err.type?.replace("_", " ")}</span>
       </div>
       <div className="px-4 py-3 grid grid-cols-2 gap-3">
         <div>
-          <p className="text-[12px] font-bold text-red-400 mb-1">Написал/а си</p>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-red-400 mb-1">Написал/а си</p>
           <p className="text-[15px] font-medium text-red-700 line-through">{err.original}</p>
         </div>
         <div>
-          <p className="text-[12px] font-bold text-emerald-500 mb-1">Трябва да бъде</p>
+          <p className="text-[12px] font-bold uppercase tracking-widest text-emerald-500 mb-1">Трябва да бъде</p>
           <p className="text-[15px] font-bold text-emerald-700">{err.correction}</p>
         </div>
       </div>
@@ -136,7 +136,7 @@ function ModelEssaySection({
   return (
     <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
       <div className="mb-4">
-        <p className="text-[12px] font-bold text-indigo-500 mb-1">Примерно есе</p>
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Примерно есе</p>
         <p className="text-[15px] text-[#6B7280] leading-snug">
           Виж как добре структуриран отговор обработва тази тема. Обърни внимание на маркираните наблюдения — те касаят твоята най-слаба област.
         </p>
@@ -151,7 +151,7 @@ function ModelEssaySection({
             <div key={i}>
               {isBody && beforeBody.map((a, j) => <AnnotationNote key={`before-${j}`} text={a.text} />)}
               <div>
-                <span className="inline-block text-[12px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1 px-3 mb-2">
+                <span className="inline-block text-[12px] font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1 px-3 mb-2">
                   {part.label}
                 </span>
                 <p className="text-[#6B7280] text-[15px] leading-relaxed whitespace-pre-wrap">{part.text}</p>
@@ -164,7 +164,7 @@ function ModelEssaySection({
 
       {/* Model essay score */}
       <div className="mt-6 pt-4 border-t border-[#F3F4F6]">
-        <p className="text-[12px] font-bold text-indigo-500 mb-3">Оценка на примерното есе (един проверяващ)</p>
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Оценка на примерното есе (един проверяващ)</p>
         <div className="flex items-end gap-1.5 mb-3">
           <span className="text-3xl font-bold text-emerald-600">{score.total}</span>
           <span className="text-lg font-semibold text-[#D1D5DB] mb-0.5">/20</span>
@@ -263,7 +263,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
       {arbitrated ? (
         <div className={`rounded-3xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[12px] font-bold text-amber-700">⚖️ Арбитраж</p>
+            <p className="text-[12px] font-bold text-amber-700 uppercase tracking-widest">⚖️ Арбитраж</p>
             <span className={`text-3xl font-bold ${col.text}`}>{finalScore}<span className="text-[15px] font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
           </div>
           <p className={`text-[15px] ${col.text} leading-relaxed mb-1`}>Проверяващите се различиха с 4+ точки. На реалния изпит арбитратор би преоценил есето ти.</p>
@@ -273,7 +273,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         <div className={`rounded-3xl border ${col.border} ${col.bg} px-5 py-5`}>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="text-[12px] font-bold text-[#9CA3AF] mb-0.5">Краен резултат</p>
+              <p className="text-[12px] font-bold uppercase tracking-widest text-[#9CA3AF] mb-0.5">Краен резултат</p>
               <p className={`text-[13px] font-semibold ${col.text}`}>{col.label}</p>
             </div>
             <span className={`text-4xl font-bold ${col.text}`}>{finalScore}<span className="text-lg font-semibold text-[#D1D5DB] ml-0.5">/20</span></span>
@@ -290,7 +290,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         <div className="bg-indigo-50 rounded-3xl border border-indigo-100 px-5 py-4 flex gap-3 items-start">
           <span className="text-indigo-500 text-xl shrink-0">🎯</span>
           <div>
-            <p className="text-[12px] font-bold text-indigo-500 mb-1">Основен извод</p>
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Основен извод</p>
             <p className="text-[15px] font-semibold text-[#111827] leading-relaxed">{keyTakeaway}</p>
           </div>
         </div>
@@ -300,7 +300,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {paragraphs.length > 0 && (
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
-          <p className="text-[12px] font-bold text-indigo-500 mb-4">Обратна връзка</p>
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Обратна връзка</p>
           <div className="space-y-4 text-[15px] text-[#6B7280] leading-relaxed">
             {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
           </div>
@@ -309,7 +309,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {feedbackData.languageErrors.length > 0 && (
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
-          <p className="text-[12px] font-bold text-indigo-500 mb-4">
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">
             Езикови грешки и правопис ({feedbackData.languageErrors.length})
           </p>
           <div className="space-y-3">
@@ -322,7 +322,7 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
 
       {rewriteLoading && (
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-8">
-          <p className="text-[12px] font-bold text-indigo-500 mb-4">Примерно есе</p>
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">Примерно есе</p>
           <div className="space-y-3 animate-pulse">
             <div className="h-3 bg-[#F3F4F6] rounded-full w-3/4" />
             <div className="h-3 bg-[#F3F4F6] rounded-full w-full" />

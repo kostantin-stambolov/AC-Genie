@@ -74,7 +74,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
 
       {/* Prompt display */}
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
-        <p className="text-[12px] font-bold text-indigo-500 mb-3">Твоята тема</p>
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоята тема</p>
         <h3 className="font-semibold text-[#111827] text-[18px] mb-2">{prompt.title}</h3>
         {prompt.body && <p className="text-[#6B7280] text-[15px] leading-relaxed mb-2 whitespace-pre-wrap">{prompt.body}</p>}
         {prompt.instruction && <p className="text-[#9CA3AF] text-[15px] leading-relaxed italic">{prompt.instruction}</p>}
@@ -82,7 +82,7 @@ export function PhaseComprehension({ attemptId, prompt, advancing, onAdvance }: 
 
       {/* Three questions */}
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5 space-y-5">
-        <p className="text-[12px] font-bold text-indigo-500">Твоите отговори</p>
+        <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest">Твоите отговори</p>
 
         {[
           { label: "1. Какво се иска от теб в тази тема?", value: q1, set: setQ1, placeholder: "напр. Да изразя позиция дали нещо видимо или невидимо е по-важно…", check: checkResult ? { ok: checkResult.promptUnderstood, note: checkResult.promptNote } : null },

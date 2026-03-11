@@ -141,7 +141,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
               {/* Essay parts */}
               {result.parts.map((part, i) => (
                 <div key={i}>
-                  <span className="inline-block text-[12px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1.5 px-3 mb-2">
+                  <span className="inline-block text-[12px] font-bold uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-xl py-1.5 px-3 mb-2">
                     {part.label}
                   </span>
                   <p className="text-[#111827] text-[15px] leading-relaxed whitespace-pre-wrap">
@@ -168,7 +168,7 @@ export function RewriteModal({ attemptId, open, onClose }: Props) {
                     </div>
                   ))}
                 </div>
-                <p className="text-[12px] font-bold text-[#9CA3AF] mb-1">Защо тази оценка</p>
+                <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Защо тази оценка</p>
                 <p className="text-[#6B7280] text-[15px] leading-relaxed">{result.scoreReason}</p>
               </div>
             </div>

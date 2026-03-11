@@ -86,7 +86,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
       {/* Outline reference */}
       {outlineOpen && outline && (
         <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-4">
-          <p className="text-[12px] font-bold text-indigo-500 mb-3">Твоят план (само за четене)</p>
+          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">Твоят план (само за четене)</p>
           <div className="space-y-2">
             {[
               { l: "Начало",      v: outline.opening },
@@ -95,7 +95,7 @@ export function PhaseWriting({ attemptId, outline, initialEssay, phaseTimings, a
               { l: "Заключение",  v: outline.closing },
             ].map(({ l, v }) => v ? (
               <div key={l} className="flex gap-2">
-                <span className="shrink-0 text-[12px] font-bold text-indigo-400 mt-0.5 w-20">{l}</span>
+                <span className="shrink-0 text-[12px] font-bold text-indigo-400 uppercase tracking-widest mt-0.5 w-20">{l}</span>
                 <span className="text-[15px] text-[#6B7280] leading-relaxed">{v}</span>
               </div>
             ) : null)}

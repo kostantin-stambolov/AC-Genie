@@ -78,13 +78,13 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, initialDon
           <h2 className="text-[22px] font-semibold text-[#111827] mb-4 tracking-tight">Сесията е завършена!</h2>
 
           <div className="mb-5">
-            <p className="text-[12px] font-bold text-indigo-500 mb-1">Твоят резултат</p>
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Твоят резултат</p>
             <p className="text-4xl font-bold text-[#111827]">{finalScore}<span className="text-[22px] font-semibold text-[#D1D5DB]">/20</span></p>
             <p className="text-[13px] text-[#9CA3AF] mt-0.5">Средно от Проверяващ 1 ({e1.total}) + Проверяващ 2 ({e2.total})</p>
           </div>
 
           <div className="mb-5">
-            <p className="text-[12px] font-bold text-indigo-500 mb-2">Времеразпределение</p>
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-2">Времеразпределение</p>
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {timingRows.map(({ key, label }) => (
                 phaseTimings[key]?.seconds
@@ -99,7 +99,7 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, initialDon
 
           {reflection.trim() && (
             <div className="mb-5">
-              <p className="text-[12px] font-bold text-indigo-500 mb-1">Твоят фокус за следващия път</p>
+              <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-1">Твоят фокус за следващия път</p>
               <p className="text-[15px] text-[#6B7280] leading-relaxed italic">"{reflection}"</p>
             </div>
           )}
@@ -129,13 +129,13 @@ export function PhaseReflect({ feedbackData, phaseTimings, advancing, initialDon
 
       {/* Weakest area card */}
       <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5">
-        <p className="text-[12px] font-bold text-orange-500 mb-3">
+        <p className="text-[12px] font-bold text-orange-500 uppercase tracking-widest mb-3">
           Твоята най-слаба област: {dimLabel} (средно {avgValue.toFixed(1)} / {dimMax})
         </p>
 
         {relevantNote && (
           <div className="rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] px-4 py-3 mb-4">
-            <p className="text-[12px] font-bold text-[#9CA3AF] mb-1">Твоите проверяващи отбелязаха</p>
+            <p className="text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1">Твоите проверяващи отбелязаха</p>
             <p className="text-[15px] text-[#6B7280] leading-relaxed italic">"{relevantNote}"</p>
           </div>
         )}

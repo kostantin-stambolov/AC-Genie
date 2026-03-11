@@ -67,7 +67,7 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
+              <label htmlFor="email" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
                 Email
               </label>
               <input
@@ -82,7 +82,7 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label htmlFor="pin" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
+              <label htmlFor="pin" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
                 PIN <span className="text-[#9CA3AF] normal-case font-normal">(4–8 digits)</span>
               </label>
               <input
@@ -100,7 +100,7 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label htmlFor="confirmPin" className="block text-[12px] font-bold text-[#9CA3AF] mb-1.5">
+              <label htmlFor="confirmPin" className="block text-[12px] font-bold text-[#9CA3AF] uppercase tracking-widest mb-1.5">
                 Confirm PIN
               </label>
               <input

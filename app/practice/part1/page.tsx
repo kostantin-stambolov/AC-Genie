@@ -60,7 +60,7 @@ function InstructionBlock({ instruction }: { instruction: string }) {
 
   return (
     <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
-      <p className="text-[12px] font-bold text-indigo-500 mb-3">
+      <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-3">
         Твоята задача
       </p>
 
