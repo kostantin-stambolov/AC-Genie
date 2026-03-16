@@ -256,11 +256,13 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                   </div>
                 </div>
 
-                {v2.languageErrors && v2.languageErrors.length > 0 && (
+                {(() => {
+                  const withDiff = (v2.languageErrors ?? []).filter((err) => err.original?.trim() !== err.correction?.trim());
+                  return withDiff.length > 0 && (
                   <div className="border-t border-amber-100 pt-4">
                     <p className="text-[12px] font-semibold text-amber-700 uppercase tracking-widest mb-2">Езикови корекции</p>
                     <ul className="space-y-2">
-                      {v2.languageErrors.map((err, j) => (
+                      {withDiff.map((err, j) => (
                         <li key={j} className="text-[15px] flex flex-wrap items-center gap-1.5">
                           <span className="inline-block rounded-full px-2 py-0.5 text-[12px] font-semibold bg-amber-100 text-amber-800 uppercase">
                             {err.type.replace(/_/g, " ")}
@@ -273,7 +275,8 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                       ))}
                     </ul>
                   </div>
-                )}
+                  );
+                })()}
               </section>
             );
           }
@@ -311,11 +314,13 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              {v1.languageErrors && v1.languageErrors.length > 0 && (
+              {(() => {
+                const withDiff = (v1.languageErrors ?? []).filter((err) => err.original?.trim() !== err.correction?.trim());
+                return withDiff.length > 0 && (
                 <div className="border-t border-amber-100 pt-4">
                   <p className="text-[12px] font-semibold text-amber-700 uppercase tracking-widest mb-2">Езикови корекции</p>
                   <ul className="space-y-2">
-                    {v1.languageErrors.map((err, j) => (
+                    {withDiff.map((err, j) => (
                       <li key={j} className="text-[15px] flex flex-wrap items-center gap-1.5">
                         <span className="inline-block rounded-full px-2 py-0.5 text-[12px] font-semibold bg-amber-100 text-amber-800 uppercase">
                           {err.type.replace(/_/g, " ")}
@@ -328,7 +333,8 @@ export default async function Part1ExampleDetailPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
-              )}
+                );
+              })()}
             </section>
           );
         })}

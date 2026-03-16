@@ -106,7 +106,8 @@ export default async function Part1FeedbackPage({ searchParams }: Props) {
       if (Array.isArray(p)) {
         languageErrors = p.filter(
           (e): e is { type: string; original: string; correction: string; note?: string } =>
-            e && typeof e === "object" && "original" in e && "correction" in e
+            e && typeof e === "object" && "original" in e && "correction" in e &&
+            String((e as { original: string }).original).trim() !== String((e as { correction: string }).correction).trim()
         );
       }
     } catch { /* empty */ }

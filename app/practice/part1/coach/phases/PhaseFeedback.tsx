@@ -307,16 +307,21 @@ export function PhaseFeedback({ attemptId, feedbackData, advancing, onAdvance }:
         </div>
       )}
 
-      {feedbackData.languageErrors.length > 0 && (
-        <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
-          <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">
-            Езикови грешки и правопис ({feedbackData.languageErrors.length})
-          </p>
-          <div className="space-y-3">
-            {feedbackData.languageErrors.map((err, i) => <LangErrorCard key={i} err={err} />)}
+      {(() => {
+        const errorsWithDiff = feedbackData.languageErrors.filter(
+          (err) => err.original.trim() !== err.correction.trim()
+        );
+        return errorsWithDiff.length > 0 && (
+          <div className="bg-white rounded-3xl shadow-[0_2px_12px_rgba(0,0,0,0.06)] px-5 py-5">
+            <p className="text-[12px] font-bold text-indigo-500 uppercase tracking-widest mb-4">
+              Езикови грешки и правопис ({errorsWithDiff.length})
+            </p>
+            <div className="space-y-3">
+              {errorsWithDiff.map((err, i) => <LangErrorCard key={i} err={err} />)}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ── Section C: Model Essay ─────────────────────────────────────────── */}
 

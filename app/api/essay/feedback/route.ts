@@ -29,7 +29,8 @@ function normalizeLanguageErrors(raw: unknown): LanguageErrorItem[] {
       const note = typeof item.note === "string" ? item.note : undefined;
       return { type, original, correction, note };
     })
-    .filter((e) => e.original !== "" || e.correction !== "");
+    .filter((e) => e.original !== "" || e.correction !== "")
+    .filter((e) => e.original.trim() !== e.correction.trim());
 }
 
 function parsePrompt(promptText: string | null): {
